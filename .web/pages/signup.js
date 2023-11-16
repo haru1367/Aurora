@@ -65,7 +65,7 @@ export default function Component() {
 </Fragment>
   <Container>
   <Container sx={{"height": "200px"}}/>
-  <Container centerContent={true} sx={{"width": "500px", "height": "auto", "background": "url('aurora.jpg')", "backgroundRepeat": "no-repeat", "backgroundSize": "cover", "borderRadius": "20px", "boxShadow": "9px 9px 50px #ceddf5"}}>
+  <Container centerContent={true} sx={{"width": "500px", "height": "auto", "borderRadius": "20px", "boxShadow": "9px 9px 50px #ceddf5"}}>
   <Heading sx={{"display": "flex", "flexDirection": "column", "alignItems": "center", "textAlign": "center"}}>
   <Text as={`span`}>
   {`Aurora!`}
