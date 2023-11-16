@@ -1,5 +1,6 @@
 """Login page. Uses auth_layout to render UI shared with the sign up page."""
 import reflex as rx
+
 from aurora.state.auth import AuthState
 
 
@@ -8,7 +9,19 @@ def login():
         rx.container(height='200px'), 
         rx.vstack(           
             rx.heading(
-                rx.span("Aurora!"),
+                rx.text(
+                    "Aurora!",
+                    style={
+                        "fontSize": "40px",
+                        "fontWeight": "bolder",
+                        "letterSpacing": "5px",
+                        "fontFamily": "Open Sans,Sans-serif",
+                        "background": "-webkit-linear-gradient(-45deg, #e04a3f, #4e8be6)",
+                        "-webkit-background-clip": "text",
+                        "color": "transparent",
+                    },
+                    center_content=True,
+                ),
                 display="flex",
                 flex_direction="column",
                 align_items="center",
@@ -18,6 +31,15 @@ def login():
                 "Create a picture with your story!",
                 color="gray.500",
                 font_weight="medium",
+            ),
+            rx.container(
+                rx.container(height='30px'),
+                rx.image(
+                    src="C:/Users/a/Desktop/vscodeGithub/aurora/assets/favicon.ico",
+                    alt="star",
+                    style={"width": "100px", "height": "100px"},
+                ),
+                center_content=True,
             ),
             rx.container(
                 rx.vstack(
@@ -36,6 +58,7 @@ def login():
                             color="white",
                             _hover={"bg": "blue.600"},
                         ),
+                        center_content=True,
                         align_items="left",
                         bg="white",
                         border="1px solid #eaeaea",
@@ -61,9 +84,6 @@ def login():
         maxWidth='auto',
         maxHeight='auto',
         height='100vh',
-        style={
-            'background-image': "url('favicon.ico')",
-            'background-size': 'cover',
-            'background-repeat': 'no-repeat',
-        },
+        bg="url('aurora.jpg')",
     )
+

@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { Event, getAllLocalStorageItems, getRefValue, getRefValues, isTrue, preventDefault, refs, set_val, spreadArraysOrObjects, uploadFiles, useEventLoop } from "/utils/state"
 import { ColorModeContext, EventLoopContext, initialEvents, StateContext } from "/utils/context.js"
 import "focus-visible/dist/focus-visible"
-import { Button, Container, Heading, Input, Link, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text, VStack } from "@chakra-ui/react"
+import { Button, Container, Heading, Image, Input, Link, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text, VStack } from "@chakra-ui/react"
 import { getEventURL } from "/utils/state.js"
 import NextLink from "next/link"
 import NextHead from "next/head"
@@ -63,20 +63,24 @@ export default function Component() {
   <Fragment/>
 )}
 </Fragment>
-  <Container centerContent={true} sx={{"background-image": "url('favicon.ico')", "background-size": "cover", "background-repeat": "no-repeat", "maxWidth": "auto", "maxHeight": "auto", "height": "100vh"}}>
+  <Container centerContent={true} sx={{"maxWidth": "auto", "maxHeight": "auto", "height": "100vh", "bg": "url('aurora.jpg')"}}>
   <Container sx={{"height": "200px"}}/>
   <VStack sx={{"width": "500px", "height": "auto", "centerContent": true, "borderRadius": "20px", "boxShadow": "9px 9px 50px #ceddf5"}}>
   <Heading sx={{"display": "flex", "flexDirection": "column", "alignItems": "center", "textAlign": "center"}}>
-  <Text as={`span`}>
+  <Text sx={{"fontSize": "40px", "fontWeight": "bolder", "letterSpacing": "5px", "fontFamily": "Open Sans,Sans-serif", "background": "-webkit-linear-gradient(-45deg, #e04a3f, #4e8be6)", "-webkit-background-clip": "text", "color": "transparent", "centerContent": true}}>
   {`Aurora!`}
 </Text>
 </Heading>
   <Text sx={{"color": "gray.500", "fontWeight": "medium"}}>
   {`Create a picture with your story!`}
 </Text>
+  <Container centerContent={true}>
+  <Container sx={{"height": "30px"}}/>
+  <Image alt={`star`} src={`C:/Users/a/Desktop/vscodeGithub/aurora/assets/favicon.ico`} sx={{"width": "100px", "height": "100px"}}/>
+</Container>
   <Container>
   <VStack>
-  <Container sx={{"alignItems": "left", "bg": "white", "border": "1px solid #eaeaea", "p": 4, "maxWidth": "400px", "borderRadius": "lg"}}>
+  <Container centerContent={true} sx={{"alignItems": "left", "bg": "white", "border": "1px solid #eaeaea", "p": 4, "maxWidth": "400px", "borderRadius": "lg"}}>
   <Input onBlur={(_e0) => addEvents([Event("state.auth_state.set_username", {value:_e0.target.value})], (_e0), {})} placeholder={`Username`} sx={{"mb": 4}} type={`text`}/>
   <Input onBlur={(_e0) => addEvents([Event("state.auth_state.set_password", {value:_e0.target.value})], (_e0), {})} placeholder={`Password`} sx={{"mb": 4}} type={`password`}/>
   <Button onClick={(_e) => addEvents([Event("state.auth_state.login", {})], (_e), {})} sx={{"bg": "blue.500", "color": "white", "_hover": {"bg": "blue.600"}}}>
