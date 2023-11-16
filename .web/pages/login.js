@@ -63,7 +63,7 @@ export default function Component() {
   <Fragment/>
 )}
 </Fragment>
-  <Container centerContent={true} sx={{"maxWidth": "auto", "maxHeight": "auto", "height": "100vh", "bg": "url('aurora.jpg')"}}>
+  <Container centerContent={true} sx={{"background-image": "url('C:/Users/a/Desktop/vscodeGithub/aurora/assets/aurora.jpg')", "background-size": "cover", "maxWidth": "auto", "maxHeight": "auto", "height": "100vh"}}>
   <Container sx={{"height": "200px"}}/>
   <VStack sx={{"width": "500px", "height": "auto", "centerContent": true, "borderRadius": "20px", "boxShadow": "9px 9px 50px #ceddf5"}}>
   <Heading sx={{"display": "flex", "flexDirection": "column", "alignItems": "center", "textAlign": "center"}}>

@@ -84,6 +84,9 @@ def login():
         maxWidth='auto',
         maxHeight='auto',
         height='100vh',
-        bg="url('aurora.jpg')",
+        style={
+            'background-image':"url('C:/Users/a/Desktop/vscodeGithub/aurora/assets/aurora.jpg')",
+            'background-size':'cover',
+        }
     )
 
