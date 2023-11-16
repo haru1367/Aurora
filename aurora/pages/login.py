@@ -4,9 +4,10 @@ import reflex as rx
 from aurora.state.auth import AuthState
 
 
+
 def login():
     return rx.container(
-        rx.container(height='200px'), 
+        rx.container(height='150px'), 
         rx.vstack(           
             rx.heading(
                 rx.text(
@@ -35,7 +36,7 @@ def login():
             rx.container(
                 rx.container(height='30px'),
                 rx.image(
-                    src="C:/Users/a/Desktop/vscodeGithub/aurora/assets/favicon.ico",
+                    src="stardark.ico",
                     alt="star",
                     style={"width": "100px", "height": "100px"},
                 ),
@@ -85,7 +86,7 @@ def login():
         maxHeight='auto',
         height='100vh',
         style={
-            'background-image':"url('C:/Users/a/Desktop/vscodeGithub/aurora/assets/aurora.jpg')",
+            'background':"url('aurora.jpg')",
             'background-size':'cover',
         }
     )
