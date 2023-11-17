@@ -96,7 +96,7 @@ export default function Component() {
   <Text sx={{"color": "gray.600"}}>
   {`Don't have an account yet?   `}
   <Link as={NextLink} href={`/signup`} sx={{"color": "blue.500"}}>
-  {`Sign up here!`}
+  {`Sign up!`}
 </Link>
 </Text>
   <Container sx={{"height": "30px"}}/>

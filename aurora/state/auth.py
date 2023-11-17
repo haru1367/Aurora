@@ -41,7 +41,7 @@ class AuthState(State):
         with rx.session() as session:
             user_instance = session.exec(User.select.where(User.username == self.username)).first()
             if user_instance:
-                return rx.window_alert(user_instance.password)
+                return rx.window_alert(f'your password : {user_instance.password}')
             session.expire_on_commit = False
             return rx.redirect("/")
     

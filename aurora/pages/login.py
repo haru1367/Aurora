@@ -70,7 +70,7 @@ def login():
                     ), 
                     rx.text(
                         "Don't have an account yet?   ",
-                        rx.link("Sign up here!", href="/signup", color="blue.500"),
+                        rx.link("Sign up!", href="/signup", color="blue.500"),
                         color="gray.600",
                     ),
                     rx.container(height='30px') ,  
