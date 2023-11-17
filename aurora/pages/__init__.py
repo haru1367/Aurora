@@ -2,3 +2,4 @@
 from .home import home
 from .login import login
 from .signup import signup
+from .findpassword import findpassword

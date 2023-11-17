@@ -22,10 +22,6 @@ def findpassword():
                     },
                     center_content=True,
                 ),
-                display="flex",
-                flex_direction="column",
-                align_items="center",
-                text_align="center",
             ),
             rx.text(
                 "Create a picture with your story!",
@@ -34,21 +30,9 @@ def findpassword():
             ),
             rx.container(
                 rx.input(placeholder="Username", on_blur=AuthState.set_username, mb=4),
-                rx.input(
-                    type_="password",
-                    placeholder="Password",
-                    on_blur=AuthState.set_password,
-                    mb=4,
-                ),
-                rx.input(
-                    type_="password",
-                    placeholder="Confirm password",
-                    on_blur=AuthState.set_confirm_password,
-                    mb=4,
-                ),
                 rx.button(
-                    "Sign up",
-                    on_click=AuthState.signup,
+                    "Find Password",
+                    on_click=AuthState.findpassword,
                     bg="blue.500",
                     color="white",
                     _hover={"bg": "blue.600"},

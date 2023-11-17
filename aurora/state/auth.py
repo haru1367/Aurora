@@ -35,3 +35,13 @@ class AuthState(State):
                 return rx.redirect("/")
             else:
                 return rx.window_alert("아이디 또는 비밀번호가 일치하지 않습니다.")
+    
+    def findpassword(self):
+        """find a password."""
+        with rx.session() as session:
+            user_instance = session.exec(User.select.where(User.username == self.username)).first()
+            if user_instance:
+                return rx.window_alert(user_instance.password)
+            session.expire_on_commit = False
+            return rx.redirect("/")
+    
