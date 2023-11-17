@@ -63,7 +63,7 @@ export default function Component() {
   <Fragment/>
 )}
 </Fragment>
-  <Container centerContent={true} sx={{"background": "linear-gradient(to bottom, #f57145, #bded9a)", "maxWidth": "auto", "maxHeight": "auto", "height": "100vh"}}>
+  <Container centerContent={true} sx={{"maxWidth": "auto", "maxHeight": "auto", "height": "100vh", "bg": "rgb(255 255 255)"}}>
   <Container sx={{"height": "150px"}}/>
   <VStack sx={{"width": "500px", "height": "auto", "centerContent": true, "borderRadius": "20px", "boxShadow": "9px 9px 100px #79d0ed", "bg": "rgb(255 255 255)"}}>
   <Heading sx={{"display": "flex", "flexDirection": "column", "alignItems": "center", "textAlign": "center"}}>
@@ -99,7 +99,7 @@ export default function Component() {
   {`Sign up here!`}
 </Link>
 </Text>
-  <Container sx={{"height": "50px"}}/>
+  <Container sx={{"height": "30px"}}/>
 </VStack>
 </Container>
 </VStack>
