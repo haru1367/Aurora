@@ -6,11 +6,11 @@ from aurora.state.auth import AuthState
 
 def login():
     return rx.container(
-        rx.container(height='200px'), 
+        rx.container(height='150px'), 
         rx.vstack(           
             rx.heading(
                 rx.text(
-                    "Aurora!",
+                    "Aurora",
                     style={
                         "fontSize": "40px",
                         "fontWeight": "bolder",
@@ -34,11 +34,6 @@ def login():
             ),
             rx.container(
                 rx.container(height='30px'),
-                rx.image(
-                    src="C:/Users/a/Desktop/vscodeGithub/aurora/assets/favicon.ico",
-                    alt="star",
-                    style={"width": "100px", "height": "100px"},
-                ),
                 center_content=True,
             ),
             rx.container(
@@ -66,18 +61,26 @@ def login():
                         max_width="400px",
                         border_radius="lg",
                     ),
+                    rx.container(height='10px'),
                     rx.text(
-                        "Don't have an account yet? ",
-                        rx.link("Sign up here.", href="/signup", color="blue.500"),
+                        'Forgot your password?   ',
+                        rx.link('Find Password!',href="/findpassword",color='green.500'),
                         color="gray.600",
-                    ),            
+                    ), 
+                    rx.text(
+                        "Don't have an account yet?   ",
+                        rx.link("Sign up here!", href="/signup", color="blue.500"),
+                        color="gray.600",
+                    ),
+                    rx.container(height='50px') ,  
                 ),
             ),
             width='500px',
             height='auto',
             center_content=True,
             borderRadius='20px',
-            boxShadow='9px 9px 50px #ceddf5',
+            boxShadow='9px 9px 100px #79d0ed',
+            bg = "rgb(255 255 255)"
         ),
         center_content=True,
         # justifyContent='center',
@@ -85,8 +88,7 @@ def login():
         maxHeight='auto',
         height='100vh',
         style={
-            'background-image':"url('C:/Users/a/Desktop/vscodeGithub/aurora/assets/aurora.jpg')",
-            'background-size':'cover',
+            'background': 'linear-gradient(to bottom, #f57145, #bded9a)',
         }
     )
 

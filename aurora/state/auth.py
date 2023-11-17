@@ -15,9 +15,9 @@ class AuthState(State):
         """Sign up a user."""
         with rx.session() as session:
             if self.password != self.confirm_password:
-                return rx.window_alert("Passwords do not match.")
+                return rx.window_alert("비밀번호가 일치하지 않습니다.")
             if session.exec(User.select.where(User.username == self.username)).first():
-                return rx.window_alert("Username already exists.")
+                return rx.window_alert("이미 존재하는 아이디입니다.")
             self.user = User(username=self.username, password=self.password)
             session.add(self.user)
             session.expire_on_commit = False
@@ -34,4 +34,4 @@ class AuthState(State):
                 self.user = user
                 return rx.redirect("/")
             else:
-                return rx.window_alert("Invalid username or password.")
+                return rx.window_alert("아이디 또는 비밀번호가 일치하지 않습니다.")

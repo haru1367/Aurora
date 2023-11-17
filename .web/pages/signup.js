@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { Event, getAllLocalStorageItems, getRefValue, getRefValues, isTrue, preventDefault, refs, set_val, spreadArraysOrObjects, uploadFiles, useEventLoop } from "/utils/state"
 import { ColorModeContext, EventLoopContext, initialEvents, StateContext } from "/utils/context.js"
 import "focus-visible/dist/focus-visible"
-import { Box, Button, Container, Heading, Input, Link, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react"
+import { Button, Container, Input, Link, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text, VStack } from "@chakra-ui/react"
 import { getEventURL } from "/utils/state.js"
 import NextLink from "next/link"
 import NextHead from "next/head"
@@ -63,32 +63,27 @@ export default function Component() {
   <Fragment/>
 )}
 </Fragment>
-  <Container>
-  <Container sx={{"height": "200px"}}/>
-  <Container centerContent={true} sx={{"width": "500px", "height": "auto", "borderRadius": "20px", "boxShadow": "9px 9px 50px #ceddf5"}}>
-  <Heading sx={{"display": "flex", "flexDirection": "column", "alignItems": "center", "textAlign": "center"}}>
-  <Text as={`span`}>
-  {`Aurora!`}
+  <Container centerContent={true} sx={{"background": "linear-gradient(to bottom, #f57145, #bded9a)", "maxWidth": "auto", "maxHeight": "auto", "height": "100vh"}}>
+  <Container sx={{"height": "150px"}}/>
+  <VStack sx={{"width": "500px", "height": "auto", "centerContent": true, "borderRadius": "20px", "boxShadow": "9px 9px 100px #79d0ed", "bg": "rgb(255 255 255)"}}>
+  <Text sx={{"fontSize": "40px", "fontWeight": "bolder", "letterSpacing": "5px", "fontFamily": "Open Sans,Sans-serif", "background": "-webkit-linear-gradient(-45deg, #e04a3f, #4e8be6)", "-webkit-background-clip": "text", "color": "transparent", "centerContent": true}}>
+  {`Aurora`}
 </Text>
-</Heading>
-  <Text sx={{"color": "gray.500", "fontWeight": "medium"}}>
-  {`Create a picture with your story!`}
-</Text>
-  <Box sx={{"alignItems": "left", "bg": "white", "border": "1px solid #eaeaea", "p": 4, "maxWidth": "400px", "borderRadius": "lg"}}>
+  <Container sx={{"alignItems": "left", "bg": "white", "border": "1px solid #eaeaea", "p": 4, "maxWidth": "400px", "borderRadius": "lg"}}>
   <Input onBlur={(_e0) => addEvents([Event("state.auth_state.set_username", {value:_e0.target.value})], (_e0), {})} placeholder={`Username`} sx={{"mb": 4}} type={`text`}/>
   <Input onBlur={(_e0) => addEvents([Event("state.auth_state.set_password", {value:_e0.target.value})], (_e0), {})} placeholder={`Password`} sx={{"mb": 4}} type={`password`}/>
   <Input onBlur={(_e0) => addEvents([Event("state.auth_state.set_confirm_password", {value:_e0.target.value})], (_e0), {})} placeholder={`Confirm password`} sx={{"mb": 4}} type={`password`}/>
   <Button onClick={(_e) => addEvents([Event("state.auth_state.signup", {})], (_e), {})} sx={{"bg": "blue.500", "color": "white", "_hover": {"bg": "blue.600"}}}>
   {`Sign up`}
 </Button>
-</Box>
+</Container>
   <Text sx={{"color": "gray.600"}}>
   {`Already have an account? `}
   <Link as={NextLink} href={`/`} sx={{"color": "blue.500"}}>
   {`Sign in here.`}
 </Link>
 </Text>
-</Container>
+</VStack>
 </Container>
   <NextHead>
   <title>

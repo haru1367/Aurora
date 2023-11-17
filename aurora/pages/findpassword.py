@@ -3,23 +3,34 @@ import reflex as rx
 from aurora.state.auth import AuthState
 
 
-def signup():
-    """The sign up page."""
+def findpassword():
+    """The findpassword page."""
     return rx.container(
         rx.container(height='150px'),
         rx.vstack(
+             rx.heading(
+                rx.text(
+                    "Aurora",
+                    style={
+                        "fontSize": "40px",
+                        "fontWeight": "bolder",
+                        "letterSpacing": "5px",
+                        "fontFamily": "Open Sans,Sans-serif",
+                        "background": "-webkit-linear-gradient(-45deg, #e04a3f, #4e8be6)",
+                        "-webkit-background-clip": "text",
+                        "color": "transparent",
+                    },
+                    center_content=True,
+                ),
+                display="flex",
+                flex_direction="column",
+                align_items="center",
+                text_align="center",
+            ),
             rx.text(
-                "Aurora",
-                style={
-                    "fontSize": "40px",
-                    "fontWeight": "bolder",
-                    "letterSpacing": "5px",
-                    "fontFamily": "Open Sans,Sans-serif",
-                    "background": "-webkit-linear-gradient(-45deg, #e04a3f, #4e8be6)",
-                    "-webkit-background-clip": "text",
-                    "color": "transparent",
-                },
-                center_content=True,
+                "Create a picture with your story!",
+                color="gray.500",
+                font_weight="medium",
             ),
             rx.container(
                 rx.input(placeholder="Username", on_blur=AuthState.set_username, mb=4),
@@ -59,7 +70,7 @@ def signup():
             center_content=True,
             borderRadius='20px',
             boxShadow='9px 9px 100px #79d0ed',
-            bg = "rgb(255 255 255)",
+            bg = "rgb(255 255 255)"
         ),
         center_content=True,
         # justifyContent='center',
@@ -68,5 +79,5 @@ def signup():
         height='100vh',
         style={
             'background': 'linear-gradient(to bottom, #f57145, #bded9a)',
-        },
+        }
     )
