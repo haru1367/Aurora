@@ -35,11 +35,6 @@ def login():
             ),
             rx.container(
                 rx.container(height='30px'),
-                rx.image(
-                    src="C:/Users/a/Desktop/vscodeGithub/aurora/assets/favicon.ico",
-                    alt="star",
-                    style={"width": "100px", "height": "100px"},
-                ),
                 center_content=True,
             ),
             rx.container(
@@ -78,7 +73,7 @@ def login():
                         rx.link("Sign up here!", href="/signup", color="blue.500"),
                         color="gray.600",
                     ),
-                    rx.container(height='50px') ,  
+                    rx.container(height='30px') ,  
                 ),
             ),
             width='500px',
@@ -94,8 +89,7 @@ def login():
         maxHeight='auto',
         height='100vh',
         style={
-            'background-image':"url('C:/Users/a/Desktop/vscodeGithub/aurora/assets/aurora.jpg')",
-            'background-size':'cover',
+            'background': 'linear-gradient(to bottom, #f57145, #bded9a)',
         }
     )
 
