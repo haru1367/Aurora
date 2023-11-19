@@ -10,7 +10,7 @@ def login():
         rx.container(height='150px'), 
         rx.vstack(           
             rx.heading(
-                rx.container(height='50px'),
+                rx.container(height='30px'),
                 rx.text(
                     "Aurora",
                     style={
