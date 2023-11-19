@@ -10,6 +10,7 @@ def login():
         rx.container(height='150px'), 
         rx.vstack(           
             rx.heading(
+                rx.container(height='50px'),
                 rx.text(
                     "Aurora",
                     style={
@@ -34,7 +35,11 @@ def login():
                 font_weight="medium",
             ),
             rx.container(
-                rx.container(height='30px'),
+                rx.image(
+                    src = "/Mosaic.ico",
+                    width="100px",
+                    height="100px",
+                ),
                 center_content=True,
             ),
             rx.container(
@@ -81,7 +86,7 @@ def login():
             center_content=True,
             borderRadius='20px',
             boxShadow='9px 9px 100px #79d0ed',
-            bg = "rgb(255 255 255)"
+            background="linear-gradient(to bottom, #d7eefc, #ffffff)"
         ),
         center_content=True,
         # justifyContent='center',
@@ -89,7 +94,8 @@ def login():
         maxHeight='auto',
         height='100vh',
         style={
-            'background': 'linear-gradient(to bottom, #f57145, #bded9a)',
+            'background-image':"url('/aurora.jpg')",
+            'background-size':'cover',
         }
     )
 
