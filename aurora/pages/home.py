@@ -128,7 +128,7 @@ def sidebar(HomeState):
 def feed_header(HomeState):
     """The header of the feed."""
     return rx.hstack(
-        rx.heading("Home", size="md"),  # 피드의 제목
+        rx.heading("Story", size="md"),  # 피드의 제목
         rx.input(on_change=HomeState.set_search, placeholder="Search tweets"),  # 트윗 검색을 위한 입력 상자
         justify="space-between",
         p=4,
@@ -225,7 +225,7 @@ def home():
             tabs(),
             feed(HomeState),
             sidebar(HomeState),
-            grid_template_columns="1fr 2fr 1fr",
+            grid_template_columns="1fr 3fr 1fr",
             h="100vh",
             gap=4,
         ),
