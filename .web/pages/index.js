@@ -5,7 +5,7 @@ import { ColorModeContext, EventLoopContext, initialEvents, StateContext } from 
 import "focus-visible/dist/focus-visible"
 import { Avatar, Box, Button, Container, Grid, Heading, HStack, Input, Link, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Spacer, Text, Textarea, VStack } from "@chakra-ui/react"
 import { getEventURL } from "/utils/state.js"
-import { AddIcon, MoonIcon, RepeatIcon, StarIcon } from "@chakra-ui/icons"
+import { AddIcon, MinusIcon, MoonIcon, RepeatIcon, StarIcon } from "@chakra-ui/icons"
 import NextLink from "next/link"
 import NextHead from "next/head"
 
@@ -84,12 +84,12 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Followers`}
 </Heading>
-  {state.home_state.followers.map((likpovdo, urcaifmo) => (
-  <VStack key={urcaifmo} sx={{"padding": "1em"}}>
-  <HStack>
-  <Avatar name={likpovdo.follower_username} size={`sm`}/>
+  {state.home_state.followers.map((wmemjzgy, ncwvihfn) => (
+  <VStack key={ncwvihfn} sx={{"padding": "1em"}}>
+  <HStack sx={{"width": "100%"}}>
+  <Avatar name={wmemjzgy.follower_username} size={`sm`}/>
   <Text>
-  {likpovdo.follower_username}
+  {wmemjzgy.follower_username}
 </Text>
 </HStack>
 </VStack>
@@ -123,17 +123,17 @@ export default function Component() {
   <Fragment>
   {isTrue(state.home_state.tweets) ? (
   <Fragment>
-  {state.home_state.tweets.map((vrkctgua, upvmbimy) => (
-  <Grid key={upvmbimy} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
+  {state.home_state.tweets.map((nedjvtnn, vjenahqt) => (
+  <Grid key={vjenahqt} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
   <VStack>
-  <Avatar name={vrkctgua.author} size={`sm`}/>
+  <Avatar name={nedjvtnn.author} size={`sm`}/>
 </VStack>
   <Box>
   <Text sx={{"fontWeight": "bold"}}>
-  {("@" + vrkctgua.author)}
+  {("@" + nedjvtnn.author)}
 </Text>
   <Text sx={{"width": "100%"}}>
-  {vrkctgua.content}
+  {nedjvtnn.content}
 </Text>
 </Box>
 </Grid>
@@ -155,15 +155,15 @@ export default function Component() {
 </Box>
   <VStack alignItems={`start`} sx={{"gap": 4, "h": "100%", "py": 4}}>
   <Input onChange={(_e0) => addEvents([Event("state.home_state.set_friend", {value:_e0.target.value})], (_e0), {})} placeholder={`Search users`} sx={{"width": "100%"}} type={`text`}/>
-  {state.home_state.search_users.map((gwjsxgwc, htyobtku) => (
-  <VStack key={htyobtku} sx={{"py": 2, "width": "100%"}}>
+  {state.home_state.search_users.map((antucizb, qddfmnfg) => (
+  <VStack key={qddfmnfg} sx={{"py": 2, "width": "100%"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={gwjsxgwc.username} size={`sm`}/>
+  <Avatar name={antucizb.username} size={`sm`}/>
   <Text>
-  {gwjsxgwc.username}
+  {antucizb.username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:gwjsxgwc.username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:antucizb.username})], (_e), {})}>
   <AddIcon/>
 </Button>
 </HStack>
@@ -173,13 +173,17 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Following`}
 </Heading>
-  {state.home_state.following.map((dqvouhqv, mdqmkwqz) => (
-  <VStack key={mdqmkwqz} sx={{"padding": "1em"}}>
+  {state.home_state.following.map((dgvxfkzj, okmxintz) => (
+  <VStack key={okmxintz} sx={{"padding": "1em"}}>
   <HStack>
-  <Avatar name={dqvouhqv.followed_username} size={`sm`}/>
+  <Avatar name={dgvxfkzj.followed_username} size={`sm`}/>
   <Text>
-  {dqvouhqv.followed_username}
+  {dgvxfkzj.followed_username}
 </Text>
+  <Spacer/>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.unfollow_user", {username:dgvxfkzj.followed_username})], (_e), {})}>
+  <MinusIcon/>
+</Button>
 </HStack>
 </VStack>
 ))}

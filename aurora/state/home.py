@@ -54,7 +54,26 @@ class HomeState(State):
             )
             session.add(friend)
             session.commit()
+    
+    def unfollow_user(self, username):
+        """Unfollow a user."""
+        with rx.session() as session:
+            follow = (
+                session.query(Follows)
+                .filter_by(follower_username=self.user.username, followed_username=username)
+                .first()
+            )
+            if follow:
+                session.delete(follow)
+                session.commit()
 
+                # Refresh the followers list after unfollowing
+                self.followers = (
+                    session.query(Follows)
+                    .filter(Follows.followed_username == self.user.username)
+                    .all()
+                )        
+    
     @rx.var
     def following(self) -> list[Follows]:
         """Get a list of users the current user is following."""

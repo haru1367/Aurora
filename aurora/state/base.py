@@ -2,7 +2,6 @@
 from typing import Optional
 
 from sqlmodel import Field
-
 import reflex as rx
 
 
@@ -14,7 +13,6 @@ class Follows(rx.Model, table=True):
 
     followed_username: str = Field(primary_key=True)
     follower_username: str = Field(primary_key=True)
-
 
 class User(rx.Model, table=True):
     """A table of Users."""

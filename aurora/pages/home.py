@@ -53,6 +53,7 @@ def tabs():
                         rx.hstack(
                             rx.avatar(name=follow.follower_username, size="sm"),  # 팔로워의 아바타 이미지
                             rx.text(follow.follower_username),  # 팔로워의 사용자 이름
+                        width="100%",
                         ),
                         padding="1em",
                     ),
@@ -102,6 +103,11 @@ def sidebar(HomeState):
                     rx.hstack(
                         rx.avatar(name=follow.followed_username, size="sm"),  # 팔로잉 중인 사용자의 아바타 이미지
                         rx.text(follow.followed_username),  # 팔로잉 중인 사용자의 사용자 이름
+                        rx.spacer(),
+                        rx.button(
+                            rx.icon(tag="minus"),
+                            on_click=lambda: HomeState.unfollow_user(follow.followed_username),
+                        ),
                     ),
                     padding="1em",
                 ),
