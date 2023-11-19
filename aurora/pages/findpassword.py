@@ -9,6 +9,7 @@ def findpassword():
         rx.container(height='150px'),
         rx.vstack(
              rx.heading(
+                rx.container(height='30px'),
                 rx.text(
                     "Aurora",
                     style={
@@ -29,6 +30,15 @@ def findpassword():
                 font_weight="medium",
             ),
             rx.container(
+                rx.image(
+                    src = "/Mosaic.ico",
+                    width="100px",
+                    height="100px",
+                ),
+                center_content=True,
+            ),
+            rx.container(height='10px'),
+            rx.container(
                 rx.input(placeholder="Username", on_blur=AuthState.set_username, mb=4),
                 rx.button(
                     "Find Password",
@@ -44,17 +54,19 @@ def findpassword():
                 max_width="400px",
                 border_radius="lg",
             ),
+            rx.container(height='10px'),
             rx.text(
                 "Already have an account? ",
                 rx.link("Sign in here.", href="/", color="blue.500"),
                 color="gray.600",
             ),
+            rx.container(height='20px'),
             width='500px',
             height='auto',
             center_content=True,
             borderRadius='20px',
             boxShadow='9px 9px 100px #79d0ed',
-            bg = "rgb(255 255 255)"
+            background="linear-gradient(to bottom, #d7eefc, #ffffff)"
         ),
         center_content=True,
         # justifyContent='center',
@@ -62,6 +74,7 @@ def findpassword():
         maxHeight='auto',
         height='100vh',
         style={
-            'background': 'linear-gradient(to bottom, #f57145, #bded9a)',
+            'background-image':"url('/aurora.jpg')",
+            'background-size':'cover',
         }
     )

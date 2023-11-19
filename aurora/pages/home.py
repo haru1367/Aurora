@@ -62,6 +62,11 @@ def tabs():
                 border="1px solid #eaeaea",
             ),
             rx.button("Sign out", on_click=State.logout),  # 로그아웃 버튼
+            rx.button(
+                rx.icon(tag="moon"),
+                rx.text('Dark mode'),
+                on_click=rx.toggle_color_mode,
+            ),
             align_items="left",
             gap=4,
         ),
