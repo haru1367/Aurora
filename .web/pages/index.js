@@ -5,8 +5,8 @@ import { ColorModeContext, EventLoopContext, initialEvents, StateContext } from 
 import "focus-visible/dist/focus-visible"
 import { Avatar, Box, Button, Container, Grid, Heading, HStack, Input, Link, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Spacer, Text, Textarea, VStack } from "@chakra-ui/react"
 import { getEventURL } from "/utils/state.js"
+import { AddIcon, MoonIcon, RepeatIcon, StarIcon } from "@chakra-ui/icons"
 import NextLink from "next/link"
-import { AddIcon, RepeatIcon, StarIcon } from "@chakra-ui/icons"
 import NextHead from "next/head"
 
 
@@ -68,9 +68,14 @@ export default function Component() {
   <Grid sx={{"gridTemplateColumns": "1fr 2fr 1fr", "h": "100vh", "gap": 4}}>
   <Box sx={{"py": 4}}>
   <VStack alignItems={`left`} sx={{"gap": 4}}>
-  <Heading size={`md`}>
-  {`PySocial`}
-</Heading>
+  <Container>
+  <HStack>
+  <MoonIcon sx={{"mr": 2, "color": "yellow"}}/>
+  <Text sx={{"fontSize": "25px", "fontWeight": "bolder", "fontFamily": "Open Sans,Sans-serif", "background": "-webkit-linear-gradient(-45deg, #e04a3f, #4e8be6)", "-webkit-background-clip": "text", "color": "transparent", "centerContent": true}}>
+  {`Aurora`}
+</Text>
+</HStack>
+</Container>
   <Link as={NextLink} href={`/`} sx={{"display": "inline-flex", "alignItems": "center", "py": 3, "px": 6, "border": "1px solid #eaeaea", "fontWeight": "semibold", "borderRadius": "full"}}>
   <StarIcon sx={{"mr": 2}}/>
   {`Home`}
@@ -79,12 +84,12 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Followers`}
 </Heading>
-  {state.home_state.followers.map((liwdotct, euadymsn) => (
-  <VStack key={euadymsn} sx={{"padding": "1em"}}>
+  {state.home_state.followers.map((nmfduaxk, cxugqisc) => (
+  <VStack key={cxugqisc} sx={{"padding": "1em"}}>
   <HStack>
-  <Avatar name={liwdotct.follower_username} size={`sm`}/>
+  <Avatar name={nmfduaxk.follower_username} size={`sm`}/>
   <Text>
-  {liwdotct.follower_username}
+  {nmfduaxk.follower_username}
 </Text>
 </HStack>
 </VStack>
@@ -118,17 +123,17 @@ export default function Component() {
   <Fragment>
   {isTrue(state.home_state.tweets) ? (
   <Fragment>
-  {state.home_state.tweets.map((tzyjcxmb, vhpqnflh) => (
-  <Grid key={vhpqnflh} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
+  {state.home_state.tweets.map((yyslyhso, pogipayk) => (
+  <Grid key={pogipayk} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
   <VStack>
-  <Avatar name={tzyjcxmb.author} size={`sm`}/>
+  <Avatar name={yyslyhso.author} size={`sm`}/>
 </VStack>
   <Box>
   <Text sx={{"fontWeight": "bold"}}>
-  {("@" + tzyjcxmb.author)}
+  {("@" + yyslyhso.author)}
 </Text>
   <Text sx={{"width": "100%"}}>
-  {tzyjcxmb.content}
+  {yyslyhso.content}
 </Text>
 </Box>
 </Grid>
@@ -150,15 +155,15 @@ export default function Component() {
 </Box>
   <VStack alignItems={`start`} sx={{"gap": 4, "h": "100%", "py": 4}}>
   <Input onChange={(_e0) => addEvents([Event("state.home_state.set_friend", {value:_e0.target.value})], (_e0), {})} placeholder={`Search users`} sx={{"width": "100%"}} type={`text`}/>
-  {state.home_state.search_users.map((rxukchxl, dhydzzfv) => (
-  <VStack key={dhydzzfv} sx={{"py": 2, "width": "100%"}}>
+  {state.home_state.search_users.map((xtwpmyxu, hdrovyle) => (
+  <VStack key={hdrovyle} sx={{"py": 2, "width": "100%"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={rxukchxl.username} size={`sm`}/>
+  <Avatar name={xtwpmyxu.username} size={`sm`}/>
   <Text>
-  {rxukchxl.username}
+  {xtwpmyxu.username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:rxukchxl.username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:xtwpmyxu.username})], (_e), {})}>
   <AddIcon/>
 </Button>
 </HStack>
@@ -168,12 +173,12 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Following`}
 </Heading>
-  {state.home_state.following.map((xnsspqmc, osbeoalh) => (
-  <VStack key={osbeoalh} sx={{"padding": "1em"}}>
+  {state.home_state.following.map((rtajfdaj, ufprhlob) => (
+  <VStack key={ufprhlob} sx={{"padding": "1em"}}>
   <HStack>
-  <Avatar name={xnsspqmc.followed_username} size={`sm`}/>
+  <Avatar name={rtajfdaj.followed_username} size={`sm`}/>
   <Text>
-  {xnsspqmc.followed_username}
+  {rtajfdaj.followed_username}
 </Text>
 </HStack>
 </VStack>
