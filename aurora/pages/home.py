@@ -2,9 +2,9 @@
 import reflex as rx
 from aurora.state.base import State
 from aurora.state.home import HomeState
-
 # 컴포넌트를 가져옵니다.
 from ..components import container
+
 
 # 탭 버튼을 생성하는 함수
 def tab_button(name, href):
@@ -42,7 +42,7 @@ def tabs():
                         },
                         center_content=True,
                     ),  # 앱 이름
-                )
+                ),
             ),
             tab_button("Home", "/"),  # Home 탭 버튼
             rx.box(
@@ -63,6 +63,7 @@ def tabs():
                 border="1px solid #eaeaea",
             ),
             rx.button("Sign out", on_click=State.logout),  # 로그아웃 버튼
+            rx.container(height='200px'),
             align_items="left",
             gap=4,
         ),
