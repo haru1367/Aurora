@@ -2,6 +2,7 @@
 import reflex as rx
 from aurora.state.base import State
 from aurora.state.home import HomeState
+
 # 컴포넌트를 가져옵니다.
 from ..components import container
 
@@ -45,6 +46,7 @@ def tabs():
                 ),
             ),
             tab_button("Home", "/"),  # Home 탭 버튼
+            tab_button("My Profile","/myprofile"),
             rx.box(
                 rx.heading("Followers", size="sm"),
                 rx.foreach(

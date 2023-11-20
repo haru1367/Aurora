@@ -5,8 +5,6 @@ import { ColorModeContext, EventLoopContext, initialEvents, StateContext } from 
 import "focus-visible/dist/focus-visible"
 import { Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react"
 import { getEventURL } from "/utils/state.js"
-import Error from "next/error"
-import { useClientSideRouting } from "/utils/client_side_routing"
 import NextHead from "next/head"
 
 
@@ -36,7 +34,6 @@ export default function Component() {
     }
   }, [router])
 
-  const routeNotFound = useClientSideRouting()
 
   return (
     <Fragment>
@@ -65,22 +62,14 @@ export default function Component() {
   <Fragment/>
 )}
 </Fragment>
-  <Fragment>
-  {isTrue(routeNotFound) ? (
-  <Fragment>
-  <Error statusCode={404}/>
-</Fragment>
-) : (
-  <Fragment>
-  
-</Fragment>
-)}
-</Fragment>
+  <Text>
+  {`Welcome to MyProfile!`}
+</Text>
   <NextHead>
   <title>
-  {`404 - Not Found`}
+  {`Reflex App`}
 </title>
-  <meta content={`The page was not found`} name={`description`}/>
+  <meta content={`A Reflex app.`} name={`description`}/>
   <meta content={`favicon.ico`} property={`og:image`}/>
 </NextHead>
 </Fragment>

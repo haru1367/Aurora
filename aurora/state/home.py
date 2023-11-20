@@ -17,6 +17,7 @@ class HomeState(State):
 
     friend: str
     search: str
+    
     def post_tweet(self):
         """Post a tweet."""
         if not self.logged_in:
