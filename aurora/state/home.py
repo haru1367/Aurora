@@ -27,6 +27,7 @@ class HomeState(State):
             )
             session.add(tweet)
             session.commit()
+            self.tweet = ""
         return self.get_tweets()
 
     def get_tweets(self):

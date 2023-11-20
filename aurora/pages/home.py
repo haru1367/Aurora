@@ -145,6 +145,7 @@ def composer(HomeState):
         ),
         rx.box(
             rx.text_area(
+                value = HomeState.tweet,
                 w="100%",
                 border=0,
                 placeholder="What's happening?",  # 트윗을 작성하는 입력 상자
@@ -152,15 +153,21 @@ def composer(HomeState):
                 py=4,
                 px=0,
                 _focus={"border": 0, "outline": 0, "boxShadow": "none"},
-                on_blur=HomeState.set_tweet,
+                on_change =HomeState.set_tweet,
             ),
             rx.hstack(
                 rx.button(
                     "Tweet",
                     on_click=HomeState.post_tweet,
-                    bg="rgb(29 161 242)",
+                    border_radius="1em",
+                    box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                    background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                    box_sizing="border-box",
                     color="white",
-                    border_radius="full",
+                    opacity="0.6",
+                    _hover={
+                        "opacity": 1,
+                    },
                 ),  # 트윗을 게시하는 버튼
                 justify_content="flex-end",
                 border_top="1px solid #ededed",
