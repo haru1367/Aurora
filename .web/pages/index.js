@@ -8,6 +8,7 @@ import { getEventURL } from "/utils/state.js"
 import { AddIcon, MinusIcon, MoonIcon, RepeatIcon, StarIcon } from "@chakra-ui/icons"
 import NextLink from "next/link"
 import { DebounceInput } from "react-debounce-input"
+import ReactDropzone from "react-dropzone"
 import NextHead from "next/head"
 
 
@@ -37,6 +38,7 @@ export default function Component() {
     }
   }, [router])
 
+  const [files, setFiles] = useState([]);
 
   return (
     <Fragment>
@@ -89,12 +91,12 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Followers`}
 </Heading>
-  {state.home_state.followers.map((swhnnswy, qayfratc) => (
-  <VStack key={qayfratc} sx={{"padding": "1em"}}>
+  {state.home_state.followers.map((bipaxcoh, swkphwok) => (
+  <VStack key={swkphwok} sx={{"padding": "1em"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={swhnnswy.follower_username} size={`sm`}/>
+  <Avatar name={bipaxcoh.follower_username} size={`sm`}/>
   <Text>
-  {swhnnswy.follower_username}
+  {bipaxcoh.follower_username}
 </Text>
 </HStack>
 </VStack>
@@ -116,36 +118,46 @@ export default function Component() {
 </Heading>
   <Input onChange={(_e0) => addEvents([Event("state.home_state.set_search", {search:_e0.target.value})], (_e0), {})} placeholder={`Search tweets`} type={`text`}/>
 </HStack>
-  <Grid sx={{"gridTemplateColumns": "1fr 5fr", "borderBottom": "1px solid #ededed"}}>
-  <VStack sx={{"p": 4}}>
+  <Grid sx={{"gridTemplateRows": "0.5fr 0.3fr", "borderBottom": "1px solid #ededed"}}>
+  <HStack>
   <Avatar size={`md`}/>
-</VStack>
-  <Box>
-  <DebounceInput debounceTimeout={50} element={Textarea} onChange={(_e0) => addEvents([Event("state.home_state.set_tweet", {value:_e0.target.value})], (_e0), {})} placeholder={`What's happening?`} sx={{"w": "100%", "border": 0, "resize": "none", "py": 4, "px": 0, "_focus": {"border": 0, "outline": 0, "boxShadow": "none"}}} value={state.home_state.tweet}/>
+  <DebounceInput debounceTimeout={50} element={Textarea} onChange={(_e0) => addEvents([Event("state.home_state.set_tweet", {value:_e0.target.value})], (_e0), {})} placeholder={`What's happening?`} sx={{"w": "600px", "border": 2, "resize": "none", "py": 4, "px": 0, "_focus": {"border": 0, "outline": 0, "boxShadow": "none"}}} value={state.home_state.tweet}/>
+</HStack>
   <HStack justifyContent={`flex-end`} sx={{"borderTop": "1px solid #ededed", "px": 4, "py": 2}}>
-  <Button sx={{"borderRadius": "1em", "boxShadow": "rgba(151, 65, 252, 0.8) 0 15px 30px -10px", "backgroundImage": "linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)", "boxSizing": "border-box", "color": "white", "opacity": "0.6", "_hover": {"opacity": 1}}}>
-  {`File Select`}
+  <ReactDropzone accept={{"application/pdf": [".pdf"], "image/png": [".png"], "image/jpeg": [".jpg", ".jpeg"], "image/gif": [".gif"], "image/webp": [".webp"], "text/html": [".html", ".htm"]}} disabled={false} maxFiles={5} multiple={true} onDrop={e => setFiles((files) => e)}>
+  {({ getRootProps, getInputProps }) => (
+    <Box sx={{"height": "10px", "width": "10px", "align-items": "center", "onKeyboard": true, "border": "1px dotted rgb(107,99,246)", "padding": "5em"}} {...getRootProps()}>
+    <Input type={`file`} {...getInputProps()}/>
+    <Box sx={{"display": "flex", "justifyContent": "center", "alignItems": "center", "height": "100%"}}>
+    <Button onClick={(_e) => addEvents([Event("state.home_state.handle_upload", {files:files}, "uploadFiles")], (_e), {})} sx={{"margin": "0", "padding": "10px", "color": "rgb(107,99,246)", "bg": "white", "border": "1px solid rgb(107,99,246)"}}>
+    {`Select File`}
+  </Button>
+  </Box>
+  </Box>
+  )}
+</ReactDropzone>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.handle_upload", {files:files}, "uploadFiles")], (_e), {})}>
+  {`Upload`}
 </Button>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.post_tweet", {})], (_e), {})} sx={{"borderRadius": "1em", "boxShadow": "rgba(151, 65, 252, 0.8) 0 15px 30px -10px", "backgroundImage": "linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)", "boxSizing": "border-box", "color": "white", "opacity": "0.6", "_hover": {"opacity": 1}}}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.post_tweet", {})], (_e), {})} sx={{"margin-left": "auto", "borderRadius": "1em", "boxShadow": "rgba(151, 65, 252, 0.8) 0 15px 30px -10px", "backgroundImage": "linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)", "boxSizing": "border-box", "color": "white", "opacity": "0.6", "_hover": {"opacity": 1}}}>
   {`Tweet`}
 </Button>
 </HStack>
-</Box>
 </Grid>
   <Fragment>
   {isTrue(state.home_state.tweets) ? (
   <Fragment>
-  {state.home_state.tweets.map((bvhrjqwx, unwytejt) => (
-  <Grid key={unwytejt} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
+  {state.home_state.tweets.map((erugulnh, afldqvee) => (
+  <Grid key={afldqvee} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
   <VStack>
-  <Avatar name={bvhrjqwx.author} size={`sm`}/>
+  <Avatar name={erugulnh.author} size={`sm`}/>
 </VStack>
   <Box>
   <Text sx={{"fontWeight": "bold"}}>
-  {("@" + bvhrjqwx.author)}
+  {("@" + erugulnh.author)}
 </Text>
   <Text sx={{"width": "100%"}}>
-  {bvhrjqwx.content}
+  {erugulnh.content}
 </Text>
 </Box>
 </Grid>
@@ -167,15 +179,15 @@ export default function Component() {
 </Box>
   <VStack alignItems={`start`} sx={{"gap": 4, "h": "100%", "py": 4}}>
   <Input onChange={(_e0) => addEvents([Event("state.home_state.set_friend", {value:_e0.target.value})], (_e0), {})} placeholder={`Search users`} sx={{"width": "100%"}} type={`text`}/>
-  {state.home_state.search_users.map((ywrqbqgh, veljplno) => (
-  <VStack key={veljplno} sx={{"py": 2, "width": "100%"}}>
+  {state.home_state.search_users.map((hrlffoor, axslzafc) => (
+  <VStack key={axslzafc} sx={{"py": 2, "width": "100%"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={ywrqbqgh.username} size={`sm`}/>
+  <Avatar name={hrlffoor.username} size={`sm`}/>
   <Text>
-  {ywrqbqgh.username}
+  {hrlffoor.username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:ywrqbqgh.username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:hrlffoor.username})], (_e), {})}>
   <AddIcon/>
 </Button>
 </HStack>
@@ -185,15 +197,15 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Following`}
 </Heading>
-  {state.home_state.following.map((ykdrcatn, ergjiqji) => (
-  <VStack key={ergjiqji} sx={{"padding": "1em"}}>
+  {state.home_state.following.map((fnwvazpc, lvyubqwq) => (
+  <VStack key={lvyubqwq} sx={{"padding": "1em"}}>
   <HStack>
-  <Avatar name={ykdrcatn.followed_username} size={`sm`}/>
+  <Avatar name={fnwvazpc.followed_username} size={`sm`}/>
   <Text>
-  {ykdrcatn.followed_username}
+  {fnwvazpc.followed_username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.unfollow_user", {username:ykdrcatn.followed_username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.unfollow_user", {username:fnwvazpc.followed_username})], (_e), {})}>
   <MinusIcon/>
 </Button>
 </HStack>

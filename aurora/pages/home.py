@@ -6,6 +6,7 @@ from aurora.state.home import HomeState
 # 컴포넌트를 가져옵니다.
 from ..components import container
 
+color = "rgb(107,99,246)"
 # 탭 버튼을 생성하는 함수
 def tab_button(name, href):
     """A tab switcher button."""
@@ -144,57 +145,81 @@ def feed_header(HomeState):
 def composer(HomeState):
     """The composer for new tweets."""
     return rx.grid(
-        rx.vstack(
+        rx.hstack(
             rx.avatar(size="md"),  # 사용자의 아바타 이미지
-            p=4,
-        ),
-        rx.box(
             rx.text_area(
-                value = HomeState.tweet,
-                w="100%",
-                border=0,
+                value=HomeState.tweet,
+                w="600px",
+                border=2,
                 placeholder="What's happening?",  # 트윗을 작성하는 입력 상자
                 resize="none",
                 py=4,
                 px=0,
                 _focus={"border": 0, "outline": 0, "boxShadow": "none"},
-                on_change =HomeState.set_tweet,
-            ),
-            rx.hstack(
-                rx.button(
-                    "File Select",
-                    border_radius="1em",
-                    box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
-                    background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
-                    box_sizing="border-box",
-                    color="white",
-                    opacity="0.6",
-                    _hover={
-                        "opacity": 1,
-                    },
-                ),
-                rx.button(
-                    "Tweet",
-                    on_click=HomeState.post_tweet,
-                    border_radius="1em",
-                    box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
-                    background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
-                    box_sizing="border-box",
-                    color="white",
-                    opacity="0.6",
-                    _hover={
-                        "opacity": 1,
-                    },
-                ),  # 트윗을 게시하는 버튼
-                justify_content="flex-end",
-                border_top="1px solid #ededed",
-                px=4,
-                py=2,
+                on_change=HomeState.set_tweet,
             ),
         ),
-        grid_template_columns="1fr 5fr",
+        rx.hstack(
+            rx.upload(
+                rx.box(
+                    rx.button(
+                        "Select File",
+                        color=color,
+                        bg="white",
+                        border=f"1px solid {color}",
+                        on_click=lambda: HomeState.handle_upload(
+                            rx.upload_files()
+                        ),
+                        style={"margin": "0", "padding": "10px"},
+                    ),
+                    style={
+                        "display": "flex",
+                        "justifyContent": "center",
+                        "alignItems": "center",
+                        "height": "100%",
+                    },  # 중앙 정렬 스타일
+                ),
+                multiple=True,
+                accept={
+                    "application/pdf": [".pdf"],
+                    "image/png": [".png"],
+                    "image/jpeg": [".jpg", ".jpeg"],
+                    "image/gif": [".gif"],
+                    "image/webp": [".webp"],
+                    "text/html": [".html", ".htm"],
+                },
+                max_files=5,
+                disabled=False,
+                on_keyboard=True,
+                border=f"1px dotted {color}",
+                padding="5em",
+                style={"height": "10px", "width": "10px", "align-items": "center"},
+            ),
+            rx.button(
+                "Upload",
+                on_click=lambda: HomeState.handle_upload(rx.upload_files()),
+            ),
+            rx.button(
+                "Tweet",
+                on_click=HomeState.post_tweet,
+                border_radius="1em",
+                box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                box_sizing="border-box",
+                color="white",
+                opacity="0.6",
+                _hover={"opacity": 1},
+                style={"margin-left": "auto"},  # Align to the right
+            ),  # 트윗을 게시하는 버튼
+            justify_content="flex-end",
+            border_top="1px solid #ededed",
+            px=4,
+            py=2,
+        ),
+        grid_template_rows="0.5fr 0.3fr",
         border_bottom="1px solid #ededed",
     )
+
 
 # 개별 트윗을 표시하는 함수
 def tweet(tweet):
