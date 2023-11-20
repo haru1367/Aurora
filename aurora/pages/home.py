@@ -160,40 +160,13 @@ def composer(HomeState):
             ),
         ),
         rx.hstack(
-            rx.upload(
-                rx.box(
-                    rx.button(
-                        "Select File",
-                        color=color,
-                        bg="white",
-                        border=f"1px solid {color}",
-                        on_click=lambda: HomeState.handle_upload(
-                            rx.upload_files()
-                        ),
-                        style={"margin": "0", "padding": "10px"},
-                    ),
-                    style={
-                        "display": "flex",
-                        "justifyContent": "center",
-                        "alignItems": "center",
-                        "height": "100%",
-                    },  # 중앙 정렬 스타일
-                ),
-                multiple=True,
-                accept={
-                    "application/pdf": [".pdf"],
-                    "image/png": [".png"],
-                    "image/jpeg": [".jpg", ".jpeg"],
-                    "image/gif": [".gif"],
-                    "image/webp": [".webp"],
-                    "text/html": [".html", ".htm"],
-                },
-                max_files=5,
-                disabled=False,
-                on_keyboard=True,
-                border=f"1px dotted {color}",
-                padding="5em",
-                style={"height": "10px", "width": "10px", "align-items": "center"},
+            rx.button(
+                "Select File",
+                color=color,
+                bg="white",
+                border=f"1px solid {color}",
+                on_click=HomeState.handle_file_selection,
+                style={"margin": "0", "padding": "10px"}
             ),
             rx.button(
                 "Upload",

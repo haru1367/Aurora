@@ -8,7 +8,6 @@ import { getEventURL } from "/utils/state.js"
 import { AddIcon, MinusIcon, MoonIcon, RepeatIcon, StarIcon } from "@chakra-ui/icons"
 import NextLink from "next/link"
 import { DebounceInput } from "react-debounce-input"
-import ReactDropzone from "react-dropzone"
 import NextHead from "next/head"
 
 
@@ -38,7 +37,6 @@ export default function Component() {
     }
   }, [router])
 
-  const [files, setFiles] = useState([]);
 
   return (
     <Fragment>
@@ -91,12 +89,12 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Followers`}
 </Heading>
-  {state.home_state.followers.map((bipaxcoh, swkphwok) => (
-  <VStack key={swkphwok} sx={{"padding": "1em"}}>
+  {state.home_state.followers.map((yansmhih, ietbzllh) => (
+  <VStack key={ietbzllh} sx={{"padding": "1em"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={bipaxcoh.follower_username} size={`sm`}/>
+  <Avatar name={yansmhih.follower_username} size={`sm`}/>
   <Text>
-  {bipaxcoh.follower_username}
+  {yansmhih.follower_username}
 </Text>
 </HStack>
 </VStack>
@@ -124,18 +122,9 @@ export default function Component() {
   <DebounceInput debounceTimeout={50} element={Textarea} onChange={(_e0) => addEvents([Event("state.home_state.set_tweet", {value:_e0.target.value})], (_e0), {})} placeholder={`What's happening?`} sx={{"w": "600px", "border": 2, "resize": "none", "py": 4, "px": 0, "_focus": {"border": 0, "outline": 0, "boxShadow": "none"}}} value={state.home_state.tweet}/>
 </HStack>
   <HStack justifyContent={`flex-end`} sx={{"borderTop": "1px solid #ededed", "px": 4, "py": 2}}>
-  <ReactDropzone accept={{"application/pdf": [".pdf"], "image/png": [".png"], "image/jpeg": [".jpg", ".jpeg"], "image/gif": [".gif"], "image/webp": [".webp"], "text/html": [".html", ".htm"]}} disabled={false} maxFiles={5} multiple={true} onDrop={e => setFiles((files) => e)}>
-  {({ getRootProps, getInputProps }) => (
-    <Box sx={{"height": "10px", "width": "10px", "align-items": "center", "onKeyboard": true, "border": "1px dotted rgb(107,99,246)", "padding": "5em"}} {...getRootProps()}>
-    <Input type={`file`} {...getInputProps()}/>
-    <Box sx={{"display": "flex", "justifyContent": "center", "alignItems": "center", "height": "100%"}}>
-    <Button onClick={(_e) => addEvents([Event("state.home_state.handle_upload", {files:files}, "uploadFiles")], (_e), {})} sx={{"margin": "0", "padding": "10px", "color": "rgb(107,99,246)", "bg": "white", "border": "1px solid rgb(107,99,246)"}}>
-    {`Select File`}
-  </Button>
-  </Box>
-  </Box>
-  )}
-</ReactDropzone>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.handle_file_selection", {})], (_e), {})} sx={{"margin": "0", "padding": "10px", "color": "rgb(107,99,246)", "bg": "white", "border": "1px solid rgb(107,99,246)"}}>
+  {`Select File`}
+</Button>
   <Button onClick={(_e) => addEvents([Event("state.home_state.handle_upload", {files:files}, "uploadFiles")], (_e), {})}>
   {`Upload`}
 </Button>
@@ -147,17 +136,17 @@ export default function Component() {
   <Fragment>
   {isTrue(state.home_state.tweets) ? (
   <Fragment>
-  {state.home_state.tweets.map((erugulnh, afldqvee) => (
-  <Grid key={afldqvee} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
+  {state.home_state.tweets.map((szavpaol, avdvkuug) => (
+  <Grid key={avdvkuug} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
   <VStack>
-  <Avatar name={erugulnh.author} size={`sm`}/>
+  <Avatar name={szavpaol.author} size={`sm`}/>
 </VStack>
   <Box>
   <Text sx={{"fontWeight": "bold"}}>
-  {("@" + erugulnh.author)}
+  {("@" + szavpaol.author)}
 </Text>
   <Text sx={{"width": "100%"}}>
-  {erugulnh.content}
+  {szavpaol.content}
 </Text>
 </Box>
 </Grid>
@@ -179,15 +168,15 @@ export default function Component() {
 </Box>
   <VStack alignItems={`start`} sx={{"gap": 4, "h": "100%", "py": 4}}>
   <Input onChange={(_e0) => addEvents([Event("state.home_state.set_friend", {value:_e0.target.value})], (_e0), {})} placeholder={`Search users`} sx={{"width": "100%"}} type={`text`}/>
-  {state.home_state.search_users.map((hrlffoor, axslzafc) => (
-  <VStack key={axslzafc} sx={{"py": 2, "width": "100%"}}>
+  {state.home_state.search_users.map((rbtwnqwx, bhigullx) => (
+  <VStack key={bhigullx} sx={{"py": 2, "width": "100%"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={hrlffoor.username} size={`sm`}/>
+  <Avatar name={rbtwnqwx.username} size={`sm`}/>
   <Text>
-  {hrlffoor.username}
+  {rbtwnqwx.username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:hrlffoor.username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:rbtwnqwx.username})], (_e), {})}>
   <AddIcon/>
 </Button>
 </HStack>
@@ -197,15 +186,15 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Following`}
 </Heading>
-  {state.home_state.following.map((fnwvazpc, lvyubqwq) => (
-  <VStack key={lvyubqwq} sx={{"padding": "1em"}}>
+  {state.home_state.following.map((ajgtlpju, yewbnydx) => (
+  <VStack key={yewbnydx} sx={{"padding": "1em"}}>
   <HStack>
-  <Avatar name={fnwvazpc.followed_username} size={`sm`}/>
+  <Avatar name={ajgtlpju.followed_username} size={`sm`}/>
   <Text>
-  {fnwvazpc.followed_username}
+  {ajgtlpju.followed_username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.unfollow_user", {username:fnwvazpc.followed_username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.unfollow_user", {username:ajgtlpju.followed_username})], (_e), {})}>
   <MinusIcon/>
 </Button>
 </HStack>

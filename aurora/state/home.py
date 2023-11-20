@@ -4,9 +4,10 @@ from datetime import datetime
 import reflex as rx
 
 from .base import Follows, State, Tweet, User
-from base64 import b64encode
-
 import os
+import tkinter as tk
+from tkinter import filedialog
+
 
 
 class HomeState(State):
@@ -18,6 +19,19 @@ class HomeState(State):
     friend: str
     search: str
     img: list[str]
+    
+    def handle_file_selection(self):
+        # 파일 선택 대화상자 열기
+        root = tk.Tk()
+        root.withdraw()  # 화면에 창을 보이지 않도록 함
+        file_paths = filedialog.askopenfilenames()
+
+        # 선택된 파일 경로에 대한 처리
+        for file_path in file_paths:
+            # 파일 이름과 확장자를 추출
+            file_name = os.path.basename(file_path)
+            file_extension = os.path.splitext(file_name)[1]
+
 
     async def handle_upload(
         self, files: list[rx.UploadFile]
