@@ -63,6 +63,10 @@ def tabs():
                 border="1px solid #eaeaea",
             ),
             rx.button("Sign out", on_click=State.logout),  # 로그아웃 버튼
+            rx.button(
+                rx.icon(tag="moon"),
+                on_click=rx.toggle_color_mode,
+            ),
             rx.container(height='200px'),
             align_items="left",
             gap=4,
@@ -156,6 +160,18 @@ def composer(HomeState):
                 on_change =HomeState.set_tweet,
             ),
             rx.hstack(
+                rx.button(
+                    "File Select",
+                    border_radius="1em",
+                    box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                    background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                    box_sizing="border-box",
+                    color="white",
+                    opacity="0.6",
+                    _hover={
+                        "opacity": 1,
+                    },
+                ),
                 rx.button(
                     "Tweet",
                     on_click=HomeState.post_tweet,

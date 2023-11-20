@@ -4,6 +4,9 @@ from datetime import datetime
 import reflex as rx
 
 from .base import Follows, State, Tweet, User
+from base64 import b64encode
+
+import os
 
 
 class HomeState(State):
@@ -14,7 +17,6 @@ class HomeState(State):
 
     friend: str
     search: str
-
     def post_tweet(self):
         """Post a tweet."""
         if not self.logged_in:
@@ -25,9 +27,12 @@ class HomeState(State):
                 content=self.tweet,
                 created_at=datetime.now().strftime("%m/%d %H"),
             )
+            if len(self.tweet)==0:
+                return rx.window_alert('Please write at least one character!')
             session.add(tweet)
             session.commit()
             self.tweet = ""
+            
         return self.get_tweets()
 
     def get_tweets(self):
