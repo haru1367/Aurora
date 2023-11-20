@@ -6,7 +6,6 @@ from aurora.state.home import HomeState
 # 컴포넌트를 가져옵니다.
 from ..components import container
 
-
 # 탭 버튼을 생성하는 함수
 def tab_button(name, href):
     """A tab switcher button."""
