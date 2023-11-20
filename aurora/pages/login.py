@@ -3,44 +3,47 @@ import reflex as rx
 
 from aurora.state.auth import AuthState
 
-
-
 def login():
     return rx.container(
-        rx.container(height='150px'), 
-        rx.vstack(           
-            rx.heading(
-                rx.container(height='30px'),
-                rx.text(
-                    "Aurora",
-                    style={
-                        "fontSize": "40px",
-                        "fontWeight": "bolder",
-                        "letterSpacing": "5px",
-                        "fontFamily": "Open Sans,Sans-serif",
-                        "background": "-webkit-linear-gradient(-45deg, #e04a3f, #4e8be6)",
-                        "-webkit-background-clip": "text",
-                        "color": "transparent",
-                    },
-                    center_content=True,
+        rx.container(height='120px'), 
+        rx.vstack(
+            rx.hstack(
+                rx.vstack(
+                    rx.container(height='20px'),
+                    rx.image(
+                        src = "/aurora.ico",
+                        width="70px",
+                        height="70px",
+                    ),
+                ),              
+                rx.vstack(           
+                    rx.container(height='8px'),
+                    rx.container(
+                        rx.text(
+                            "AURORA",
+                            style={
+                                "fontSize": "40px",
+                                "fontWeight": "bolder",
+                                "letterSpacing": "3px",
+                                "fontFamily": "Open Sans, Sans-serif",
+                                "background": "-webkit-linear-gradient(-45deg, #e04a3f, #4e8be6)",
+                                "-webkit-background-clip": "text",
+                                "color": "black",
+                            },
+                            mb=-3,
+                        ),
+                        rx.text(
+                            "Record your shining moments!",
+                            style={
+                                'background': "-webkit-linear-gradient(-45deg, #e04a3f, #4e8be6)",
+                                'background_clip': "text",  # 텍스트에만 그라데이션 적용
+                                'color': "transparent",  # 텍스트 색상을 투명으로 설정
+                                'font_weight': "medium",
+                            },
+                        ),
+                    ),
+
                 ),
-                display="flex",
-                flex_direction="column",
-                align_items="center",
-                text_align="center",
-            ),
-            rx.text(
-                "Create a picture with your story!",
-                color="gray.500",
-                font_weight="medium",
-            ),
-            rx.container(
-                rx.image(
-                    src = "/Mosaic.ico",
-                    width="100px",
-                    height="100px",
-                ),
-                center_content=True,
             ),
             rx.container(
                 rx.vstack(
@@ -55,7 +58,7 @@ def login():
                         rx.button(
                             "Log in",
                             on_click=AuthState.login,
-                            bg="blue.500",
+                            bg="#212963",
                             color="white",
                             _hover={"bg": "blue.600"},
                         ),
@@ -81,11 +84,11 @@ def login():
                     rx.container(height='30px') ,  
                 ),
             ),
-            width='500px',
+            width='400px',
             height='auto',
             center_content=True,
             borderRadius='20px',
-            boxShadow='9px 9px 100px #79d0ed',
+            boxShadow='10px 10px 100px #79d0ed',
             background="linear-gradient(to bottom, #d7eefc, #ffffff)"
         ),
         center_content=True,
@@ -98,4 +101,3 @@ def login():
             'background-size':'cover',
         }
     )
-

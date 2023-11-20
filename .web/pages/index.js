@@ -85,12 +85,12 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Followers`}
 </Heading>
-  {state.home_state.followers.map((ipnjiaty, hkneawqt) => (
-  <VStack key={hkneawqt} sx={{"padding": "1em"}}>
+  {state.home_state.followers.map((zdzcglgp, rlqgigtg) => (
+  <VStack key={rlqgigtg} sx={{"padding": "1em"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={ipnjiaty.follower_username} size={`sm`}/>
+  <Avatar name={zdzcglgp.follower_username} size={`sm`}/>
   <Text>
-  {ipnjiaty.follower_username}
+  {zdzcglgp.follower_username}
 </Text>
 </HStack>
 </VStack>
@@ -131,17 +131,17 @@ export default function Component() {
   <Fragment>
   {isTrue(state.home_state.tweets) ? (
   <Fragment>
-  {state.home_state.tweets.map((pfqotdqj, eepqxhjd) => (
-  <Grid key={eepqxhjd} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
+  {state.home_state.tweets.map((msxxjgth, vphwyqft) => (
+  <Grid key={vphwyqft} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
   <VStack>
-  <Avatar name={pfqotdqj.author} size={`sm`}/>
+  <Avatar name={msxxjgth.author} size={`sm`}/>
 </VStack>
   <Box>
   <Text sx={{"fontWeight": "bold"}}>
-  {("@" + pfqotdqj.author)}
+  {("@" + msxxjgth.author)}
 </Text>
   <Text sx={{"width": "100%"}}>
-  {pfqotdqj.content}
+  {msxxjgth.content}
 </Text>
 </Box>
 </Grid>
@@ -163,15 +163,15 @@ export default function Component() {
 </Box>
   <VStack alignItems={`start`} sx={{"gap": 4, "h": "100%", "py": 4}}>
   <Input onChange={(_e0) => addEvents([Event("state.home_state.set_friend", {value:_e0.target.value})], (_e0), {})} placeholder={`Search users`} sx={{"width": "100%"}} type={`text`}/>
-  {state.home_state.search_users.map((yuzvpuuu, zwlctjlq) => (
-  <VStack key={zwlctjlq} sx={{"py": 2, "width": "100%"}}>
+  {state.home_state.search_users.map((whfokmhi, mcyqwrvd) => (
+  <VStack key={mcyqwrvd} sx={{"py": 2, "width": "100%"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={yuzvpuuu.username} size={`sm`}/>
+  <Avatar name={whfokmhi.username} size={`sm`}/>
   <Text>
-  {yuzvpuuu.username}
+  {whfokmhi.username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:yuzvpuuu.username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:whfokmhi.username})], (_e), {})}>
   <AddIcon/>
 </Button>
 </HStack>
@@ -181,15 +181,15 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Following`}
 </Heading>
-  {state.home_state.following.map((ifmuqltd, pyieadus) => (
-  <VStack key={pyieadus} sx={{"padding": "1em"}}>
+  {state.home_state.following.map((pumqmvom, tlccuqlh) => (
+  <VStack key={tlccuqlh} sx={{"padding": "1em"}}>
   <HStack>
-  <Avatar name={ifmuqltd.followed_username} size={`sm`}/>
+  <Avatar name={pumqmvom.followed_username} size={`sm`}/>
   <Text>
-  {ifmuqltd.followed_username}
+  {pumqmvom.followed_username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.unfollow_user", {username:ifmuqltd.followed_username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.unfollow_user", {username:pumqmvom.followed_username})], (_e), {})}>
   <MinusIcon/>
 </Button>
 </HStack>
