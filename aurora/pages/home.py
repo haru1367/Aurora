@@ -146,6 +146,7 @@ def composer(HomeState):
     """The composer for new tweets."""
     return rx.grid(
         rx.hstack(
+            rx.container(width='10px'),
             rx.avatar(size="md"),  # 사용자의 아바타 이미지
             rx.text_area(
                 value=HomeState.tweet,
