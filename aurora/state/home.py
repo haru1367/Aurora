@@ -35,7 +35,7 @@ class HomeState(State):
             
             # 선택한 파일을 저장
             upload_data = open(file_path, "rb").read()
-            outfile = f".web/public/{file_name}"
+            outfile = f"C:/Users/a/Desktop/vscodeGithub/Aurora/.web/public/{file_name}"
 
             # Save the file.
             with open(outfile, "wb") as file_object:
@@ -71,15 +71,19 @@ class HomeState(State):
         """Post a tweet."""
         if not self.logged_in:
             return rx.window_alert("Please log in to post a tweet.")
+        if len(self.tweet)==0:
+            return rx.window_alert('Please write at least one character!')
+        
+        await self.handle_upload(rx.upload_files())
+        
         with rx.session() as session:
             tweet = Tweet(
                 author=self.user.username,
                 content=self.tweet,
                 created_at=datetime.now().strftime("%m/%d %H"),
+                image_content=", ".join(self.files),
             )
-            if len(self.tweet)==0:
-                return rx.window_alert('Please write at least one character!')
-            tweet.image_content = await self.handle_upload(rx.upload_files())
+            
             session.add(tweet)
             session.commit()
             self.tweet = ""

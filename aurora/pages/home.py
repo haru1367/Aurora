@@ -171,7 +171,7 @@ def composer(HomeState):
             ),
             rx.button(
                 "Tweet",
-                on_click= HomeState.post_tweet(rx.upload_files()),
+                on_click= HomeState.post_tweet,
                 border_radius="1em",
                 box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
                 background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
@@ -205,12 +205,17 @@ def composer(HomeState):
 # 개별 트윗을 표시하는 함수
 def tweet(tweet):
     """Display for an individual tweet in the feed."""
+    image_tags = rx.foreach(
+        tweet.image_content.split(", "),
+        lambda image: rx.image(src=f"C:/Users/a/Desktop/vscodeGithub/Aurora/.web/public/{tweet.image_content}", alt="tweet image")
+    ),
     return rx.grid(
         rx.vstack(
             rx.avatar(name=tweet.author, size="sm"),  # 트윗 작성자의 아바타 이미지
         ),
         rx.box(
             rx.text("@" + tweet.author, font_weight="bold"),  # 트윗 작성자의 사용자 이름
+            *image_tags,
             rx.text(tweet.content, width="100%"),  # 트윗 내용
         ),
         grid_template_columns="1fr 5fr",

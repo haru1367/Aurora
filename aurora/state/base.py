@@ -26,7 +26,7 @@ class Tweet(rx.Model, table=True):
 
     content: str = Field()
     created_at: str = Field()
-
+    image_content: str = Field()
     author: str = Field()
 
 class State(rx.State):
