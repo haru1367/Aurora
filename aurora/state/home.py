@@ -19,6 +19,7 @@ class HomeState(State):
     friend: str
     search: str
     img: list[str]
+    files: list[str] = []  # Add files attribute
     
     def handle_file_selection(self):
         # 파일 선택 대화상자 열기
@@ -31,6 +32,20 @@ class HomeState(State):
             # 파일 이름과 확장자를 추출
             file_name = os.path.basename(file_path)
             file_extension = os.path.splitext(file_name)[1]
+            
+            # 선택한 파일을 저장
+            upload_data = open(file_path, "rb").read()
+            outfile = f".web/public/{file_name}"
+
+            # Save the file.
+            with open(outfile, "wb") as file_object:
+                file_object.write(upload_data)
+
+            # Update the img var.
+            self.img.append(file_name)
+
+            # Set the files attribute
+            self.files.append(file_name)
 
 
     async def handle_upload(
@@ -52,7 +67,7 @@ class HomeState(State):
             # Update the img var.
             self.img.append(file.filename)
     
-    def post_tweet(self):
+    async def post_tweet(self):
         """Post a tweet."""
         if not self.logged_in:
             return rx.window_alert("Please log in to post a tweet.")
@@ -64,6 +79,7 @@ class HomeState(State):
             )
             if len(self.tweet)==0:
                 return rx.window_alert('Please write at least one character!')
+            tweet.image_content = await self.handle_upload(rx.upload_files())
             session.add(tweet)
             session.commit()
             self.tweet = ""

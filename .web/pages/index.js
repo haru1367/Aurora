@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { Event, getAllLocalStorageItems, getRefValue, getRefValues, isTrue, preventDefault, refs, set_val, spreadArraysOrObjects, uploadFiles, useEventLoop } from "/utils/state"
 import { ColorModeContext, EventLoopContext, initialEvents, StateContext } from "/utils/context.js"
 import "focus-visible/dist/focus-visible"
-import { Avatar, Box, Button, Container, Grid, Heading, HStack, Input, Link, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Spacer, Text, Textarea, VStack } from "@chakra-ui/react"
+import { Avatar, Box, Button, Container, Grid, Heading, HStack, Image, Input, Link, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, SimpleGrid, Spacer, Text, Textarea, VStack } from "@chakra-ui/react"
 import { getEventURL } from "/utils/state.js"
 import { AddIcon, MinusIcon, MoonIcon, RepeatIcon, StarIcon } from "@chakra-ui/icons"
 import NextLink from "next/link"
@@ -89,12 +89,12 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Followers`}
 </Heading>
-  {state.home_state.followers.map((rzudpjll, yzrmgwpb) => (
-  <VStack key={yzrmgwpb} sx={{"padding": "1em"}}>
+  {state.home_state.followers.map((dieffbfb, yhaxmusq) => (
+  <VStack key={yhaxmusq} sx={{"padding": "1em"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={rzudpjll.follower_username} size={`sm`}/>
+  <Avatar name={dieffbfb.follower_username} size={`sm`}/>
   <Text>
-  {rzudpjll.follower_username}
+  {dieffbfb.follower_username}
 </Text>
 </HStack>
 </VStack>
@@ -109,14 +109,14 @@ export default function Component() {
   <Container sx={{"height": "200px"}}/>
 </VStack>
 </Box>
-  <Box sx={{"borderX": "1px solid #ededed", "h": "100%"}}>
-  <HStack justify={`space-between`} sx={{"p": 4, "borderBottom": "1px solid #ededed"}}>
+  <Box sx={{"borderX": "3px solid #ededed", "h": "100%"}}>
+  <HStack justify={`space-between`} sx={{"p": 4, "borderBottom": "3px solid #ededed"}}>
   <Heading size={`md`}>
   {`Story`}
 </Heading>
   <Input onChange={(_e0) => addEvents([Event("state.home_state.set_search", {search:_e0.target.value})], (_e0), {})} placeholder={`Search tweets`} type={`text`}/>
 </HStack>
-  <Grid sx={{"gridTemplateRows": "0.5fr 0.3fr", "borderBottom": "1px solid #ededed"}}>
+  <Grid sx={{"gridTemplateRows": "0.5fr 0.3fr 0.5fr", "borderBottom": "3px solid #ededed"}}>
   <HStack>
   <Container sx={{"width": "10px"}}/>
   <Avatar size={`md`}/>
@@ -126,28 +126,35 @@ export default function Component() {
   <Button onClick={(_e) => addEvents([Event("state.home_state.handle_file_selection", {})], (_e), {})} sx={{"margin": "0", "padding": "10px", "color": "rgb(107,99,246)", "bg": "white", "border": "1px solid rgb(107,99,246)"}}>
   {`Select File`}
 </Button>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.handle_upload", {files:files}, "uploadFiles")], (_e), {})}>
-  {`Upload`}
-</Button>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.post_tweet", {})], (_e), {})} sx={{"margin-left": "auto", "borderRadius": "1em", "boxShadow": "rgba(151, 65, 252, 0.8) 0 15px 30px -10px", "backgroundImage": "linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)", "boxSizing": "border-box", "color": "white", "opacity": "0.6", "_hover": {"opacity": 1}}}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.post_tweet", {}, "uploadFiles")], (_e), {})} sx={{"margin-left": "auto", "borderRadius": "1em", "boxShadow": "rgba(151, 65, 252, 0.8) 0 15px 30px -10px", "backgroundImage": "linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)", "boxSizing": "border-box", "color": "white", "opacity": "0.6", "_hover": {"opacity": 1}}}>
   {`Tweet`}
 </Button>
 </HStack>
+  <SimpleGrid columns={[2]} spacing={`5px`}>
+  {state.home_state.img.map((hgtlxmea, gzqskzpg) => (
+  <VStack key={gzqskzpg}>
+  <Image src={hgtlxmea}/>
+  <Text>
+  {hgtlxmea}
+</Text>
+</VStack>
+))}
+</SimpleGrid>
 </Grid>
   <Fragment>
   {isTrue(state.home_state.tweets) ? (
   <Fragment>
-  {state.home_state.tweets.map((uldslsvw, vdalgvcy) => (
-  <Grid key={vdalgvcy} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
+  {state.home_state.tweets.map((cslhkens, jjatbppp) => (
+  <Grid key={jjatbppp} sx={{"gridTemplateColumns": "1fr 5fr", "py": 4, "gap": 1, "borderBottom": "1px solid #ededed"}}>
   <VStack>
-  <Avatar name={uldslsvw.author} size={`sm`}/>
+  <Avatar name={cslhkens.author} size={`sm`}/>
 </VStack>
   <Box>
   <Text sx={{"fontWeight": "bold"}}>
-  {("@" + uldslsvw.author)}
+  {("@" + cslhkens.author)}
 </Text>
   <Text sx={{"width": "100%"}}>
-  {uldslsvw.content}
+  {cslhkens.content}
 </Text>
 </Box>
 </Grid>
@@ -169,15 +176,15 @@ export default function Component() {
 </Box>
   <VStack alignItems={`start`} sx={{"gap": 4, "h": "100%", "py": 4}}>
   <Input onChange={(_e0) => addEvents([Event("state.home_state.set_friend", {value:_e0.target.value})], (_e0), {})} placeholder={`Search users`} sx={{"width": "100%"}} type={`text`}/>
-  {state.home_state.search_users.map((oxbgsrpp, ngdindwq) => (
-  <VStack key={ngdindwq} sx={{"py": 2, "width": "100%"}}>
+  {state.home_state.search_users.map((byaoxahk, bjxrwawx) => (
+  <VStack key={bjxrwawx} sx={{"py": 2, "width": "100%"}}>
   <HStack sx={{"width": "100%"}}>
-  <Avatar name={oxbgsrpp.username} size={`sm`}/>
+  <Avatar name={byaoxahk.username} size={`sm`}/>
   <Text>
-  {oxbgsrpp.username}
+  {byaoxahk.username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:oxbgsrpp.username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.follow_user", {username:byaoxahk.username})], (_e), {})}>
   <AddIcon/>
 </Button>
 </HStack>
@@ -187,15 +194,15 @@ export default function Component() {
   <Heading size={`sm`}>
   {`Following`}
 </Heading>
-  {state.home_state.following.map((ndcolxfo, vuvthscc) => (
-  <VStack key={vuvthscc} sx={{"padding": "1em"}}>
+  {state.home_state.following.map((iuszphnd, xvhclnvq) => (
+  <VStack key={xvhclnvq} sx={{"padding": "1em"}}>
   <HStack>
-  <Avatar name={ndcolxfo.followed_username} size={`sm`}/>
+  <Avatar name={iuszphnd.followed_username} size={`sm`}/>
   <Text>
-  {ndcolxfo.followed_username}
+  {iuszphnd.followed_username}
 </Text>
   <Spacer/>
-  <Button onClick={(_e) => addEvents([Event("state.home_state.unfollow_user", {username:ndcolxfo.followed_username})], (_e), {})}>
+  <Button onClick={(_e) => addEvents([Event("state.home_state.unfollow_user", {username:iuszphnd.followed_username})], (_e), {})}>
   <MinusIcon/>
 </Button>
 </HStack>

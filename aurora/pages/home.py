@@ -138,7 +138,7 @@ def feed_header(HomeState):
         rx.input(on_change=HomeState.set_search, placeholder="Search tweets"),  # 트윗 검색을 위한 입력 상자
         justify="space-between",
         p=4,
-        border_bottom="1px solid #ededed",
+        border_bottom="3px solid #ededed",
     )
 
 # 새로운 트윗을 작성하는 컴포저
@@ -170,12 +170,8 @@ def composer(HomeState):
                 style={"margin": "0", "padding": "10px"}
             ),
             rx.button(
-                "Upload",
-                on_click=lambda: HomeState.handle_upload(rx.upload_files()),
-            ),
-            rx.button(
                 "Tweet",
-                on_click=HomeState.post_tweet,
+                on_click=HomeState.post_tweet(rx.upload_files()),
                 border_radius="1em",
                 box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
                 background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
@@ -190,8 +186,19 @@ def composer(HomeState):
             px=4,
             py=2,
         ),
-        grid_template_rows="0.5fr 0.3fr",
-        border_bottom="1px solid #ededed",
+        rx.responsive_grid(
+            rx.foreach(
+                HomeState.img,
+                lambda img: rx.vstack(
+                    rx.image(src=img),
+                    rx.text(img),
+                ),
+            ),
+            columns=[2],
+            spacing="5px",
+        ),
+        grid_template_rows="0.5fr 0.3fr 0.5fr",
+        border_bottom="3px solid #ededed",
     )
 
 
@@ -236,7 +243,7 @@ def feed(HomeState):
                 p=4,
             ),
         ),
-        border_x="1px solid #ededed",
+        border_x="3px solid #ededed",
         h="100%",
     )
 

@@ -29,7 +29,6 @@ class Tweet(rx.Model, table=True):
 
     author: str = Field()
 
-
 class State(rx.State):
     """The base state for the app."""
 
