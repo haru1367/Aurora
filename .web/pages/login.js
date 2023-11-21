@@ -64,7 +64,7 @@ export default function Component() {
 )}
 </Fragment>
   <Container centerContent={true} sx={{"background-image": "url('/aurora.jpg')", "background-size": "cover", "maxWidth": "auto", "maxHeight": "auto", "height": "100vh"}}>
-  <Container sx={{"height": "120px"}}/>
+  <Container sx={{"height": "200px"}}/>
   <VStack sx={{"width": "400px", "height": "auto", "centerContent": true, "borderRadius": "20px", "boxShadow": "10px 10px 100px #79d0ed", "background": "linear-gradient(to bottom, #d7eefc, #ffffff)"}}>
   <HStack>
   <VStack>

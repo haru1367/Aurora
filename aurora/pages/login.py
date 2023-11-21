@@ -5,7 +5,7 @@ from aurora.state.auth import AuthState
 
 def login():
     return rx.container(
-        rx.container(height='120px'), 
+        rx.container(height='200px'), 
         rx.vstack(
             rx.hstack(
                 rx.vstack(

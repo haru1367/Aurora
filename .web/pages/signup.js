@@ -64,7 +64,7 @@ export default function Component() {
 )}
 </Fragment>
   <Container centerContent={true} sx={{"background-image": "url('/aurora.jpg')", "background-size": "cover", "maxWidth": "auto", "maxHeight": "auto", "height": "100vh"}}>
-  <Container sx={{"height": "150px"}}/>
+  <Container sx={{"height": "210px"}}/>
   <VStack sx={{"width": "400px", "height": "auto", "centerContent": true, "borderRadius": "20px", "boxShadow": "9px 9px 100px #79d0ed", "background": "linear-gradient(to bottom, #d7eefc, #ffffff)"}}>
   <HStack>
   <VStack>
@@ -88,7 +88,7 @@ export default function Component() {
   <Input onBlur={(_e0) => addEvents([Event("state.auth_state.set_username", {value:_e0.target.value})], (_e0), {})} placeholder={`Username`} sx={{"mb": 4}} type={`text`}/>
   <Input onBlur={(_e0) => addEvents([Event("state.auth_state.set_password", {value:_e0.target.value})], (_e0), {})} placeholder={`Password`} sx={{"mb": 4}} type={`password`}/>
   <Input onBlur={(_e0) => addEvents([Event("state.auth_state.set_confirm_password", {value:_e0.target.value})], (_e0), {})} placeholder={`Confirm password`} sx={{"mb": 4}} type={`password`}/>
-  <Button onClick={(_e) => addEvents([Event("state.auth_state.signup", {})], (_e), {})} sx={{"bg": "blue.500", "color": "white", "_hover": {"bg": "blue.600"}}}>
+  <Button onClick={(_e) => addEvents([Event("state.auth_state.signup", {})], (_e), {})} sx={{"bg": "#212963", "color": "white", "_hover": {"bg": "blue.600"}}}>
   {`Sign up`}
 </Button>
 </Container>

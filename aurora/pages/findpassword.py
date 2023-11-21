@@ -6,7 +6,7 @@ from aurora.state.auth import AuthState
 def findpassword():
     """The findpassword page."""
     return rx.container(
-        rx.container(height='150px'),
+        rx.container(height='200px'),
         rx.vstack(
             rx.hstack(
                 rx.vstack(
@@ -52,7 +52,7 @@ def findpassword():
                 rx.button(
                     "Find Password",
                     on_click=AuthState.findpassword,
-                    bg="blue.500",
+                    bg="#212963",
                     color="white",
                     _hover={"bg": "blue.600"},
                 ),
