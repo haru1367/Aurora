@@ -35,7 +35,7 @@ class HomeState(State):
             
             # 선택한 파일을 저장
             upload_data = open(file_path, "rb").read()
-            outfile = f"C:/Users/a/Desktop/vscodeGithub/Aurora/.web/public/{file_name}"
+            outfile = f".web/public/{file_name}"
 
             # Save the file.
             with open(outfile, "wb") as file_object:
@@ -58,7 +58,7 @@ class HomeState(State):
         """
         for file in files:
             upload_data = await file.read()
-            outfile = f".web/public/{file.filename}"
+            outfile = f"C:/Users/a/Desktop/vscodeGithub/Aurora/.web/public/{file.filename}"
 
             # Save the file.
             with open(outfile, "wb") as file_object:

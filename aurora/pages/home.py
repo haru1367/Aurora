@@ -205,18 +205,23 @@ def composer(HomeState):
 # 개별 트윗을 표시하는 함수
 def tweet(tweet):
     """Display for an individual tweet in the feed."""
-    image_tags = rx.foreach(
-        tweet.image_content.split(", "),
-        lambda image: rx.image(src=f"C:/Users/a/Desktop/vscodeGithub/Aurora/.web/public/{tweet.image_content}", alt="tweet image")
+    image_tags = rx.cond(
+        tweet.image_content,
+        rx.foreach(
+            tweet.image_content.split(", "),
+            lambda image: rx.image(src=f"C:/Users/a/Desktop/vscodeGithub/Aurora/.web/public/{image}", alt="tweet image")
+        ),
+        rx.box()  # 이미지가 없는 경우 빈 리스트를 반환합니다.
     ),
+
     return rx.grid(
         rx.vstack(
             rx.avatar(name=tweet.author, size="sm"),  # 트윗 작성자의 아바타 이미지
         ),
         rx.box(
             rx.text("@" + tweet.author, font_weight="bold"),  # 트윗 작성자의 사용자 이름
-            *image_tags,
             rx.text(tweet.content, width="100%"),  # 트윗 내용
+            *image_tags
         ),
         grid_template_columns="1fr 5fr",
         py=4,
@@ -234,7 +239,7 @@ def feed(HomeState):
             HomeState.tweets,
             rx.foreach(
                 HomeState.tweets,
-                tweet,
+                tweet
             ),
             rx.vstack(
                 rx.button(
