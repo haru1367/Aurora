@@ -285,7 +285,11 @@ class HomeState(State):
         
     def clear_map(self):
         self.map_search_check = False
-        os.remove('assets/map2.html')
+        self.locations = []
+        self.tag_search = ""
+        self.df = None
+        if os.path.exists('assets/map2.html'):
+            os.remove('assets/map2.html')
         self.map_html = "/map.html"
         self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
         
