@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import folium
 from folium.plugins import MiniMap
+import shutil
 
 
 class HomeState(State):
@@ -27,6 +28,10 @@ class HomeState(State):
     locations: list[str]
     df:pd.DataFrame  
     map_html:str
+    tag_search:str
+    map_html:str = "/map.html"
+    map_iframe:str = f'<iframe src="{map_html}" width="100%" height="600"></iframe>'
+    map_search_check:bool=False
     
     def handle_file_selection(self):
         # 파일 선택 대화상자 열기
@@ -196,17 +201,17 @@ class HomeState(State):
         
     def kakao_api(self): 
         key=''
-        with open('../key.json','r')as f:
+        with open('key.json','r')as f:
             key = json.load(f)
         self.REST_API_KEY = key['key']
         
     def elec_location(self,region,page_num):
+        self.kakao_api()
         url = 'https://dapi.kakao.com/v2/local/search/keyword.json'
         params = {'query': region,'page': page_num}
-        headers = {"Authorization": self.REST_API_KEY}
+        headers = {"Authorization": f'KakaoAK {self.REST_API_KEY}'}
 
         places = requests.get(url, params=params, headers=headers).json()['documents']
-        total = requests.get(url, params=params, headers=headers).json()['meta']['total_count']
         return places
     
     def elec_info(self,places):
@@ -228,9 +233,8 @@ class HomeState(State):
         df = pd.DataFrame(ar, columns = ['ID','stores', 'X', 'Y','road_address','place_url'])
         return df
     
-    def keywords(self,location_name):
+    def keywords(self):
         df = None
-        self.location.extend('성산일출봉 전기충전소','광치기해수욕장 전기충전소')
         for loca in self.locations:
             for page in range(1,4):
                 local_name = self.elec_location(loca, page)
@@ -259,13 +263,30 @@ class HomeState(State):
                     tooltip=dfs['stores'][i],
                     popup=dfs['place_url'][i],
                     ).add_to(m)
-        return m
+        m.save('assets/map2.html')
     
     def search_map(self):
-        self.df = self.keywords(self.locations)
+        self.df = self.keywords()
         self.df = self.df.drop_duplicates(['ID'])
         self.df = self.df.reset_index()
         self.make_map(self.df)
         
     def map(self):
         m = folium.Map(location=[37.5518911, 126.9917937], zoom_start=12)
+        
+    def map_search(self):
+        if self.map_search_check == True:
+            return rx.window_alert('Express clear first!')
+        self.locations = self.tag_search.split(',')
+        self.search_map()
+        self.map_html = "/map2.html"
+        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
+        self.map_search_check = True
+        
+    def clear_map(self):
+        self.map_search_check = False
+        os.remove('assets/map2.html')
+        self.map_html = "/map.html"
+        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
+        
+            
