@@ -1,21 +1,21 @@
 """The state for the home page."""
 from datetime import datetime
-
 import reflex as rx
-
 from .base import Follows, State, Tweet, User
-import os
+import os,json
 import tkinter as tk
 from tkinter import filedialog
-
+import requests
+import pandas as pd
+import numpy as np
+import folium
+from folium.plugins import MiniMap
 
 
 class HomeState(State):
     """The state for the home page."""
-
     tweet: str
     tweets: list[Tweet] = []
-
     friend: str
     search: str
     img: list[str]
@@ -23,6 +23,10 @@ class HomeState(State):
     show_right: bool = False
     show_top: bool = False
     show: bool = False
+    REST_API_KEY: str
+    locations: list[str]
+    df:pd.DataFrame  
+    map_html:str
     
     def handle_file_selection(self):
         # 파일 선택 대화상자 열기
@@ -189,3 +193,79 @@ class HomeState(State):
 
     def change(self):
         self.show = not (self.show)
+        
+    def kakao_api(self): 
+        key=''
+        with open('../key.json','r')as f:
+            key = json.load(f)
+        self.REST_API_KEY = key['key']
+        
+    def elec_location(self,region,page_num):
+        url = 'https://dapi.kakao.com/v2/local/search/keyword.json'
+        params = {'query': region,'page': page_num}
+        headers = {"Authorization": self.REST_API_KEY}
+
+        places = requests.get(url, params=params, headers=headers).json()['documents']
+        total = requests.get(url, params=params, headers=headers).json()['meta']['total_count']
+        return places
+    
+    def elec_info(self,places):
+        X = []
+        Y = []
+        stores = []
+        road_address = []
+        place_url = []
+        ID = []
+        for place in places:
+            X.append(float(place['x']))
+            Y.append(float(place['y']))
+            stores.append(place['place_name'])
+            road_address.append(place['road_address_name'])
+            place_url.append(place['place_url'])
+            ID.append(place['id'])
+
+        ar = np.array([ID,stores, X, Y, road_address,place_url]).T
+        df = pd.DataFrame(ar, columns = ['ID','stores', 'X', 'Y','road_address','place_url'])
+        return df
+    
+    def keywords(self,location_name):
+        df = None
+        self.location.extend('성산일출봉 전기충전소','광치기해수욕장 전기충전소')
+        for loca in self.locations:
+            for page in range(1,4):
+                local_name = self.elec_location(loca, page)
+                local_elec_info = self.elec_info(local_name)
+
+                if df is None:
+                    df = local_elec_info
+                elif local_elec_info is None:
+                    continue
+                else:
+                    df = pd.concat([df, local_elec_info],join='outer', ignore_index = True)
+        return df
+    
+    def make_map(self,dfs):
+        # 지도 생성하기
+        m = folium.Map(location=[37.5518911,126.9917937],   # 기준좌표: 제주어딘가로 내가 대충 설정
+                    zoom_start=12)
+
+        # 미니맵 추가하기
+        minimap = MiniMap() 
+        m.add_child(minimap)
+
+        # 마커 추가하기
+        for i in range(len(dfs)):
+            folium.Marker([self.df['Y'][i],self.df['X'][i]],
+                    tooltip=dfs['stores'][i],
+                    popup=dfs['place_url'][i],
+                    ).add_to(m)
+        return m
+    
+    def search_map(self):
+        self.df = self.keywords(self.locations)
+        self.df = self.df.drop_duplicates(['ID'])
+        self.df = self.df.reset_index()
+        self.make_map(self.df)
+        
+    def map(self):
+        m = folium.Map(location=[37.5518911, 126.9917937], zoom_start=12)

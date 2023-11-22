@@ -3,7 +3,6 @@ import reflex as rx
 from aurora.state.base import State
 from aurora.state.home import HomeState
 
-
 # 컴포넌트를 가져옵니다.
 from ..components import container
 
@@ -92,9 +91,14 @@ def feed_header(HomeState):
 
 # 피드 영역
 def feed(HomeState):
+    map_html = "/map.html"  # Adjust the path accordingly
+    map_iframe = f'<iframe src="{map_html}" width="100%" height="600"></iframe>'
+
     return rx.box(
         feed_header(HomeState),
         rx.text('지도가 표기될 곳'),
+        rx.button('지도', on_click=HomeState.map),
+        rx.html(map_iframe),  # Add this line to include the map iframe
         border_x="3px solid #ededed",
         h="100%",
     )
