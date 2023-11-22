@@ -209,7 +209,7 @@ def tweet(tweet):
         tweet.image_content,
         rx.foreach(
             tweet.image_content.split(", "),
-            lambda image: rx.image(src=f"C:/Users/a/Desktop/vscodeGithub/Aurora/.web/public/{image}", alt="tweet image")
+            lambda image: rx.image(src=f"/{image}", alt="tweet image")
         ),
         rx.box()  # 이미지가 없는 경우 빈 리스트를 반환합니다.
     ),

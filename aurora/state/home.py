@@ -58,7 +58,7 @@ class HomeState(State):
         """
         for file in files:
             upload_data = await file.read()
-            outfile = f"C:/Users/a/Desktop/vscodeGithub/Aurora/.web/public/{file.filename}"
+            outfile = f"/{file.filename}"
 
             # Save the file.
             with open(outfile, "wb") as file_object:
