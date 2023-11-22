@@ -83,7 +83,7 @@ def findpassword():
         maxHeight='auto',
         height='100vh',
         style={
-            'background-image':"url('/aurora.jpg')",
+            'background-image':"url('/aurora1.jpg')",
             'background-size':'cover',
         }
     )
