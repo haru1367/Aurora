@@ -4,3 +4,4 @@ from .login import login
 from .signup import signup
 from .findpassword import findpassword
 from .myprofile import myprofile
+from .maps import maps

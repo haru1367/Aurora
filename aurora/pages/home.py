@@ -47,6 +47,7 @@ def tabs():
             ),
             tab_button("Home", "/"),  # Home 탭 버튼
             tab_button("My Profile","/myprofile"),
+            tab_button("Maps","/maps"),
             rx.box(
                 rx.heading("Followers", size="sm"),
                 rx.foreach(
