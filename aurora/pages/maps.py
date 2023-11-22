@@ -83,6 +83,16 @@ def feed_header(HomeState):
     return rx.hstack(
         rx.heading("Maps", size="md"),  # 피드의 제목
         rx.input(on_change=HomeState.set_search, placeholder="Search tags"),  # 트윗 검색을 위한 입력 상자
+        rx.button(
+            "Search",
+            border_radius="1em",
+            box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+            background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+            box_sizing="border-box",
+            color="white",
+            opacity="0.6",
+            _hover={"opacity": 1},
+        ),
         justify="space-between",
         p=4,
         border_bottom="3px solid #ededed",
@@ -96,8 +106,6 @@ def feed(HomeState):
 
     return rx.box(
         feed_header(HomeState),
-        rx.text('지도가 표기될 곳'),
-        rx.button('지도', on_click=HomeState.map),
         rx.html(map_iframe),  # Add this line to include the map iframe
         border_x="3px solid #ededed",
         h="100%",
