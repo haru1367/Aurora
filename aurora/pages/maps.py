@@ -84,7 +84,7 @@ def feed_header(HomeState):
     """The header of the feed."""
     return rx.hstack(
         rx.heading("Maps", size="md"),  # 피드의 제목
-        rx.input(on_change=HomeState.set_tag_search, placeholder="Search tags"),  # 트윗 검색을 위한 입력 상자
+        rx.input(on_blur=HomeState.set_tag_search, placeholder="Search tags"),  # 트윗 검색을 위한 입력 상자
         rx.button(
             "Search",
             on_click = HomeState.map_search,
@@ -98,7 +98,7 @@ def feed_header(HomeState):
         ),
         rx.button(
             "clear",
-            on_click = HomeState.clear_map,
+            on_click = HomeState.map_clear,
             border_radius="1em",
             box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
             background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
@@ -111,16 +111,16 @@ def feed_header(HomeState):
         p=4,
         border_bottom="3px solid #ededed",
     )
-    
-def clear_map_iframe(HomeState):
-    map_iframe1 = HomeState.map_iframe
-    return map_iframe1
 
 # 피드 영역
 def feed(HomeState):
+    HomeState.map_iframe1
+    HomeState.clear_map1
+    HomeState.clear_map2
+    HomeState.clear_map3
     return rx.box(
         feed_header(HomeState),
-        rx.html(clear_map_iframe(HomeState)),  # Add this line to include the map iframe
+        rx.html(HomeState.map_iframe),
         border_x="3px solid #ededed",
         h="100%",
     )

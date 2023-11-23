@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import folium
 from folium.plugins import MiniMap
-import shutil
+import time
 
 
 class HomeState(State):
@@ -252,38 +252,74 @@ class HomeState(State):
         # 지도 생성하기
         m = folium.Map(location=[37.5518911,126.9917937],   # 기준좌표: 제주어딘가로 내가 대충 설정
                     zoom_start=12)
-
         # 미니맵 추가하기
         minimap = MiniMap() 
         m.add_child(minimap)
-    
-    def search_map(self):
+        for i in range(len(dfs)):
+            folium.Marker([dfs['Y'][i],dfs['X'][i]],
+                    tooltip=dfs['stores'][i],
+                    popup=dfs['place_url'][i],
+                    ).add_to(m)
+        return m
+
+
+    # def map(self):
+    # m = folium.Map(location=[37.5518911, 126.9917937], zoom_start=12)
+    # self.map_html = "/map2.html"
+    # self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
+        
+    def map_search(self):
+        if os.path.exists('assets/map2.html'):
+            return rx.window_alert('Press clear first!')
+        if self.tag_search == "":
+            return rx.window_alert('Please enter your search term!')
+        self.locations = self.tag_search.split(',')
         self.df = self.keywords()
         self.df = self.df.drop_duplicates(['ID'])
         self.df = self.df.reset_index()
-        self.make_map(self.df)
-        
-    def map(self):
-        m = folium.Map(location=[37.5518911, 126.9917937], zoom_start=12)
-        
-    def map_search(self):
-        if self.map_search_check == True:
-            return rx.window_alert('Express clear first!')
-        self.locations = self.tag_search.split(',')
-        self.search_map()
-        self.map_html = "/map2.html"
+        self.make_map(self.df).save('assets/map2.html')
+        self.map_html ='/map2.html'
         self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
-        self.map_search_check = True
-        
-    def clear_map(self):
-        self.map_search_check = False
+
+    def map_clear(self):
         if os.path.exists('assets/map2.html'):
             os.remove('assets/map2.html')
-        m = folium.Map(location=[37.5518911, 126.9917937], zoom_start=12)
-        m.save('assets/map.html')
-        self.map_html = "/map.html"
-        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
         self.locations=[]
-        self.tag_search=""
+        self.tag_search =""
+        self.df = pd.DataFrame()
+        self.map_html='/map.html'
+        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
+
+    @rx.var
+    def map_iframe1(self) -> str:
+        print(self.map_iframe)
+        return self.map_iframe
+    
+    @rx.var
+    def clear_map1(self) -> list[str]:
+        print(self.locations)
+        return self.locations
+    
+    @rx.var
+    def clear_map2(self) -> str:
+        print(self.tag_search)
+        return self.tag_search
+    
+    @rx.var
+    def clear_map3(self) -> pd.DataFrame:
+        print(self.df)
+        return self.df
+    
+    @rx.var
+    def clear_map4(self) -> str:
+        print(self.map_html)
+        return self.map_html
+
+        
+
+    
+
+        
+    
         
             

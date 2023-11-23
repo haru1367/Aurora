@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1b84c7de3609c3ea3d3296dab1ac976f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_1b84c7de3609c3ea3d3296dab1ac976f" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_1b84c7de3609c3ea3d3296dab1ac976f = L.map(
+                "map_1b84c7de3609c3ea3d3296dab1ac976f",
+                {
+                    center: [37.5518911, 126.9917937],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 12,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f18ed7d2b4f52e790bf5e9452671c64c = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+            var tile_layer_26a0a6309c1176236955fa3b778e4906 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+            var mini_map_e82c4959cd69b89ae847b74d87f96f50 = new L.Control.MiniMap(
+                tile_layer_26a0a6309c1176236955fa3b778e4906,
+                {"autoToggleDisplay": false, "centerFixed": false, "collapsedHeight": 25, "collapsedWidth": 25, "height": 150, "minimized": false, "position": "bottomright", "toggleDisplay": false, "width": 150, "zoomAnimation": false, "zoomLevelOffset": -5}
+            );
+            map_1b84c7de3609c3ea3d3296dab1ac976f.addControl(mini_map_e82c4959cd69b89ae847b74d87f96f50);
+        
+    
+            var marker_b942c406dffd6bf4ee5527fcd657137b = L.marker(
+                [36.6109529892437, 127.286987211083],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_dabc056decfc576c1624deeb71151a46 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c3d5573ea99a5ee3a5c886e57a02b909 = $(`<div id="html_c3d5573ea99a5ee3a5c886e57a02b909" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/8650976</div>`)[0];
+                popup_dabc056decfc576c1624deeb71151a46.setContent(html_c3d5573ea99a5ee3a5c886e57a02b909);
+            
+        
+
+        marker_b942c406dffd6bf4ee5527fcd657137b.bindPopup(popup_dabc056decfc576c1624deeb71151a46)
+        ;
+
+        
+    
+    
+            marker_b942c406dffd6bf4ee5527fcd657137b.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_b416529102df58f47581ed6c7a507308 = L.marker(
+                [36.60872637198954, 127.289184267893],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_4d71d1ea7eb586b59571d1b19cfac9d3 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_b5fbb1c2d0d6ddf79eb75a0c1ae56b96 = $(`<div id="html_b5fbb1c2d0d6ddf79eb75a0c1ae56b96" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/919411072</div>`)[0];
+                popup_4d71d1ea7eb586b59571d1b19cfac9d3.setContent(html_b5fbb1c2d0d6ddf79eb75a0c1ae56b96);
+            
+        
+
+        marker_b416529102df58f47581ed6c7a507308.bindPopup(popup_4d71d1ea7eb586b59571d1b19cfac9d3)
+        ;
+
+        
+    
+    
+            marker_b416529102df58f47581ed6c7a507308.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 정문
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_dfd6b1bc46c769ec8e3000a375c76ace = L.marker(
+                [36.6113815829862, 127.291585115406],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_3371246851067876f44b3cc081eccc72 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_ca98d04cf17ac3fd0bee7fc5545cad94 = $(`<div id="html_ca98d04cf17ac3fd0bee7fc5545cad94" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/456932417</div>`)[0];
+                popup_3371246851067876f44b3cc081eccc72.setContent(html_ca98d04cf17ac3fd0bee7fc5545cad94);
+            
+        
+
+        marker_dfd6b1bc46c769ec8e3000a375c76ace.bindPopup(popup_3371246851067876f44b3cc081eccc72)
+        ;
+
+        
+    
+    
+            marker_dfd6b1bc46c769ec8e3000a375c76ace.bindTooltip(
+                `<div>
+                     고려대학교세종캠퍼스 약학대학약학과
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_645543fce4a1160dffc0e07b1e9a8b38 = L.marker(
+                [36.609099560827936, 127.28426645080886],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_6526ca06b2db6db1ab55deaa8fdca534 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_37785288e3f051f95c5fceac1e36edca = $(`<div id="html_37785288e3f051f95c5fceac1e36edca" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1158684806</div>`)[0];
+                popup_6526ca06b2db6db1ab55deaa8fdca534.setContent(html_37785288e3f051f95c5fceac1e36edca);
+            
+        
+
+        marker_645543fce4a1160dffc0e07b1e9a8b38.bindPopup(popup_6526ca06b2db6db1ab55deaa8fdca534)
+        ;
+
+        
+    
+    
+            marker_645543fce4a1160dffc0e07b1e9a8b38.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 산학협력관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_91d26010f667c060383ab27d71db487a = L.marker(
+                [36.610471824539395, 127.28964932886056],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_72e111b1f83d7caced2c61d51098e889 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_120ce3246ce876c4858f0ca2e06cfa79 = $(`<div id="html_120ce3246ce876c4858f0ca2e06cfa79" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17736741</div>`)[0];
+                popup_72e111b1f83d7caced2c61d51098e889.setContent(html_120ce3246ce876c4858f0ca2e06cfa79);
+            
+        
+
+        marker_91d26010f667c060383ab27d71db487a.bindPopup(popup_72e111b1f83d7caced2c61d51098e889)
+        ;
+
+        
+    
+    
+            marker_91d26010f667c060383ab27d71db487a.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 우편취급국
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_3632ef6e663680130a35b097f1a890a6 = L.marker(
+                [36.611210750723, 127.29069024933419],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_44d901f84c69947800a344e3f8fd5f7a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_b122067c46eb330c4dd3655b97415609 = $(`<div id="html_b122067c46eb330c4dd3655b97415609" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1575911218</div>`)[0];
+                popup_44d901f84c69947800a344e3f8fd5f7a.setContent(html_b122067c46eb330c4dd3655b97415609);
+            
+        
+
+        marker_3632ef6e663680130a35b097f1a890a6.bindPopup(popup_44d901f84c69947800a344e3f8fd5f7a)
+        ;
+
+        
+    
+    
+            marker_3632ef6e663680130a35b097f1a890a6.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 문화스포츠관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_a78b3cf6291035fb6374151e7e7ae5df = L.marker(
+                [36.6115014206788, 127.289743460396],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_9e69d35bf5b24d6bc237a8b3013c5606 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c6d7df5508f320e1ffef9f6247fc9e9a = $(`<div id="html_c6d7df5508f320e1ffef9f6247fc9e9a" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17556120</div>`)[0];
+                popup_9e69d35bf5b24d6bc237a8b3013c5606.setContent(html_c6d7df5508f320e1ffef9f6247fc9e9a);
+            
+        
+
+        marker_a78b3cf6291035fb6374151e7e7ae5df.bindPopup(popup_9e69d35bf5b24d6bc237a8b3013c5606)
+        ;
+
+        
+    
+    
+            marker_a78b3cf6291035fb6374151e7e7ae5df.bindTooltip(
+                `<div>
+                     고려대학교세종캠퍼스 석원경상관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_df9df9ac6690f959d6bb5729788b1230 = L.marker(
+                [36.6099578399329, 127.287108713002],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_bba02dac82a21e49f66f1dd304c6dd4b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3ae61c4cc621060cf51f1cbf9192ccbc = $(`<div id="html_3ae61c4cc621060cf51f1cbf9192ccbc" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17558558</div>`)[0];
+                popup_bba02dac82a21e49f66f1dd304c6dd4b.setContent(html_3ae61c4cc621060cf51f1cbf9192ccbc);
+            
+        
+
+        marker_df9df9ac6690f959d6bb5729788b1230.bindPopup(popup_bba02dac82a21e49f66f1dd304c6dd4b)
+        ;
+
+        
+    
+    
+            marker_df9df9ac6690f959d6bb5729788b1230.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 학술정보원
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_790ee02ac52cce0c070594be01ecd489 = L.marker(
+                [36.6102248281716, 127.29292990225],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_f925f1d62c128faa4a4934528177bfbe = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_ca55df7f93f10e326f07776aece11ee9 = $(`<div id="html_ca55df7f93f10e326f07776aece11ee9" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/673797531</div>`)[0];
+                popup_f925f1d62c128faa4a4934528177bfbe.setContent(html_ca55df7f93f10e326f07776aece11ee9);
+            
+        
+
+        marker_790ee02ac52cce0c070594be01ecd489.bindPopup(popup_f925f1d62c128faa4a4934528177bfbe)
+        ;
+
+        
+    
+    
+            marker_790ee02ac52cce0c070594be01ecd489.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 동문
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_0b1c5ef3e3a7adeb4fe443fa60015641 = L.marker(
+                [36.6115158990548, 127.288232271769],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_c2ac00bdabac6473b882e487e9f7b9f4 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_5bc54f48896e5d7ac7498bb1a274a292 = $(`<div id="html_5bc54f48896e5d7ac7498bb1a274a292" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17566698</div>`)[0];
+                popup_c2ac00bdabac6473b882e487e9f7b9f4.setContent(html_5bc54f48896e5d7ac7498bb1a274a292);
+            
+        
+
+        marker_0b1c5ef3e3a7adeb4fe443fa60015641.bindPopup(popup_c2ac00bdabac6473b882e487e9f7b9f4)
+        ;
+
+        
+    
+    
+            marker_0b1c5ef3e3a7adeb4fe443fa60015641.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 공공정책대학
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_95ab0bf98b83cb0aa630f1cd7f79c3b3 = L.marker(
+                [36.609742269495, 127.282288142931],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_c42ede9cc5efeec7e648eeda8a86cb3b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_262adbffe96fc515ba8134c923101752 = $(`<div id="html_262adbffe96fc515ba8134c923101752" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17567519</div>`)[0];
+                popup_c42ede9cc5efeec7e648eeda8a86cb3b.setContent(html_262adbffe96fc515ba8134c923101752);
+            
+        
+
+        marker_95ab0bf98b83cb0aa630f1cd7f79c3b3.bindPopup(popup_c42ede9cc5efeec7e648eeda8a86cb3b)
+        ;
+
+        
+    
+    
+            marker_95ab0bf98b83cb0aa630f1cd7f79c3b3.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 종합운동장
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_edd475ff35d5373fd42de9eb1c4b1db9 = L.marker(
+                [36.6097162511181, 127.284513502922],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_8a3961f3ab40c413e61fdaa9427c0aa0 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_55969b5df020d8bc1e971bce8909ca99 = $(`<div id="html_55969b5df020d8bc1e971bce8909ca99" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1357293605</div>`)[0];
+                popup_8a3961f3ab40c413e61fdaa9427c0aa0.setContent(html_55969b5df020d8bc1e971bce8909ca99);
+            
+        
+
+        marker_edd475ff35d5373fd42de9eb1c4b1db9.bindPopup(popup_8a3961f3ab40c413e61fdaa9427c0aa0)
+        ;
+
+        
+    
+    
+            marker_edd475ff35d5373fd42de9eb1c4b1db9.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 과학기술1관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_2f27ce3c916df24813f54b5431fd0f5a = L.marker(
+                [36.6121731717031, 127.284715906468],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_4a9e97edbaa3e9f420160cb53ac486b5 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a3223f71cbc3fdbaf3f705616b162294 = $(`<div id="html_a3223f71cbc3fdbaf3f705616b162294" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17558557</div>`)[0];
+                popup_4a9e97edbaa3e9f420160cb53ac486b5.setContent(html_a3223f71cbc3fdbaf3f705616b162294);
+            
+        
+
+        marker_2f27ce3c916df24813f54b5431fd0f5a.bindPopup(popup_4a9e97edbaa3e9f420160cb53ac486b5)
+        ;
+
+        
+    
+    
+            marker_2f27ce3c916df24813f54b5431fd0f5a.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 자유관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_172c4c4fa9cdcd5a9194bf6f814de699 = L.marker(
+                [36.6112011802365, 127.288696096452],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_c095299a878247841040f87a891f97d4 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_033001d4346c85f547086d9fced7ca9c = $(`<div id="html_033001d4346c85f547086d9fced7ca9c" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/2133374807</div>`)[0];
+                popup_c095299a878247841040f87a891f97d4.setContent(html_033001d4346c85f547086d9fced7ca9c);
+            
+        
+
+        marker_172c4c4fa9cdcd5a9194bf6f814de699.bindPopup(popup_c095299a878247841040f87a891f97d4)
+        ;
+
+        
+    
+    
+            marker_172c4c4fa9cdcd5a9194bf6f814de699.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 입학처
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_78f6fabb5fd2dc421168b5f9519d56c9 = L.marker(
+                [36.6104959987975, 127.289641335582],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_91c051fc5a614728878bee0054c705f4 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_ac1f269748ada623a6fdac5a71c509c4 = $(`<div id="html_ac1f269748ada623a6fdac5a71c509c4" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17555776</div>`)[0];
+                popup_91c051fc5a614728878bee0054c705f4.setContent(html_ac1f269748ada623a6fdac5a71c509c4);
+            
+        
+
+        marker_78f6fabb5fd2dc421168b5f9519d56c9.bindPopup(popup_91c051fc5a614728878bee0054c705f4)
+        ;
+
+        
+    
+    
+            marker_78f6fabb5fd2dc421168b5f9519d56c9.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 학생회관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_07dbfcc1c6b1d4f381d0dfb5841fcfc9 = L.marker(
+                [36.60895778181741, 127.28401443755811],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_8f936649337d889f7f2bb08356add0fe = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c70e43c8560c24a89325ba55e05cf106 = $(`<div id="html_c70e43c8560c24a89325ba55e05cf106" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1086234178</div>`)[0];
+                popup_8f936649337d889f7f2bb08356add0fe.setContent(html_c70e43c8560c24a89325ba55e05cf106);
+            
+        
+
+        marker_07dbfcc1c6b1d4f381d0dfb5841fcfc9.bindPopup(popup_8f936649337d889f7f2bb08356add0fe)
+        ;
+
+        
+    
+    
+            marker_07dbfcc1c6b1d4f381d0dfb5841fcfc9.bindTooltip(
+                `<div>
+                     고려대학교 세종산학협력단
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_fd0f3d8e7aa97274e789fb809b950465 = L.marker(
+                [36.612383874145, 127.288530600062],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_263d6ac10d2bde59c5ffa4a85806b8ab = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d85567e8839d842d8e56fc584d83b252 = $(`<div id="html_d85567e8839d842d8e56fc584d83b252" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17560486</div>`)[0];
+                popup_263d6ac10d2bde59c5ffa4a85806b8ab.setContent(html_d85567e8839d842d8e56fc584d83b252);
+            
+        
+
+        marker_fd0f3d8e7aa97274e789fb809b950465.bindPopup(popup_263d6ac10d2bde59c5ffa4a85806b8ab)
+        ;
+
+        
+    
+    
+            marker_fd0f3d8e7aa97274e789fb809b950465.bindTooltip(
+                `<div>
+                     고려대학교세종캠퍼스 학군단
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_07b11d7ea4d9d386e76a7afcd4f1cb73 = L.marker(
+                [36.609526439149, 127.283619719809],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_41f2659fda4826620b68573b22497f1e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c2de31dad0014263fe353b2f0946bf29 = $(`<div id="html_c2de31dad0014263fe353b2f0946bf29" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17563884</div>`)[0];
+                popup_41f2659fda4826620b68573b22497f1e.setContent(html_c2de31dad0014263fe353b2f0946bf29);
+            
+        
+
+        marker_07b11d7ea4d9d386e76a7afcd4f1cb73.bindPopup(popup_41f2659fda4826620b68573b22497f1e)
+        ;
+
+        
+    
+    
+            marker_07b11d7ea4d9d386e76a7afcd4f1cb73.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 약학대학연구실험동
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_9ef8f393353a1cbaca1e2f8f31a827aa = L.marker(
+                [36.6110831405127, 127.291284427661],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_481ed2f4640a7b2ce76a54ddbf276e52 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fadff6799e21f61c3406e490c7d541b9 = $(`<div id="html_fadff6799e21f61c3406e490c7d541b9" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17564434</div>`)[0];
+                popup_481ed2f4640a7b2ce76a54ddbf276e52.setContent(html_fadff6799e21f61c3406e490c7d541b9);
+            
+        
+
+        marker_9ef8f393353a1cbaca1e2f8f31a827aa.bindPopup(popup_481ed2f4640a7b2ce76a54ddbf276e52)
+        ;
+
+        
+    
+    
+            marker_9ef8f393353a1cbaca1e2f8f31a827aa.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 체육과학관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f3a30d4eb706d8395cd6504af3036079 = L.marker(
+                [36.6099370022022, 127.292710850463],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_42872916cbf5dfde22f01d1ca2ec358a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_0e4fdc5a9a27ba16844c2801fcebe1ff = $(`<div id="html_0e4fdc5a9a27ba16844c2801fcebe1ff" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17571644</div>`)[0];
+                popup_42872916cbf5dfde22f01d1ca2ec358a.setContent(html_0e4fdc5a9a27ba16844c2801fcebe1ff);
+            
+        
+
+        marker_f3a30d4eb706d8395cd6504af3036079.bindPopup(popup_42872916cbf5dfde22f01d1ca2ec358a)
+        ;
+
+        
+    
+    
+            marker_f3a30d4eb706d8395cd6504af3036079.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 주차장1
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_c54f0b880a03605bca96bd05cf363dff = L.marker(
+                [36.60887063652342, 127.28314563007558],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_a3e05efd2bb151271ad07903f489c6fc = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_819aa1dea3132a935548d30aa084fdd6 = $(`<div id="html_819aa1dea3132a935548d30aa084fdd6" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/696383970</div>`)[0];
+                popup_a3e05efd2bb151271ad07903f489c6fc.setContent(html_819aa1dea3132a935548d30aa084fdd6);
+            
+        
+
+        marker_c54f0b880a03605bca96bd05cf363dff.bindPopup(popup_a3e05efd2bb151271ad07903f489c6fc)
+        ;
+
+        
+    
+    
+            marker_c54f0b880a03605bca96bd05cf363dff.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 가속기ICT융합관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_468ecc24418427399e659f92caeff7f1 = L.marker(
+                [36.6110546776128, 127.292603296754],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_51a95b8f526ecf70553de248da2546ac = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_ca1b026e1bd7bf3b355fe62904e7570e = $(`<div id="html_ca1b026e1bd7bf3b355fe62904e7570e" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17567520</div>`)[0];
+                popup_51a95b8f526ecf70553de248da2546ac.setContent(html_ca1b026e1bd7bf3b355fe62904e7570e);
+            
+        
+
+        marker_468ecc24418427399e659f92caeff7f1.bindPopup(popup_51a95b8f526ecf70553de248da2546ac)
+        ;
+
+        
+    
+    
+            marker_468ecc24418427399e659f92caeff7f1.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 테니스장
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_35bac5a5a48aeb1598f8918e21082502 = L.marker(
+                [36.609109854527624, 127.28823449570294],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_02efdbe673c0e80ee66830e406fe341e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_4ecf0d5226cde1f72191b853e23de464 = $(`<div id="html_4ecf0d5226cde1f72191b853e23de464" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17574454</div>`)[0];
+                popup_02efdbe673c0e80ee66830e406fe341e.setContent(html_4ecf0d5226cde1f72191b853e23de464);
+            
+        
+
+        marker_35bac5a5a48aeb1598f8918e21082502.bindPopup(popup_02efdbe673c0e80ee66830e406fe341e)
+        ;
+
+        
+    
+    
+            marker_35bac5a5a48aeb1598f8918e21082502.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 주차장4
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_24d696947acacfb340dd6a6a51e8c6a9 = L.marker(
+                [36.6109961842671, 127.287011962201],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_55db01807c4ede70a3030899bb976a91 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f84d4972deeeb7cf8592cef2c9969076 = $(`<div id="html_f84d4972deeeb7cf8592cef2c9969076" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1017625225</div>`)[0];
+                popup_55db01807c4ede70a3030899bb976a91.setContent(html_f84d4972deeeb7cf8592cef2c9969076);
+            
+        
+
+        marker_24d696947acacfb340dd6a6a51e8c6a9.bindPopup(popup_55db01807c4ede70a3030899bb976a91)
+        ;
+
+        
+    
+    
+            marker_24d696947acacfb340dd6a6a51e8c6a9.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 문화스포츠대학 교육관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_4f5f18bc55a9b8275317ccd7ba356cd8 = L.marker(
+                [36.609161342349, 127.285563266692],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_cf12162dcab9dea2049bb7a0902063b3 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6dd1d498f3a1b28812afd1bb88fc1811 = $(`<div id="html_6dd1d498f3a1b28812afd1bb88fc1811" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17566697</div>`)[0];
+                popup_cf12162dcab9dea2049bb7a0902063b3.setContent(html_6dd1d498f3a1b28812afd1bb88fc1811);
+            
+        
+
+        marker_4f5f18bc55a9b8275317ccd7ba356cd8.bindPopup(popup_cf12162dcab9dea2049bb7a0902063b3)
+        ;
+
+        
+    
+    
+            marker_4f5f18bc55a9b8275317ccd7ba356cd8.bindTooltip(
+                `<div>
+                     고려대학교 농심국제관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_137134b4843ebe47c6c4906c2dddf0af = L.marker(
+                [36.61062435898939, 127.28536746194989],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_b9802ccb6b0d00ac7f5a69f161c4e976 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_94673c3c7f8be009dcf12f5efc366e4f = $(`<div id="html_94673c3c7f8be009dcf12f5efc366e4f" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/12315379</div>`)[0];
+                popup_b9802ccb6b0d00ac7f5a69f161c4e976.setContent(html_94673c3c7f8be009dcf12f5efc366e4f);
+            
+        
+
+        marker_137134b4843ebe47c6c4906c2dddf0af.bindPopup(popup_b9802ccb6b0d00ac7f5a69f161c4e976)
+        ;
+
+        
+    
+    
+            marker_137134b4843ebe47c6c4906c2dddf0af.bindTooltip(
+                `<div>
+                     GS25 고대세종점
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_5786732fa2cb1f9ef99a10b069c409ab = L.marker(
+                [36.6103980867454, 127.288398012537],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_9b3fa8ad8323588a3fbaf1087e6c5c9b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3e664496e5da63c53da74f6029f0c28f = $(`<div id="html_3e664496e5da63c53da74f6029f0c28f" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17563126</div>`)[0];
+                popup_9b3fa8ad8323588a3fbaf1087e6c5c9b.setContent(html_3e664496e5da63c53da74f6029f0c28f);
+            
+        
+
+        marker_5786732fa2cb1f9ef99a10b069c409ab.bindPopup(popup_9b3fa8ad8323588a3fbaf1087e6c5c9b)
+        ;
+
+        
+    
+    
+            marker_5786732fa2cb1f9ef99a10b069c409ab.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 주차장3
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_62065203607f9d7998f455f04a31359d = L.marker(
+                [36.6100226674523, 127.287131308537],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_00fc5e2a57a82f121406a5aca1e60489 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_ea7d0c00fbd80b79b13fad0b3c0a8e09 = $(`<div id="html_ea7d0c00fbd80b79b13fad0b3c0a8e09" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1388871628</div>`)[0];
+                popup_00fc5e2a57a82f121406a5aca1e60489.setContent(html_ea7d0c00fbd80b79b13fad0b3c0a8e09);
+            
+        
+
+        marker_62065203607f9d7998f455f04a31359d.bindPopup(popup_00fc5e2a57a82f121406a5aca1e60489)
+        ;
+
+        
+    
+    
+            marker_62065203607f9d7998f455f04a31359d.bindTooltip(
+                `<div>
+                     고려대학교세종캠퍼스 세종창업교육센터
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_64c7511f7a47321c2777551f959e293e = L.marker(
+                [36.611406785178445, 127.29085977009923],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_a34d486ee7fc2ae7731f64211b8e7bf6 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_5bc4361e61dd807012647758cbd25d53 = $(`<div id="html_5bc4361e61dd807012647758cbd25d53" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1780855995</div>`)[0];
+                popup_a34d486ee7fc2ae7731f64211b8e7bf6.setContent(html_5bc4361e61dd807012647758cbd25d53);
+            
+        
+
+        marker_64c7511f7a47321c2777551f959e293e.bindPopup(popup_a34d486ee7fc2ae7731f64211b8e7bf6)
+        ;
+
+        
+    
+    
+            marker_64c7511f7a47321c2777551f959e293e.bindTooltip(
+                `<div>
+                     고려대학교 세종평생교육원
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_dd9eaf0df9ab57a5605e188ed63616ee = L.marker(
+                [36.6105370140062, 127.29019143129634],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_144c0afa9b07c53d7ba563252a288767 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_7cea734ab3fffaee28ffc5ee277fcfae = $(`<div id="html_7cea734ab3fffaee28ffc5ee277fcfae" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17560485</div>`)[0];
+                popup_144c0afa9b07c53d7ba563252a288767.setContent(html_7cea734ab3fffaee28ffc5ee277fcfae);
+            
+        
+
+        marker_dd9eaf0df9ab57a5605e188ed63616ee.bindPopup(popup_144c0afa9b07c53d7ba563252a288767)
+        ;
+
+        
+    
+    
+            marker_dd9eaf0df9ab57a5605e188ed63616ee.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 문화융합관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_5d804ad7f538fba00795d1853f7abb0e = L.marker(
+                [36.6101030136523, 127.284817837341],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_2f3ce6200057523e16af206663173475 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6bdd8da5b305fae7b705efba6eb29017 = $(`<div id="html_6bdd8da5b305fae7b705efba6eb29017" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1199754842</div>`)[0];
+                popup_2f3ce6200057523e16af206663173475.setContent(html_6bdd8da5b305fae7b705efba6eb29017);
+            
+        
+
+        marker_5d804ad7f538fba00795d1853f7abb0e.bindPopup(popup_2f3ce6200057523e16af206663173475)
+        ;
+
+        
+    
+    
+            marker_5d804ad7f538fba00795d1853f7abb0e.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 코워킹스페이스
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_ca801dea94e9b5cf786de6a80d2890cc = L.marker(
+                [36.6109525149414, 127.291268287552],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_b16d9f0b1ff5591126d8c6c28a5e75b8 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8f37941be24887b15ef047fa4b6d90ff = $(`<div id="html_8f37941be24887b15ef047fa4b6d90ff" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1550774711</div>`)[0];
+                popup_b16d9f0b1ff5591126d8c6c28a5e75b8.setContent(html_8f37941be24887b15ef047fa4b6d90ff);
+            
+        
+
+        marker_ca801dea94e9b5cf786de6a80d2890cc.bindPopup(popup_b16d9f0b1ff5591126d8c6c28a5e75b8)
+        ;
+
+        
+    
+    
+            marker_ca801dea94e9b5cf786de6a80d2890cc.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 국제스포츠학부
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_2c0d8f167067163ea1f7e6c816f8d6fd = L.marker(
+                [36.6107273998571, 127.2856137514],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_fc27e4d2e08a766874adf7795e4c34ff = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2db49d3110ea1d58c600e9583bd79b4e = $(`<div id="html_2db49d3110ea1d58c600e9583bd79b4e" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1097870182</div>`)[0];
+                popup_fc27e4d2e08a766874adf7795e4c34ff.setContent(html_2db49d3110ea1d58c600e9583bd79b4e);
+            
+        
+
+        marker_2c0d8f167067163ea1f7e6c816f8d6fd.bindPopup(popup_fc27e4d2e08a766874adf7795e4c34ff)
+        ;
+
+        
+    
+    
+            marker_2c0d8f167067163ea1f7e6c816f8d6fd.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 교직원식당
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_35c8dc1df02ec7902dcfbc4e0a900bde = L.marker(
+                [36.609819974979, 127.28560481647975],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_83466d8f6ef5df128509110ae5242532 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8a5c3fa7d5c6ae6a084a4307196d2815 = $(`<div id="html_8a5c3fa7d5c6ae6a084a4307196d2815" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17568774</div>`)[0];
+                popup_83466d8f6ef5df128509110ae5242532.setContent(html_8a5c3fa7d5c6ae6a084a4307196d2815);
+            
+        
+
+        marker_35c8dc1df02ec7902dcfbc4e0a900bde.bindPopup(popup_83466d8f6ef5df128509110ae5242532)
+        ;
+
+        
+    
+    
+            marker_35c8dc1df02ec7902dcfbc4e0a900bde.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 중앙광장
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7f882f38c4787d2c682f53fc929afb9b = L.marker(
+                [36.6108262562382, 127.285725893269],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_e9b8a8d5d40ff201842ad3110c3dfeb4 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_dae9bb67f8a84023dea94420c5a401cc = $(`<div id="html_dae9bb67f8a84023dea94420c5a401cc" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17556119</div>`)[0];
+                popup_e9b8a8d5d40ff201842ad3110c3dfeb4.setContent(html_dae9bb67f8a84023dea94420c5a401cc);
+            
+        
+
+        marker_7f882f38c4787d2c682f53fc929afb9b.bindPopup(popup_e9b8a8d5d40ff201842ad3110c3dfeb4)
+        ;
+
+        
+    
+    
+            marker_7f882f38c4787d2c682f53fc929afb9b.bindTooltip(
+                `<div>
+                     고려대학교 미래관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_a186b4f2182de93c3bdb020c20bb651a = L.marker(
+                [36.6088592144598, 127.286791672196],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_11fb3e832284dede2bdd7a0bbd4ee2c8 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c1ff210609334bab5d67add7f7b99266 = $(`<div id="html_c1ff210609334bab5d67add7f7b99266" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17571645</div>`)[0];
+                popup_11fb3e832284dede2bdd7a0bbd4ee2c8.setContent(html_c1ff210609334bab5d67add7f7b99266);
+            
+        
+
+        marker_a186b4f2182de93c3bdb020c20bb651a.bindPopup(popup_11fb3e832284dede2bdd7a0bbd4ee2c8)
+        ;
+
+        
+    
+    
+            marker_a186b4f2182de93c3bdb020c20bb651a.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 주차장5
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_790627df84e6c60657f05c2905ce8703 = L.marker(
+                [36.6090700394465, 127.284175804881],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_c2350092c0bceb98aaae2a252f196b76 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_51d64d7e9884cd13a677a94d5d0d5026 = $(`<div id="html_51d64d7e9884cd13a677a94d5d0d5026" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1334996710</div>`)[0];
+                popup_c2350092c0bceb98aaae2a252f196b76.setContent(html_51d64d7e9884cd13a677a94d5d0d5026);
+            
+        
+
+        marker_790627df84e6c60657f05c2905ce8703.bindPopup(popup_c2350092c0bceb98aaae2a252f196b76)
+        ;
+
+        
+    
+    
+            marker_790627df84e6c60657f05c2905ce8703.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 과학기술3관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_2c57329ecae52d1f3df224e415aa1aa1 = L.marker(
+                [36.6106236547993, 127.284531367121],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_b29123142a3baf901615fc1dca8562ba = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_873fbe21e2af05b472f774719ea2f68b = $(`<div id="html_873fbe21e2af05b472f774719ea2f68b" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17566108</div>`)[0];
+                popup_b29123142a3baf901615fc1dca8562ba.setContent(html_873fbe21e2af05b472f774719ea2f68b);
+            
+        
+
+        marker_2c57329ecae52d1f3df224e415aa1aa1.bindPopup(popup_b29123142a3baf901615fc1dca8562ba)
+        ;
+
+        
+    
+    
+            marker_2c57329ecae52d1f3df224e415aa1aa1.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 휘트니스센터
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_efe3a0e0ce650d1eb63248ce64ae78e6 = L.marker(
+                [36.6099790002761, 127.284296504658],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_dc3b8775fe7025f707290175f02e9e85 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f5da5678855d3e892f544901b710920d = $(`<div id="html_f5da5678855d3e892f544901b710920d" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/26870959</div>`)[0];
+                popup_dc3b8775fe7025f707290175f02e9e85.setContent(html_f5da5678855d3e892f544901b710920d);
+            
+        
+
+        marker_efe3a0e0ce650d1eb63248ce64ae78e6.bindPopup(popup_dc3b8775fe7025f707290175f02e9e85)
+        ;
+
+        
+    
+    
+            marker_efe3a0e0ce650d1eb63248ce64ae78e6.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 환경시스템공학과
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_0fbc2a864b9d316cbe2b6f777be17436 = L.marker(
+                [36.6111900172697, 127.28884024826],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_68556859973fbf0a921e6aaf2fa1f96d = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_61f42a4431d6f05dc7a9499950ccafac = $(`<div id="html_61f42a4431d6f05dc7a9499950ccafac" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/1882444495</div>`)[0];
+                popup_68556859973fbf0a921e6aaf2fa1f96d.setContent(html_61f42a4431d6f05dc7a9499950ccafac);
+            
+        
+
+        marker_0fbc2a864b9d316cbe2b6f777be17436.bindPopup(popup_68556859973fbf0a921e6aaf2fa1f96d)
+        ;
+
+        
+    
+    
+            marker_0fbc2a864b9d316cbe2b6f777be17436.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 행정관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_a6dbecca2490a66076f0fb19c4f5bac0 = L.marker(
+                [36.6105306952088, 127.290195878697],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_ffd5732c11c82097b82145e87f8b433b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_aed8f06ed59f785e3f1af9c16d1764f3 = $(`<div id="html_aed8f06ed59f785e3f1af9c16d1764f3" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/26442166</div>`)[0];
+                popup_ffd5732c11c82097b82145e87f8b433b.setContent(html_aed8f06ed59f785e3f1af9c16d1764f3);
+            
+        
+
+        marker_a6dbecca2490a66076f0fb19c4f5bac0.bindPopup(popup_ffd5732c11c82097b82145e87f8b433b)
+        ;
+
+        
+    
+    
+            marker_a6dbecca2490a66076f0fb19c4f5bac0.bindTooltip(
+                `<div>
+                     고려대학교세종캠퍼스 어학원
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_59a865d21345a07609ca73ff6a7a65a8 = L.marker(
+                [36.6101336029163, 127.288955909337],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_6362f652e177dd3aba1ef4f7dd8f2a53 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9c9bb40891f73ec9e7819f76f91c5f9a = $(`<div id="html_9c9bb40891f73ec9e7819f76f91c5f9a" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17580171</div>`)[0];
+                popup_6362f652e177dd3aba1ef4f7dd8f2a53.setContent(html_9c9bb40891f73ec9e7819f76f91c5f9a);
+            
+        
+
+        marker_59a865d21345a07609ca73ff6a7a65a8.bindPopup(popup_6362f652e177dd3aba1ef4f7dd8f2a53)
+        ;
+
+        
+    
+    
+            marker_59a865d21345a07609ca73ff6a7a65a8.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 주차장2
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_cf0e57bc7504594c0c9776fddb1bcb03 = L.marker(
+                [36.6089409803864, 127.285389203644],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_70922366cc0dc25c6c5b7a0de8c832f7 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c767458189e751ae88517d1a69ec68a3 = $(`<div id="html_c767458189e751ae88517d1a69ec68a3" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/680247479</div>`)[0];
+                popup_70922366cc0dc25c6c5b7a0de8c832f7.setContent(html_c767458189e751ae88517d1a69ec68a3);
+            
+        
+
+        marker_cf0e57bc7504594c0c9776fddb1bcb03.bindPopup(popup_70922366cc0dc25c6c5b7a0de8c832f7)
+        ;
+
+        
+    
+    
+            marker_cf0e57bc7504594c0c9776fddb1bcb03.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 종합교육관
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_dbb2a2a2d4330dc949a98c022663c35b = L.marker(
+                [36.6108983772846, 127.284205986236],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_cd2d5b4fb2bdace8da99addea0fad7c8 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fb46ea91fd55b9b4b8f464d0e3024a03 = $(`<div id="html_fb46ea91fd55b9b4b8f464d0e3024a03" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17181568</div>`)[0];
+                popup_cd2d5b4fb2bdace8da99addea0fad7c8.setContent(html_fb46ea91fd55b9b4b8f464d0e3024a03);
+            
+        
+
+        marker_dbb2a2a2d4330dc949a98c022663c35b.bindPopup(popup_cd2d5b4fb2bdace8da99addea0fad7c8)
+        ;
+
+        
+    
+    
+            marker_dbb2a2a2d4330dc949a98c022663c35b.bindTooltip(
+                `<div>
+                     세븐일레븐 세종고대기숙사점
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_3d5d450ff23cabd4700e1e44d899935f = L.marker(
+                [36.6109911124466, 127.292066524393],
+                {}
+            ).addTo(map_1b84c7de3609c3ea3d3296dab1ac976f);
+        
+    
+        var popup_d023c7abbcdfc5fbe57e5a412f291fef = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_acbde23a62d1c13df0ca172d0b8fe559 = $(`<div id="html_acbde23a62d1c13df0ca172d0b8fe559" style="width: 100.0%; height: 100.0%;">http://place.map.kakao.com/17568776</div>`)[0];
+                popup_d023c7abbcdfc5fbe57e5a412f291fef.setContent(html_acbde23a62d1c13df0ca172d0b8fe559);
+            
+        
+
+        marker_3d5d450ff23cabd4700e1e44d899935f.bindPopup(popup_d023c7abbcdfc5fbe57e5a412f291fef)
+        ;
+
+        
+    
+    
+            marker_3d5d450ff23cabd4700e1e44d899935f.bindTooltip(
+                `<div>
+                     고려대학교 세종캠퍼스 농구장
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
+</html>
