@@ -256,14 +256,6 @@ class HomeState(State):
         # 미니맵 추가하기
         minimap = MiniMap() 
         m.add_child(minimap)
-
-        # 마커 추가하기
-        for i in range(len(dfs)):
-            folium.Marker([self.df['Y'][i],self.df['X'][i]],
-                    tooltip=dfs['stores'][i],
-                    popup=dfs['place_url'][i],
-                    ).add_to(m)
-        m.save('assets/map2.html')
     
     def search_map(self):
         self.df = self.keywords()
@@ -287,6 +279,8 @@ class HomeState(State):
         self.map_search_check = False
         if os.path.exists('assets/map2.html'):
             os.remove('assets/map2.html')
+        m = folium.Map(location=[37.5518911, 126.9917937], zoom_start=12)
+        m.save('assets/map.html')
         self.map_html = "/map.html"
         self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
         self.locations=[]
