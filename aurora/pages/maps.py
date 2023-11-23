@@ -111,14 +111,16 @@ def feed_header(HomeState):
         p=4,
         border_bottom="3px solid #ededed",
     )
-        
+    
+def clear_map_iframe(HomeState):
+    map_iframe1 = HomeState.map_iframe
+    return map_iframe1
 
 # 피드 영역
 def feed(HomeState):
-    
     return rx.box(
         feed_header(HomeState),
-        rx.html(HomeState.map_iframe),  # Add this line to include the map iframe
+        rx.html(clear_map_iframe(HomeState)),  # Add this line to include the map iframe
         border_x="3px solid #ededed",
         h="100%",
     )

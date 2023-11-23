@@ -289,5 +289,7 @@ class HomeState(State):
             os.remove('assets/map2.html')
         self.map_html = "/map.html"
         self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
+        self.locations=[]
+        self.tag_search=""
         
             
