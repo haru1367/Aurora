@@ -387,9 +387,9 @@ class HomeState(State):
                         # get the page title
                         title = search_item.get("title")
                         # page snippet
-                        descripiton = search_item.get("snippet")
+                        description = search_item.get("snippet")
                         # print the results
-                        df_google.loc[start_page + i] = [title,link,descripiton] 
+                        df_google.loc[start_page + i] = [title,link,description] 
                         row_count+=1
                         if (row_count >= wanted_row) or (row_count == 300) :
                             return df_google

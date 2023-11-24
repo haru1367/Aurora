@@ -90,33 +90,32 @@ def trend(key: str, value: str):
             ),
         ),
         align='start',
-        # border='1px solid black',  # 테두리 스타일 지정
-        # border_radius='12px',  # 동그란 테두리를 위한 반지름 값 지정
+        border='1px solid black',  # 테두리 스타일 지정
+        border_radius='12px',  # 동그란 테두리를 위한 반지름 값 지정
         padding='5px',  # 테두리와 내용 사이의 여백 지정
     )
 
 def sidebar(HomeState):
     HomeState.real_time_trend
     """The sidebar displayed on the right."""
-    return rx.grid(
-        rx.vstack(
-            rx.container(
-                rx.button(
-                    '실시간 검색어',
-                    on_click = HomeState.google_crawler,
-                    border_radius="1em",
-                    box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
-                    background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
-                    box_sizing="border-box",
-                    color="white",
-                    opacity="0.6",
-                    _hover={"opacity": 1},
-                ),
+    return rx.vstack(
+        rx.container(
+            rx.button(
+                '실시간 검색어',
+                on_click = HomeState.google_crawler,
+                border_radius="1em",
+                box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                box_sizing="border-box",
+                color="white",
+                opacity="0.6",
+                _hover={"opacity": 1},
             ),
             align_items="start",
-            gap=4,
-            h="100%",
+            height='auto',
             py=4,
+            margin_bottom='5px',
+
         ),
         rx.vstack(
             rx.foreach(
@@ -126,11 +125,9 @@ def sidebar(HomeState):
                 ),
             ),
         ),
-        grid_template_rows="1fr 8fr",
         align_items="start",
         gap=4,
         h="100%",
-        py=4,
     )
     
 
