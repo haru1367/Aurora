@@ -10,7 +10,8 @@ import pandas as pd
 import numpy as np
 import folium
 from folium.plugins import MiniMap
-import time
+import requests, json
+from bs4 import BeautifulSoup as bs
 
 
 class HomeState(State):
@@ -32,6 +33,7 @@ class HomeState(State):
     map_iframe:str = f'<iframe src="{map_html}" width="100%" height="600"></iframe>'
     map_search_check:bool=False
     video_search:str=""
+    web_trend :dict
     
     def handle_file_selection(self):
         # 파일 선택 대화상자 열기
@@ -318,4 +320,20 @@ class HomeState(State):
     
     @rx.var
     def show_video(self) -> str:
-        return self.video_search    
+        return self.video_search
+    
+    def google_crawler(self):
+        url = 'https://trends.google.com/trends/api/topdailytrends?hl=ko&tz=-540&geo=KR'
+        html = requests.get(url).text
+        data = json.loads(str(html).split('\n')[1])
+        result = []
+        print("\n< 구글 실시간 검색어 >")
+        for i in range(10):
+            result.append(data['default']['trendingSearches'][i]['title'])
+            
+        self.web_trend = {i+1:result[i] for i in range(len(result))}
+        print(self.web_trend)
+    
+    @rx.var
+    def real_time_trend(self) -> dict:
+        return self.web_trend

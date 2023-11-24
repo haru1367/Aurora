@@ -80,22 +80,64 @@ def tabs():
         py=4,
     )
 
-def sidebar():
-    """The sidebar displayed on the right."""
+def trend(key: str, value: str):
     return rx.vstack(
+        rx.container(
+            rx.container(
+                rx.text(f'{key}위 : {value}'),
+            ),
+            align='start',
+            width='250px',
+        ),
+        align='start',
+    )
+
+def sidebar(HomeState):
+    """The sidebar displayed on the right."""
+    return rx.grid(
+        rx.vstack(
+            rx.container(
+                rx.button(
+                    'Real-time search terms',
+                    on_click = HomeState.google_crawler,
+                    border_radius="1em",
+                    box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                    background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                    box_sizing="border-box",
+                    color="white",
+                    opacity="0.6",
+                    _hover={"opacity": 1},
+                ),
+            ),
+            align_items="start",
+            gap=4,
+            h="100%",
+            py=4,
+        ),
+        rx.vstack(
+            rx.foreach(
+                HomeState.web_trend,
+                lambda entry: trend(
+                    entry[0],entry[1]
+                ),
+            ),
+        ),
+        grid_template_rows="1fr 6fr",
         align_items="start",
         gap=4,
         h="100%",
         py=4,
     )
+    
+
 
 # 피드의 헤더
 def feed_header(HomeState):
     
     """The header of the feed."""
     return rx.hstack(
-        rx.heading("Video", size="md"),  # 피드의 제목
-        rx.input(on_blur=HomeState.set_video_search, placeholder="Enter the link to the video.."),  # 트윗 검색을 위한 입력 상자
+        rx.heading("Web Search", size="md"),  # 피드의 제목
+        rx.input(on_blur=HomeState.set_video_search, placeholder="Search.."),  # 트윗 검색을 위한 입력 상자
         rx.button(
             "Search",
             on_click = HomeState.search_video,
@@ -128,13 +170,13 @@ def feed(HomeState):
     )
 
 # 홈 페이지
-def video():
+def websearch():
     State.check_login
     return container(
         rx.grid(
             tabs(),
             feed(HomeState),
-            sidebar(),
+            sidebar(HomeState),
             grid_template_columns="1fr 4fr 1fr",
             h="100vh",
             gap=4,

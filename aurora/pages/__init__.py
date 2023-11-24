@@ -6,3 +6,4 @@ from .findpassword import findpassword
 from .myprofile import myprofile
 from .maps import maps
 from .video import video
+from .websearch import websearch

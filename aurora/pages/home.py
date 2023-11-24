@@ -49,6 +49,7 @@ def tabs():
             tab_button("My Profile","/myprofile"),
             tab_button("Maps","/maps"),
             tab_button("video","/video"),
+            tab_button("web search","/websearch"),
             rx.box(
                 rx.heading("Followers", size="sm"),
                 rx.foreach(
