@@ -6,8 +6,6 @@ from aurora.state.home import HomeState
 # 컴포넌트를 가져옵니다.
 from ..components import container
 
-
-color = "rgb(107,99,246)"
 # 탭 버튼을 생성하는 함수
 def tab_button(name, href):
     """A tab switcher button."""
@@ -86,19 +84,20 @@ def trend(key: str, value: str):
             rx.container(
                 rx.text(f'{key}위 : {value}'),
             ),
-            align='start',
+            align='end',
             width='250px',
         ),
         align='start',
     )
 
 def sidebar(HomeState):
+    HomeState.real_time_trend
     """The sidebar displayed on the right."""
     return rx.grid(
         rx.vstack(
             rx.container(
                 rx.button(
-                    'Real-time search terms',
+                    '실시간 검색어',
                     on_click = HomeState.google_crawler,
                     border_radius="1em",
                     box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
@@ -122,7 +121,7 @@ def sidebar(HomeState):
                 ),
             ),
         ),
-        grid_template_rows="1fr 6fr",
+        grid_template_rows="1fr 8fr",
         align_items="start",
         gap=4,
         h="100%",
@@ -137,10 +136,9 @@ def feed_header(HomeState):
     """The header of the feed."""
     return rx.hstack(
         rx.heading("Web Search", size="md"),  # 피드의 제목
-        rx.input(on_blur=HomeState.set_video_search, placeholder="Search.."),  # 트윗 검색을 위한 입력 상자
+        rx.input(on_blur=HomeState.set_web_search, placeholder="Search.."),  # 트윗 검색을 위한 입력 상자
         rx.button(
             "Search",
-            on_click = HomeState.search_video,
             border_radius="1em",
             box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
             background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
@@ -181,5 +179,5 @@ def websearch():
             h="100vh",
             gap=4,
         ),
-        max_width="1300px",
+        max_width="1600px",
     )

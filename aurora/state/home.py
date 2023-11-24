@@ -34,6 +34,7 @@ class HomeState(State):
     map_search_check:bool=False
     video_search:str=""
     web_trend :dict
+    web_search :str
     
     def handle_file_selection(self):
         # 파일 선택 대화상자 열기
@@ -332,7 +333,6 @@ class HomeState(State):
             result.append(data['default']['trendingSearches'][i]['title'])
             
         self.web_trend = {i+1:result[i] for i in range(len(result))}
-        print(self.web_trend)
     
     @rx.var
     def real_time_trend(self) -> dict:

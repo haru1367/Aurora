@@ -131,6 +131,7 @@ def feed(HomeState):
     HomeState.clear_map3
     return rx.box(
         feed_header(HomeState),
+        rx.container(height='10px'),
         rx.html(HomeState.map_iframe),
         border_x="3px solid #ededed",
         h="100%",
@@ -148,5 +149,5 @@ def maps():
             h="100vh",
             gap=4,
         ),
-        max_width="1300px",
+        max_width="1600px",
     )

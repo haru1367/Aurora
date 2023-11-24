@@ -263,9 +263,9 @@ def myprofile():
             tabs(),
             feed(HomeState),
             sidebar(HomeState),
-            grid_template_columns="1fr 3.5fr 0.5fr",
+            grid_template_columns="1fr 4fr 1fr",
             h="100vh",
             gap=4,
         ),
-        max_width="1300px",
+        max_width="1600px",
     )

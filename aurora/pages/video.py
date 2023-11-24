@@ -116,12 +116,15 @@ def feed_header(HomeState):
 def feed(HomeState):
     return rx.box(
         feed_header(HomeState),
-        rx.video(
-            url = HomeState.show_video,
-            max_width = '700px',
-            max_height = 'auto',
-            playing = True,
-            loop = True,
+        rx.vstack(
+            rx.container(height='10px'),
+            rx.video(
+                url = HomeState.show_video,
+                max_width = '700px',
+                max_height = 'auto',
+                playing = True,
+                loop = True,
+            ),
         ),
         border_x="3px solid #ededed",
         h="100%",
@@ -139,5 +142,5 @@ def video():
             h="100vh",
             gap=4,
         ),
-        max_width="1300px",
+        max_width="1600px",
     )
