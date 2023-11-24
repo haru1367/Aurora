@@ -319,12 +319,3 @@ class HomeState(State):
     @rx.var
     def show_video(self) -> str:
         return self.video_search    
-
-        
-
-    
-
-        
-    
-        
-            
