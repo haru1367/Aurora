@@ -49,6 +49,7 @@ def tabs():
             tab_button("Home", "/"),  # Home 탭 버튼
             tab_button("My Profile","/myprofile"),
             tab_button("Maps","/maps"),
+            tab_button("video","/video"),
             rx.box(
                 rx.heading("Followers", size="sm"),
                 rx.foreach(
@@ -78,6 +79,15 @@ def tabs():
         py=4,
     )
 
+def sidebar():
+    """The sidebar displayed on the right."""
+    return rx.vstack(
+        align_items="start",
+        gap=4,
+        h="100%",
+        py=4,
+    )
+
 # 피드의 헤더
 def feed_header(HomeState):
     
@@ -88,17 +98,6 @@ def feed_header(HomeState):
         rx.button(
             "Search",
             on_click = HomeState.search_video,
-            border_radius="1em",
-            box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
-            background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
-            box_sizing="border-box",
-            color="white",
-            opacity="0.6",
-            _hover={"opacity": 1},
-        ),
-        rx.button(
-            "clear",
-            on_click = HomeState.clear_search_video,
             border_radius="1em",
             box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
             background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
@@ -118,8 +117,10 @@ def feed(HomeState):
         feed_header(HomeState),
         rx.video(
             url = HomeState.show_video,
-            max_width = '100%',
-            max_height = '100%',
+            max_width = '700px',
+            max_height = 'auto',
+            playing = True,
+            loop = True,
         ),
         border_x="3px solid #ededed",
         h="100%",
@@ -127,12 +128,13 @@ def feed(HomeState):
 
 # 홈 페이지
 def video():
-    """The home page."""
+    State.check_login
     return container(
         rx.grid(
             tabs(),
             feed(HomeState),
-            grid_template_columns="1fr 4fr",
+            sidebar(),
+            grid_template_columns="1fr 4fr 1fr",
             h="100vh",
             gap=4,
         ),

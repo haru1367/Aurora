@@ -49,6 +49,7 @@ def tabs():
             tab_button("Home", "/"),  # Home 탭 버튼
             tab_button("My Profile","/myprofile"),
             tab_button("Maps","/maps"),
+            tab_button("video","/video"),
             rx.box(
                 rx.heading("Followers", size="sm"),
                 rx.foreach(
@@ -75,6 +76,15 @@ def tabs():
             align_items="left",
             gap=4,
         ),
+        py=4,
+    )
+
+def sidebar():
+    """The sidebar displayed on the right."""
+    return rx.vstack(
+        align_items="start",
+        gap=4,
+        h="100%",
         py=4,
     )
 
@@ -127,12 +137,13 @@ def feed(HomeState):
 
 # 홈 페이지
 def maps():
-    """The home page."""
+    State.check_login
     return container(
         rx.grid(
             tabs(),
             feed(HomeState),
-            grid_template_columns="1fr 4fr",
+            sidebar(),
+            grid_template_columns="1fr 4fr 1fr",
             h="100vh",
             gap=4,
         ),

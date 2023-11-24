@@ -10,7 +10,7 @@ from ..components import container
 
 
 # 탭 버튼을 생성하는 함수
-def tab_button1(name, href):
+def tab_button(name, href):
     """A tab switcher button."""
     return rx.link(
         rx.icon(tag="star", mr=2),  # 별 모양 아이콘
@@ -47,7 +47,10 @@ def tabs():
                     ),  # 앱 이름
                 ),
             ),
-            tab_button1("Home", "/"),  # Home 탭 버튼
+            tab_button("Home", "/"),  # Home 탭 버튼
+            tab_button("My Profile","/myprofile"),
+            tab_button("Maps","/maps"),
+            tab_button("video","/video"),
             rx.button(
                 rx.icon(tag="moon"),
                 on_click=rx.toggle_color_mode,
@@ -253,7 +256,7 @@ def feed(HomeState):
 
 # 마이 페이지
 def myprofile():
-    """The home page."""
+    State.check_login
     return container(
         rx.grid(
             tabs(),

@@ -27,12 +27,11 @@ class HomeState(State):
     REST_API_KEY: str
     locations: list[str]
     df:pd.DataFrame  
-    map_html:str
     tag_search:str
     map_html:str = "/map.html"
     map_iframe:str = f'<iframe src="{map_html}" width="100%" height="600"></iframe>'
     map_search_check:bool=False
-    video_search:str
+    video_search:str=""
     
     def handle_file_selection(self):
         # 파일 선택 대화상자 열기
@@ -293,27 +292,22 @@ class HomeState(State):
 
     @rx.var
     def map_iframe1(self) -> str:
-        print(self.map_iframe)
         return self.map_iframe
     
     @rx.var
     def clear_map1(self) -> list[str]:
-        print(self.locations)
         return self.locations
     
     @rx.var
     def clear_map2(self) -> str:
-        print(self.tag_search)
         return self.tag_search
     
     @rx.var
     def clear_map3(self) -> pd.DataFrame:
-        print(self.df)
         return self.df
     
     @rx.var
     def clear_map4(self) -> str:
-        print(self.map_html)
         return self.map_html
     
     def search_video(self):
@@ -321,8 +315,6 @@ class HomeState(State):
             return rx.window_alert('Enter the link to the video..')
         self.video_search = self.video_search
         
-    def clear_search_video(self):
-        self.video_search = ""
     
     @rx.var
     def show_video(self) -> str:

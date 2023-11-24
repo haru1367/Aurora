@@ -148,8 +148,8 @@ def composer(HomeState):
     """The composer for new tweets."""
     return rx.grid(
         rx.hstack(
-            rx.container(width='10px'),
             rx.avatar(size="md"),  # 사용자의 아바타 이미지
+            rx.container(width='30px'),
             rx.text_area(
                 value=HomeState.tweet,
                 w="600px",
@@ -161,6 +161,7 @@ def composer(HomeState):
                 _focus={"border": 0, "outline": 0, "boxShadow": "none"},
                 on_change=HomeState.set_tweet,
             ),
+            margin_left = '30px',
         ),
         rx.hstack(
             rx.button(
@@ -261,13 +262,13 @@ def feed(HomeState):
 
 # 홈 페이지
 def home():
-    """The home page."""
+    State.check_login
     return container(
         rx.grid(
             tabs(),
             feed(HomeState),
             sidebar(HomeState),
-            grid_template_columns="1fr 3fr 1fr",
+            grid_template_columns="1fr 4fr 1fr",
             h="100vh",
             gap=4,
         ),
