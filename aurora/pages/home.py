@@ -50,6 +50,7 @@ def tabs():
             tab_button("Maps","/maps"),
             tab_button("video","/video"),
             tab_button("web search","/websearch"),
+            tab_button("ai chat","/aichat"),
             rx.box(
                 rx.heading("Followers", size="sm"),
                 rx.foreach(

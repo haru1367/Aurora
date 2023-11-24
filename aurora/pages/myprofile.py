@@ -52,6 +52,7 @@ def tabs():
             tab_button("Maps","/maps"),
             tab_button("video","/video"),
             tab_button("web search","/websearch"),
+            tab_button("ai_chat","aichat"),
             rx.button(
                 rx.icon(tag="moon"),
                 on_click=rx.toggle_color_mode,

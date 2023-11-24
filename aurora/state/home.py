@@ -15,7 +15,7 @@ import urllib
 import re
 import urllib.request
 import sys
-
+import bardapi
 
 class HomeState(State):
     """The state for the home page."""
@@ -43,7 +43,10 @@ class HomeState(State):
     video_search:str=""
     web_trend :dict
     web_search :str
+    chat_input:str
+    bard_response:str
     Trash_Link = ["kin", "dcinside", "fmkorea", "ruliweb", "theqoo", "clien", "mlbpark", "instiz", "todayhumor"] 
+    os.environ['_BARD_API_KEY'] = "dQjbI-bPB1ytJCjk6ptXe6kyuuXfwKHgZgjNQImMaVcHejcdfysLmZYpu1u3IrsXdjfJOA."
     
     def handle_file_selection(self):
         # 파일 선택 대화상자 열기
@@ -337,7 +340,6 @@ class HomeState(State):
         html = requests.get(url).text
         data = json.loads(str(html).split('\n')[1])
         result = []
-        print("\n< 구글 실시간 검색어 >")
         for i in range(10):
             result.append(data['default']['trendingSearches'][i]['title'])
             
@@ -513,3 +515,11 @@ class HomeState(State):
     @rx.var
     def search_table(self)->pd.DataFrame:
         return self.search_df
+    
+    @rx.var
+    def bard_answer(self)->str:
+        return self.bard_response
+    
+    def bard_chat(self):
+        self.bard_response = bardapi.core.Bard(token='dQjbI-bPB1ytJCjk6ptXe6kyuuXfwKHgZgjNQImMaVcHejcdfysLmZYpu1u3IrsXdjfJOA.').get_answer(self.chat_input)
+        

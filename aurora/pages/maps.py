@@ -51,23 +51,7 @@ def tabs():
             tab_button("Maps","/maps"),
             tab_button("video","/video"),
             tab_button("web search","/websearch"),
-            rx.box(
-                rx.heading("Followers", size="sm"),
-                rx.foreach(
-                    HomeState.followers,
-                    lambda follow: rx.vstack(
-                        rx.hstack(
-                            rx.avatar(name=follow.follower_username, size="sm"),  # 팔로워의 아바타 이미지
-                            rx.text(follow.follower_username),  # 팔로워의 사용자 이름
-                        width="100%",
-                        ),
-                        padding="1em",
-                    ),
-                ),
-                p=4,
-                border_radius="md",
-                border="1px solid #eaeaea",
-            ),
+            tab_button("ai chat","/aichat"),
             rx.button("Sign out", on_click=State.logout),  # 로그아웃 버튼
             rx.button(
                 rx.icon(tag="moon"),

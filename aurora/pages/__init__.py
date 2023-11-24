@@ -7,3 +7,4 @@ from .myprofile import myprofile
 from .maps import maps
 from .video import video
 from .websearch import websearch
+from .aichat import aichat
