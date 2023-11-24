@@ -8,4 +8,12 @@ __pycache__/
 
 reflex.db
 
-key.json
+kakaoapikey.json
+
+googleapikey.json
+
+googlesearchengine.json
+
+naverclientid.json
+
+naverclientsecret.json

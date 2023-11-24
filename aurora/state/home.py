@@ -5,13 +5,16 @@ from .base import Follows, State, Tweet, User
 import os,json
 import tkinter as tk
 from tkinter import filedialog
-import requests
 import pandas as pd
 import numpy as np
 import folium
 from folium.plugins import MiniMap
 import requests, json
 from bs4 import BeautifulSoup as bs
+import urllib
+import re
+import urllib.request
+import sys
 
 
 class HomeState(State):
@@ -25,9 +28,14 @@ class HomeState(State):
     show_right: bool = False
     show_top: bool = False
     show: bool = False
-    REST_API_KEY: str
+    KAKAO_REST_API_KEY: str
+    Google_API_KEY : str
+    Google_SEARCH_ENGINE_ID : str
+    Naver_client_id:str
+    Naver_client_secret:str
     locations: list[str]
-    df:pd.DataFrame  
+    df:pd.DataFrame
+    search_df:pd.DataFrame  
     tag_search:str
     map_html:str = "/map.html"
     map_iframe:str = f'<iframe src="{map_html}" width="100%" height="600"></iframe>'
@@ -35,6 +43,7 @@ class HomeState(State):
     video_search:str=""
     web_trend :dict
     web_search :str
+    Trash_Link = ["kin", "dcinside", "fmkorea", "ruliweb", "theqoo", "clien", "mlbpark", "instiz", "todayhumor"] 
     
     def handle_file_selection(self):
         # 파일 선택 대화상자 열기
@@ -204,15 +213,15 @@ class HomeState(State):
         
     def kakao_api(self): 
         key=''
-        with open('key.json','r')as f:
+        with open('kakaoapikey.json','r')as f:
             key = json.load(f)
-        self.REST_API_KEY = key['key']
+        self.KAKAO_REST_API_KEY = key['key']
         
     def elec_location(self,region,page_num):
         self.kakao_api()
         url = 'https://dapi.kakao.com/v2/local/search/keyword.json'
         params = {'query': region,'page': page_num}
-        headers = {"Authorization": f'KakaoAK {self.REST_API_KEY}'}
+        headers = {"Authorization": f'KakaoAK {self.KAKAO_REST_API_KEY}'}
 
         places = requests.get(url, params=params, headers=headers).json()['documents']
         return places
@@ -337,3 +346,170 @@ class HomeState(State):
     @rx.var
     def real_time_trend(self) -> dict:
         return self.web_trend
+    
+    def google_api(self):
+        key=''
+        with open('googleapikey.json','r')as f:
+            key = json.load(f)
+        self.Google_API_KEY = key['key']
+        
+        key1 = ''
+        with open('googlesearchengine.json','r') as f:
+            key1 = json.load(f)
+        self.Google_SEARCH_ENGINE_ID = key1['key']
+    
+    def Google_API(self,query, wanted_row):
+        query= query.replace("|","OR")
+        query += "-filetype:pdf"
+        start_pages=[]
+
+        df_google= pd.DataFrame(columns=['Title','Link','Description'])
+
+        row_count =0 
+        self.google_api()
+
+
+        for i in range(1,wanted_row+1000,10):
+            start_pages.append(i)
+
+        for start_page in start_pages:
+            url = f"https://www.googleapis.com/customsearch/v1?key={self.Google_API_KEY}&cx={self.Google_SEARCH_ENGINE_ID}&q={query}&start={start_page}"
+            data = requests.get(url).json()
+            search_items = data.get("items")
+            
+            try:
+                for i, search_item in enumerate(search_items, start=1):
+                    # extract the page url
+                    link = search_item.get("link")
+                    if any(trash in link for trash in self.Trash_Link):
+                        pass
+                    else: 
+                        # get the page title
+                        title = search_item.get("title")
+                        # page snippet
+                        descripiton = search_item.get("snippet")
+                        # print the results
+                        df_google.loc[start_page + i] = [title,link,descripiton] 
+                        row_count+=1
+                        if (row_count >= wanted_row) or (row_count == 300) :
+                            return df_google
+            except:
+                return df_google
+
+        
+        return df_google
+    
+    def naver_api(self):
+        key=''
+        with open('naverclientid.json','r')as f:
+            key = json.load(f)
+        self.Naver_client_id = key['key']
+        
+        key1 = ''
+        with open('Naver_client_secret.json','r') as f:
+            key1 = json.load(f)
+        self.Google_SEARCH_ENGINE_ID = key1['key']
+    
+    def Naver_API(self,query,wanted_row):
+        query = urllib.parse.quote(query)
+
+        display=100
+        start=1
+        end=wanted_row+10000
+        idx=0
+        sort='sim'
+
+        df= pd.DataFrame(columns=['Title','Link','Description'])
+        row_count= 0 
+        
+        for start_index in range(start,end,display):
+            url = "https://openapi.naver.com/v1/search/webkr?query="+ query +\
+                "&display=" + str(display)+ \
+                "&start=" + str(start_index) + \
+                "&sort=" + sort
+            request = urllib.request.Request(url)
+            request.add_header("X-Naver-Client-Id",self.Naver_client_id)
+            request.add_header("X-Naver-Client-Secret",self.Naver_client_secret)
+            try:
+                response = urllib.request.urlopen(request)
+                rescode = response.getcode()
+                if(rescode==200):
+                    response_body = response.read()
+                    items= json.loads(response_body.decode('utf-8'))['items']
+                    remove_tag = re.compile('<.*?>')
+                    for item_index in range(0,len(items)):
+                        link = items[item_index]['link']
+                        if any(trash in link for trash in self.Trash_Link):
+                            idx+=1
+                            pass
+                        else:
+                            title = re.sub(remove_tag, '', items[item_index]['title'])
+                            description = re.sub(remove_tag, '', items[item_index]['description'])
+                            df.loc[idx] =[title,link,description]
+                            idx+=1
+                            row_count+=1
+                            if (row_count >= wanted_row) or (row_count == 300):
+                                return df
+                            
+            except:
+                return df
+    
+    def Daum_API(self,query,wanted_row):
+        pages= wanted_row//10 
+        self.kakao_api()
+        method = "GET"
+        url = "https://dapi.kakao.com/v2/search/web"
+        header = {'authorization': f'KakaoAK {self.KAKAO_REST_API_KEY}'}
+
+        df= pd.DataFrame(columns=['Title','Link','Description'])
+
+        row_count=0
+
+        for page in range(1,pages+10):
+            params = {'query' : query, 'page' : page}
+            request = requests.get( url, params= params, headers=header )
+            for i, item in enumerate(request.json()["documents"], start=1):
+                link = item['url']
+                try:
+                    written_year=int(item['datetime'][:4])
+                except:
+                    written_year = 2023
+
+                if (any(trash in link for trash in self.Trash_Link) or (written_year <2020)):
+                    pass
+                else:
+                    title= item["title"]
+                    description = item["contents"]
+                    df.loc[10*page+i] =[title,link,description]
+                    row_count+=1
+                    if (row_count >= wanted_row) or (row_count == 300):
+                        remove_tag = re.compile('<.*?>')
+                        df['Title'] =df['Title'].apply(lambda x :re.sub(remove_tag, '',x))
+                        df['Description'] =df['Description'].apply(lambda x :re.sub(remove_tag, '',x))
+
+                        return df
+                    
+
+        remove_tag = re.compile('<.*?>')
+        df['Title'] =df['Title'].apply(lambda x :re.sub(remove_tag, '',x))
+        df['Description'] =df['Description'].apply(lambda x :re.sub(remove_tag, '',x))
+        
+        return df
+    
+    def final(self,query,wanted_row=100):
+        df_google = self.Google_API(query,wanted_row)
+        df_google['search_engine']='Google'
+        df_naver = self.Naver_API(query,wanted_row)
+        df_naver['search_engine']='Naver'
+        df_daum = self.Daum_API(query,wanted_row)
+        df_daum['search_engine']='Daum'
+        df_final= pd.concat([df_google,df_naver,df_daum])
+        df_final.reset_index(inplace=True,drop=True)
+        return df_final
+    
+    def search_all(self):
+        self.search_df = self.final(query=self.web_search, wanted_row=100)
+    
+    @rx.var
+    def search_table(self)->pd.DataFrame:
+        return self.search_df

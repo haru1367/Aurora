@@ -80,14 +80,19 @@ def tabs():
 
 def trend(key: str, value: str):
     return rx.vstack(
-        rx.container(
+        rx.box(
             rx.container(
-                rx.text(f'{key}위 : {value}'),
+                rx.container(
+                    rx.text(f'{key}위 : {value}'),
+                ),
+                align='start',
+                width='250px',
             ),
-            align='end',
-            width='250px',
         ),
         align='start',
+        # border='1px solid black',  # 테두리 스타일 지정
+        # border_radius='12px',  # 동그란 테두리를 위한 반지름 값 지정
+        padding='5px',  # 테두리와 내용 사이의 여백 지정
     )
 
 def sidebar(HomeState):
@@ -139,6 +144,7 @@ def feed_header(HomeState):
         rx.input(on_blur=HomeState.set_web_search, placeholder="Search.."),  # 트윗 검색을 위한 입력 상자
         rx.button(
             "Search",
+            on_click = HomeState.search_all,
             border_radius="1em",
             box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
             background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
@@ -154,14 +160,12 @@ def feed_header(HomeState):
 
 # 피드 영역
 def feed(HomeState):
+    HomeState.search_table
     return rx.box(
         feed_header(HomeState),
-        rx.video(
-            url = HomeState.show_video,
-            max_width = '700px',
-            max_height = 'auto',
-            playing = True,
-            loop = True,
+        rx.data_table(
+            data=HomeState.search_df,
+            font_size = '8px',
         ),
         border_x="3px solid #ededed",
         h="100%",
