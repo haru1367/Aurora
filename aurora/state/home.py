@@ -539,7 +539,7 @@ class HomeState(State):
         self.kakao_api()
         api = KoGPT(service_key = self.KAKAO_REST_API_KEY)
         prompt = self.chat_input
-        max_tokens=500
+        max_tokens=300
         self.kogpt_response = api.generate(prompt, max_tokens, temperature = 0.01)['generations'][0]['text']
         
         with rx.session() as session:
