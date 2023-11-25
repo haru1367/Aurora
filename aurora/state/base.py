@@ -28,6 +28,11 @@ class Tweet(rx.Model, table=True):
     created_at: str = Field()
     image_content: str = Field()
     author: str = Field()
+    
+class GPT(rx.Model, table=True):
+    content: str = Field()
+    author: str = Field()
+    created_at : str = Field()
 
 class State(rx.State):
     """The base state for the app."""

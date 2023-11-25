@@ -78,11 +78,22 @@ def feed_header(HomeState):
     
     """The header of the feed."""
     return rx.hstack(
-        rx.heading("Ai Chat", size="md"),  # 피드의 제목
+        rx.heading("KoGPT", size="md"),  # 피드의 제목
         rx.input(on_blur=HomeState.set_chat_input, placeholder="Enter chat.."),  # 트윗 검색을 위한 입력 상자
         rx.button(
-            "Search",
+            "Enter",
             on_click = HomeState.kogptapi,
+            border_radius="1em",
+            box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+            background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+            box_sizing="border-box",
+            color="white",
+            opacity="0.6",
+            _hover={"opacity": 1},
+        ),
+        rx.button(
+            "Clear",
+            on_click = HomeState.clear_gpt,
             border_radius="1em",
             box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
             background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
@@ -95,20 +106,65 @@ def feed_header(HomeState):
         p=4,
         border_bottom="3px solid #ededed",
     )
+    
+# 개별 트윗을 표시하는 함수
+def gpt(gpt):
+    """Display for an individual tweet in the feed."""
+    return rx.vstack(
+        rx.box(
+            rx.hstack(
+                rx.hstack(
+                    rx.container(width='2px'),
+                    rx.avatar(name=gpt.author, size="sm"),  # 트윗 작성자의 아바타 이미지
+                ),
+                rx.box(
+                    rx.hstack(
+                        rx.text("@" + gpt.author, font_weight="bold"),  # 트윗 작성자의 사용자 이름
+                        rx.text("["+ gpt.created_at +"]"),
+                    ),
+                    rx.text(gpt.content, width="auto"),  # 트윗 내용
+                    width = 'auto',
+                ),
+                py=4,
+                gap=1,
+                border="1px solid #ededed",
+                width='auto',
+            ),
+            align_items='start',
+            width = '97%',
+            margin_left='5px',
+        ),
+        rx.container(height='5px'),
+        margin_left='10px',
+        align_items='start',
+        width='auto',
+    )
+
 
 # 피드 영역
 def feed(HomeState):
     HomeState.kogpt_answer
+    HomeState.saved_gpt
     return rx.box(
         feed_header(HomeState),
         rx.container(height='10px'),
-        rx.container(
-            rx.text(
-                HomeState.kogpt_response,
+        rx.cond(
+            HomeState.gpts,
+            rx.foreach(
+                HomeState.gpts,
+                gpt
             ),
-            width = '100%',
-            margin_left='10px',
-            align_items='start',
+            rx.vstack(
+                rx.button(
+                    rx.icon(
+                        tag="repeat",
+                        mr=1,
+                    ),
+                    rx.text("Click to load gpt"),
+                    on_click=HomeState.get_gpt,
+                ),  # 트윗을 불러오는 버튼
+                p=4,
+            ),
         ),
         border_x="3px solid #ededed",
         h="100%",

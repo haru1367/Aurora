@@ -1,7 +1,7 @@
 """The state for the home page."""
 from datetime import datetime
 import reflex as rx
-from .base import Follows, State, Tweet, User
+from .base import Follows, State, Tweet, User, GPT
 import os,json
 import tkinter as tk
 from tkinter import filedialog
@@ -45,6 +45,7 @@ class HomeState(State):
     web_search :str
     chat_input:str
     kogpt_response:str
+    gpts: list[GPT] = []
     Trash_Link = ["kin", "dcinside", "fmkorea", "ruliweb", "theqoo", "clien", "mlbpark", "instiz", "todayhumor"] 
     
     def handle_file_selection(self):
@@ -106,7 +107,7 @@ class HomeState(State):
             tweet = Tweet(
                 author=self.user.username,
                 content=self.tweet,
-                created_at=datetime.now().strftime("%m/%d %H"),
+                created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 image_content=", ".join(self.files),
             )
             
@@ -516,14 +517,67 @@ class HomeState(State):
         return self.search_df
         
     
-    def kogptapi(self):
-        self.kakao_api()
-        api = KoGPT(service_key = self.KAKAO_REST_API_KEY)
-        prompt = self.chat_input
-        max_tokens=32
-        self.kogpt_response = api.generate(prompt, max_tokens, temperature = 0.01)['generations'][0]['text']
-        print(self.kogpt_response)
+    # def kogptapi(self):
+    #     self.kakao_api()
+    #     api = KoGPT(service_key = self.KAKAO_REST_API_KEY)
+    #     prompt = self.chat_input
+    #     max_tokens=32
+    #     self.kogpt_response = api.generate(prompt, max_tokens, temperature = 0.01)['generations'][0]['text']
+    #     print(self.kogpt_response)
     
     @rx.var
     def kogpt_answer(self) ->str:
-        return self.kogpt_response    
+        return self.kogpt_response
+    
+    def kogptapi(self):
+        """Post a tweet."""
+        if not self.logged_in:
+            return rx.window_alert("Please log in first")
+        if len(self.chat_input)==0:
+            return rx.window_alert('Please write at least one character!')
+        
+        self.kakao_api()
+        api = KoGPT(service_key = self.KAKAO_REST_API_KEY)
+        prompt = self.chat_input
+        max_tokens=500
+        self.kogpt_response = api.generate(prompt, max_tokens, temperature = 0.01)['generations'][0]['text']
+        
+        with rx.session() as session:
+            gpt = GPT(
+                author=self.user.username,
+                content=self.chat_input,
+                created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            )
+            
+            session.add(gpt)
+            session.commit()
+            self.chat_input= ""
+            
+        with rx.session() as session:
+            gpt = GPT(
+                author = 'KoGPT',
+                content=self.kogpt_response,
+                created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            )
+            session.add(gpt)
+            session.commit()
+            self.kogpt_response=''
+            
+        return self.get_gpt()
+    
+    def get_gpt(self):
+        with rx.session() as session:
+            self.gpts = session.query(GPT).all()[::-1]  
+            
+    def clear_gpt(self):
+        with rx.session() as session:
+            session.query(GPT).delete()
+            session.commit()
+        
+        self.gpts=self.get_gpt()
+        print(self.gpts)
+    
+    @rx.var
+    def saved_gpt(self) -> list[GPT] :
+        return self.gpts
+              
