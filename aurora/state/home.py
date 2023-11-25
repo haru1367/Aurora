@@ -521,7 +521,7 @@ class HomeState(State):
         api = KoGPT(service_key = self.KAKAO_REST_API_KEY)
         prompt = self.chat_input
         max_tokens=32
-        self.kogpt_response = api.generate(prompt, max_tokens, temperature = 0.3)['generations'][0]['text']
+        self.kogpt_response = api.generate(prompt, max_tokens, temperature = 0.01)['generations'][0]['text']
         print(self.kogpt_response)
     
     @rx.var

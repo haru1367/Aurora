@@ -102,11 +102,13 @@ def feed(HomeState):
     return rx.box(
         feed_header(HomeState),
         rx.container(height='10px'),
-        rx.vstack(
+        rx.container(
             rx.text(
                 HomeState.kogpt_response,
             ),
-            height='auto',
+            width = '100%',
+            margin_left='10px',
+            align_items='start',
         ),
         border_x="3px solid #ededed",
         h="100%",
