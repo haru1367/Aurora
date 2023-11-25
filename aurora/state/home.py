@@ -19,49 +19,46 @@ from PyKakao import KoGPT
 
 class HomeState(State):
     """The state for the home page."""
-    tweet: str
-    tweets: list[Tweet] = []
-    friend: str
-    search: str
-    img: list[str]
-    files: list[str] = []  # Add files attribute
+    tweet: str                                                                 # 유저의 게시물 내용을 저장할 변수
+    tweets: list[Tweet] = []                                                   # 게시물 내용들을 리스트로 저장
+    friend: str                                                                # 유저를 검색하기 위한 입력변수
+    search: str                                                                # 게시물을 검색하기 위한 입력변수
+    img: list[str]                                                             # 이미지 파일 저장변수
+    files: list[str] = []  # Add files attribute                               # 이미지 파일 저장변수
     show_right: bool = False
     show_top: bool = False
     show: bool = False
-    KAKAO_REST_API_KEY: str
-    Google_API_KEY : str
-    Google_SEARCH_ENGINE_ID : str
-    Naver_client_id:str
-    Naver_client_secret:str
-    locations: list[str]
-    df:pd.DataFrame
-    search_df:pd.DataFrame  
-    tag_search:str
-    map_html:str = "/map.html"
-    map_iframe:str = f'<iframe src="{map_html}" width="100%" height="600"></iframe>'
-    map_search_check:bool=False
-    video_search:str=""
-    web_trend :dict
-    web_search :str
-    chat_input:str
-    kogpt_response:str
-    gpts: list[GPT] = []
-    Trash_Link = ["kin", "dcinside", "fmkorea", "ruliweb", "theqoo", "clien", "mlbpark", "instiz", "todayhumor"] 
+    KAKAO_REST_API_KEY: str                                                    # Kakao Rest API Key 저장 변수
+    Google_API_KEY : str                                                       # Google API Key 저장 변수
+    Google_SEARCH_ENGINE_ID : str                                              # Google Search Engine Id 키 저장 변수
+    Naver_client_id:str                                                        # Naver Client id  키 저장 변수
+    Naver_client_secret:str                                                    # Naver Client Secret 키 저장변수
+    locations: list[str]                                                       # Map 키워드 검색 입력변수 저장 리스트
+    df:pd.DataFrame                                                            # Map 키워드 검색 결과 저장 데이터 프레임
+    search_df:pd.DataFrame                                                     # 웹 크롤링 검색 결과 저장 데이터프레임
+    tag_search:str                                                             # Map 키워드 입력변수
+    map_html:str = "/map.html"                                                 # Map 검색 결과 html 변환 파일
+    map_iframe:str = f'<iframe src="{map_html}" width="100%" height="600"></iframe>' # html파일 이미지 태그 변환 
+    video_search:str=""                                                        # 비디오 링크 입력 변수
+    web_trend :dict                                                            # 실시간 트렌드 순위 저장 딕셔너리
+    web_search :str                                                            # 웹 크롤링 검색어 입력 변수
+    chat_input:str                                                             # AI Chat 입력변수
+    kogpt_response:str                                                         # KoGPT 답변 저장 변수
+    gpts: list[GPT] = []                                                       # KoGPT 전체 답변 저장 리스트
+    Trash_Link = ["kin", "dcinside", "fmkorea", "ruliweb", "theqoo", "clien", "mlbpark", "instiz", "todayhumor"] # 웹 크롤링 시 제외할 결과목록
     
-    def handle_file_selection(self):
-        # 파일 선택 대화상자 열기
-        root = tk.Tk()
-        root.withdraw()  # 화면에 창을 보이지 않도록 함
+    # 파일 선택함수
+    def handle_file_selection(self):                                          
+        root = tk.Tk()                                                        # 파일 선택 대화상자 열기
+        root.withdraw()                                                       # 화면에 창을 보이지 않도록 함
         file_paths = filedialog.askopenfilenames()
 
         # 선택된 파일 경로에 대한 처리
         for file_path in file_paths:
-            # 파일 이름과 확장자를 추출
-            file_name = os.path.basename(file_path)
+            file_name = os.path.basename(file_path)                           # 파일 이름과 확장자를 추출
             file_extension = os.path.splitext(file_name)[1]
             
-            # 선택한 파일을 저장
-            upload_data = open(file_path, "rb").read()
+            upload_data = open(file_path, "rb").read()                        # 선택한 파일을 저장
             outfile = f".web/public/{file_name}"
 
             # Save the file.
@@ -74,15 +71,11 @@ class HomeState(State):
             # Set the files attribute
             self.files.append(file_name)
 
-
-    async def handle_upload(
+    
+    #파일 업로드 함수
+    async def handle_upload(                                                 
         self, files: list[rx.UploadFile]
     ):
-        """Handle the upload of file(s).
-
-        Args:
-            files: The uploaded files.
-        """
         for file in files:
             upload_data = await file.read()
             outfile = f"/{file.filename}"
@@ -94,111 +87,118 @@ class HomeState(State):
             # Update the img var.
             self.img.append(file.filename)
     
+    #게시물 업로드 함수
     async def post_tweet(self):
-        """Post a tweet."""
         if not self.logged_in:
-            return rx.window_alert("Please log in to post a tweet.")
+            return rx.window_alert("Please log in to post a tweet.")                 # 로그인이 되어있지 않을 시 경고 메시지
         if len(self.tweet)==0:
-            return rx.window_alert('Please write at least one character!')
+            return rx.window_alert('Please write at least one character!')           # story 추가시 최소 한 글자 입력 경고 메시지
         
-        await self.handle_upload(rx.upload_files())
+        await self.handle_upload(rx.upload_files())                                  # 이미지 추가
         
-        with rx.session() as session:
+        with rx.session() as session:                                                # session에 생성한 story 모델 저장
             tweet = Tweet(
-                author=self.user.username,
-                content=self.tweet,
-                created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                image_content=", ".join(self.files),
+                author=self.user.username,                                           # author : 유저 아이디
+                content=self.tweet,                                                  # content : 유저 story 입력 내용
+                created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),             # created_at : stroy 작성 시간
+                image_content=", ".join(self.files),                                 # image_content : 이미지 파일
             )
             
             session.add(tweet)
             session.commit()
-            self.tweet = ""
+            self.tweet = ""                                                          # session에 저장 후 story내용 초기화
             self.img=[]
             self.files=[]
             
-        return self.get_tweets()
+        return self.get_tweets()                                                     # story 게시 즉시 내용 피드에 반영
 
+    #story 내용 불러오는 함수
     def get_tweets(self):
         """Get tweets from the database."""
         with rx.session() as session:
-            if self.search:
+            if self.search:                                                          # story 검색 입력어가 있을경우
                 self.tweets = (
                     session.query(Tweet)
-                    .filter(Tweet.content.contains(self.search))
+                    .filter(Tweet.content.contains(self.search))                     # story 검색 입력단어가 포함된 story를 모두 가져옴
                     .all()[::-1]
                 )
             else:
-                self.tweets = session.query(Tweet).all()[::-1]
+                self.tweets = session.query(Tweet).all()[::-1]                       # session에 저장된 모든 story를 가져옴
 
+    #story 검색 입력어 세팅 함수
     def set_search(self, search):
         """Set the search query."""
         self.search = search
-        return self.get_tweets()
+        return self.get_tweets()                                                     # 검색어에 맞는 story내용 불러오기
 
+    #follow 함수
     def follow_user(self, username):
         """Follow a user."""
         with rx.session() as session:
             friend = Follows(
-                follower_username=self.user.username, followed_username=username
-            )
-            session.add(friend)
-            session.commit()
+                follower_username=self.user.username, followed_username=username     # Follow모델에 follower_username에 현재 로그인 된 유저이름저장
+            )                                                                        # Follow모델에 followed_username에 팔로잉 한 유저의 이름 저장
+            session.add(friend)                                                      # session에 friend이름으로 생성된 Follow모델 추가
+            session.commit()                                                         # session 저장
     
+    #unfollow 함수
     def unfollow_user(self, username):
         """Unfollow a user."""
-        with rx.session() as session:
-            follow = (
+        with rx.session() as session: 
+            follow = (                                                                       # follow한 유저 목록 불러오기
                 session.query(Follows)
                 .filter_by(follower_username=self.user.username, followed_username=username)
                 .first()
             )
-            if follow:
-                session.delete(follow)
-                session.commit()
+            if follow:                                                                       
+                session.delete(follow)                                                       # follow가 되어있으면 session에서 삭제
+                session.commit()                                                             # session 저장
 
                 # Refresh the followers list after unfollowing
-                self.followers = (
-                    session.query(Follows)
+                self.followers = (                                                           # 삭제 후 session에 저장되어있는 follow 목록 불러오기
+                    session.query(Follows)                                                   
                     .filter(Follows.followed_username == self.user.username)
                     .all()
                 )        
     
-    @rx.var
+    # 팔로잉 목록을 불러오는 함수
+    @rx.var                                                                                  # 실시간으로 값의 변화 감지
     def following(self) -> list[Follows]:
         """Get a list of users the current user is following."""
-        if self.logged_in:
+        if self.logged_in:                                                                   # 로그인 되어있을 때
             with rx.session() as session:
                 return (
-                    session.query(Follows)
+                    session.query(Follows)                                                   # session에 저장되어 있는 follow 목록 불러오기
                     .filter(Follows.follower_username == self.user.username)
                     .all()
                 )
         return []
 
+    # 팔로워 목록을 불러오는 함수
     @rx.var
-    def followers(self) -> list[Follows]:
+    def followers(self) -> list[Follows]:                                                    
         """Get a list of users following the current user."""
-        if self.logged_in:
+        if self.logged_in:                                                                   # 로그인 되어 있을 시
             with rx.session() as session:
                 return (
-                    session.query(Follows)
+                    session.query(Follows)                                                   # session에 저장된 follower 목록 불러오기
                     .where(Follows.followed_username == self.user.username)
                     .all()
                 )
         return []
 
+    # user를 검색하는 함수
     @rx.var
     def search_users(self) -> list[User]:
         """Get a list of users matching the search query."""
-        if self.friend != "":
+        if self.friend != "":                                                                # user을 검색하는 입력어가 있을 때
             with rx.session() as session:
-                current_username = self.user.username if self.user is not None else ""
+                current_username = self.user.username if self.user is not None else ""       # 로그인이 되어있을 시
                 users = (
                     session.query(User)
                     .filter(
-                        User.username.contains(self.friend),
-                        User.username != current_username,
+                        User.username.contains(self.friend),                                 # 검색어가 들어있는 유저 목록 검색
+                        User.username != current_username,                                   # 현재 접속해있는 유저의 이름은 빼고 검색
                     )
                     .all()
                 )
@@ -213,30 +213,35 @@ class HomeState(State):
 
     def change(self):
         self.show = not (self.show)
-        
+
+    # KaKao Rest API Key를 받아오는 함수     
     def kakao_api(self): 
         key=''
-        with open('kakaoapikey.json','r')as f:
+        with open('kakaoapikey.json','r')as f:                                              # kakaoapikey.json 파일에 있는 key를 가져와 저장 
             key = json.load(f)
         self.KAKAO_REST_API_KEY = key['key']
-        
-    def elec_location(self,region,page_num):
-        self.kakao_api()
-        url = 'https://dapi.kakao.com/v2/local/search/keyword.json'
-        params = {'query': region,'page': page_num}
-        headers = {"Authorization": f'KakaoAK {self.KAKAO_REST_API_KEY}'}
 
-        places = requests.get(url, params=params, headers=headers).json()['documents']
-        return places
+    # kakao api 검색으로 장소 목록을 받는 함수   
+    def elec_location(self,region,page_num):
+        self.kakao_api()                                                                    # kakao_api 함수 호출
+        url = 'https://dapi.kakao.com/v2/local/search/keyword.json'
+        params = {'query': region,'page': page_num}                                         # API 요청을 위한 매개변수 설정, 검색할 지역 및 페이지 번호가 포함됨
+        headers = {"Authorization": f'KakaoAK {self.KAKAO_REST_API_KEY}'}                   # 인증을 위한 Kakao API 키를 포함한 헤더 설정
+
+        places = requests.get(url, params=params, headers=headers).json()['documents']      # Kakao API에 검색어와 페이지 번호를 기반으로 지역 정보를 검색하는 GET 요청 수행
+                                                                                            # 응답은 JSON 형식으로 변환되며 'documents' 키를 사용하여 관련 정보를 추출함
+        return places                                                                       # Kakao API 검색에서 얻은 장소 목록 반환
     
+    # 장소목록의 정보를 가져오는 함수
     def elec_info(self,places):
-        X = []
-        Y = []
-        stores = []
-        road_address = []
-        place_url = []
-        ID = []
-        for place in places:
+        X = []                                                                              # 경도 정보를 저장하는 리스트
+        Y = []                                                                              # 위도 정보를 저장하는 리스트
+        stores = []                                                                         # 가게 이름 정보를 저장하는 리스트
+        road_address = []                                                                   # 도로명 주소 정보를 저장하는 리스트
+        place_url = []                                                                      # 장소 URL 정보를 저장하는 리스트
+        ID = []                                                                             # ID 정보를 저장하는 리스트
+
+        for place in places:                                                                # 주어진 장소 목록을 반복하며 각 정보를 해당 리스트에 추가
             X.append(float(place['x']))
             Y.append(float(place['y']))
             stores.append(place['place_name'])
@@ -244,44 +249,40 @@ class HomeState(State):
             place_url.append(place['place_url'])
             ID.append(place['id'])
 
-        ar = np.array([ID,stores, X, Y, road_address,place_url]).T
-        df = pd.DataFrame(ar, columns = ['ID','stores', 'X', 'Y','road_address','place_url'])
+        ar = np.array([ID,stores, X, Y, road_address,place_url]).T                          # NumPy 배열을 사용하여 리스트를 전치하여 2D 배열 생성
+        df = pd.DataFrame(ar, columns = ['ID','stores', 'X', 'Y','road_address','place_url']) # Pandas DataFrame으로 변환
         return df
     
+    #사용자가 입력한 키워드로 정보를 받아와 데이터 프레임 생성
     def keywords(self):
         df = None
-        for loca in self.locations:
-            for page in range(1,4):
-                local_name = self.elec_location(loca, page)
-                local_elec_info = self.elec_info(local_name)
+        for loca in self.locations:                                                         # self.locations에 있는 각 지역에 대해 반복
+            for page in range(1,4):                                                         # 각 지역에 대해 1부터 3까지의 페이지를 검색
+                local_name = self.elec_location(loca, page)                                 # elec_location 함수를 사용하여 지역 정보를 가져오기
+                local_elec_info = self.elec_info(local_name)                                # elec_info 함수를 사용하여 가져온 지역 정보를 DataFrame으로 변환
 
-                if df is None:
+                if df is None:                                                              # df가 초기화되지 않은 경우, local_elec_info로 초기화
                     df = local_elec_info
-                elif local_elec_info is None:
+                elif local_elec_info is None:                                               # local_elec_info가 None인 경우, 계속 진행
                     continue
-                else:
+                else:                                                                       # df가 초기화되었고 local_elec_info가 None이 아닌 경우, 두 DataFrame을 연결
                     df = pd.concat([df, local_elec_info],join='outer', ignore_index = True)
         return df
     
+    #데이터 프레임을 기준으로 지도를 생성하는 함수
     def make_map(self,dfs):
-        # 지도 생성하기
-        m = folium.Map(location=[37.5518911,126.9917937],   # 기준좌표: 제주어딘가로 내가 대충 설정
+        m = folium.Map(location=[37.5518911,126.9917937],                                   # 기준 좌표를 사용하여 Folium 지도 생성
                     zoom_start=12)
-        # 미니맵 추가하기
-        minimap = MiniMap() 
+
+        minimap = MiniMap()                                                                 # 미니맵 추가하기
         m.add_child(minimap)
-        for i in range(len(dfs)):
-            folium.Marker([dfs['Y'][i],dfs['X'][i]],
-                    tooltip=dfs['stores'][i],
-                    popup=dfs['place_url'][i],
+        for i in range(len(dfs)):                                                           # DataFrame에 있는 각 행에 대해 Folium Marker 추가
+            folium.Marker([dfs['Y'][i],dfs['X'][i]],                                        # 위도와 경도 정보를 사용하여 마커의 위치 설정
+                    tooltip=dfs['stores'][i],                                               # 마커에 대한 툴팁으로 가게 이름 사용
+                    popup=dfs['place_url'][i],                                              # 마커를 클릭할 때 나타나는 팝업에 장소 URL 사용
                     ).add_to(m)
-        return m
+        return m                                                                            # 최종 지도 반환
 
-
-    # def map(self):
-    # m = folium.Map(location=[37.5518911, 126.9917937], zoom_start=12)
-    # self.map_html = "/map2.html"
-    # self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
         
     def map_search(self):
         if os.path.exists('assets/map2.html'):
