@@ -82,7 +82,7 @@ def feed_header(HomeState):
         rx.input(on_blur=HomeState.set_chat_input, placeholder="Enter chat.."),  # 트윗 검색을 위한 입력 상자
         rx.button(
             "Search",
-            on_click = HomeState.bard_chat,
+            on_click = HomeState.kogptapi,
             border_radius="1em",
             box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
             background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
@@ -98,14 +98,15 @@ def feed_header(HomeState):
 
 # 피드 영역
 def feed(HomeState):
-    HomeState.bard_answer
+    HomeState.kogpt_answer
     return rx.box(
         feed_header(HomeState),
+        rx.container(height='10px'),
         rx.vstack(
-            rx.container(height='10px'),
-            rx.container(
-                rx.text(HomeState.bard_response)
-            )
+            rx.text(
+                HomeState.kogpt_response,
+            ),
+            height='auto',
         ),
         border_x="3px solid #ededed",
         h="100%",
