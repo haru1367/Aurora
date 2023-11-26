@@ -291,26 +291,20 @@ class HomeState(State):
 
         
     def map_search(self):
-        if os.path.exists('assets/map2.html'):                                              # 'assets/map2.html' 파일이 이미 존재하는 경우
-            return rx.window_alert('Press clear first!')                                    # 'Clear' 버튼을 누르세요!
         if self.tag_search == "":                                                           # 검색어가 입력되지 않은 경우
             return rx.window_alert('Please enter your search term!')                        # 검색어를 입력해주세요!
         self.locations = self.tag_search.split(',')                                         # 입력된 검색어를 쉼표로 분리하여 위치 정보로 사용
         self.df = self.keywords()
         self.df = self.df.drop_duplicates(['ID'])                                           # 중복된 ID를 가진 행 제거
+        self.df['place url'] = self.df['place_url']
+        self.df = self.df.drop('place_url', axis=1)                                         
         self.df = self.df.reset_index()                                                     # 인덱스 재설정
-        self.make_map(self.df).save('assets/map2.html')                                     # 지도 생성 및 'assets/map2.html'에 저장
-        self.map_html ='/map2.html'                                                         # 맵 파일의 상대 경로
-        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>' # 맵을 표시하기 위한 iframe 코드
 
     def map_clear(self):
-        if os.path.exists('assets/map2.html'):                                              # 'assets/map2.html' 파일이 이미 존재하는 경우 삭제
-            os.remove('assets/map2.html')
         self.locations=[]                                                                   # 위치 정보, 검색어, 데이터프레임 초기화
         self.tag_search =""
         self.df = pd.DataFrame()
-        self.map_html='/map.html'                                                           # 초기 맵 파일의 상대 경로
-        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>' # 초기 맵을 표시하기 위한 iframe 코드
+
 
     # 맵 iframe의 HTML 코드를 반환하는 Getter 메서드.
     @rx.var

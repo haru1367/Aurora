@@ -116,7 +116,10 @@ def feed(HomeState):
     return rx.box(
         feed_header(HomeState),
         rx.container(height='10px'),
-        rx.html(HomeState.map_iframe),
+        rx.data_table(
+            data=HomeState.df,
+            font_size = '8px',
+        ),
         border_x="3px solid #ededed",
         h="100%",
     )
