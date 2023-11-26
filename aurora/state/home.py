@@ -285,265 +285,280 @@ class HomeState(State):
 
         
     def map_search(self):
-        if os.path.exists('assets/map2.html'):
-            return rx.window_alert('Press clear first!')
-        if self.tag_search == "":
-            return rx.window_alert('Please enter your search term!')
-        self.locations = self.tag_search.split(',')
+        if os.path.exists('assets/map2.html'):                                              # 'assets/map2.html' 파일이 이미 존재하는 경우
+            return rx.window_alert('Press clear first!')                                    # 'Clear' 버튼을 누르세요!
+        if self.tag_search == "":                                                           # 검색어가 입력되지 않은 경우
+            return rx.window_alert('Please enter your search term!')                        # 검색어를 입력해주세요!
+        self.locations = self.tag_search.split(',')                                         # 입력된 검색어를 쉼표로 분리하여 위치 정보로 사용
         self.df = self.keywords()
-        self.df = self.df.drop_duplicates(['ID'])
-        self.df = self.df.reset_index()
-        self.make_map(self.df).save('assets/map2.html')
-        self.map_html ='/map2.html'
-        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
+        self.df = self.df.drop_duplicates(['ID'])                                           # 중복된 ID를 가진 행 제거
+        self.df = self.df.reset_index()                                                     # 인덱스 재설정
+        self.make_map(self.df).save('assets/map2.html')                                     # 지도 생성 및 'assets/map2.html'에 저장
+        self.map_html ='/map2.html'                                                         # 맵 파일의 상대 경로
+        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>' # 맵을 표시하기 위한 iframe 코드
 
     def map_clear(self):
-        if os.path.exists('assets/map2.html'):
+        if os.path.exists('assets/map2.html'):                                              # 'assets/map2.html' 파일이 이미 존재하는 경우 삭제
             os.remove('assets/map2.html')
-        self.locations=[]
+        self.locations=[]                                                                   # 위치 정보, 검색어, 데이터프레임 초기화
         self.tag_search =""
         self.df = pd.DataFrame()
-        self.map_html='/map.html'
-        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>'
+        self.map_html='/map.html'                                                           # 초기 맵 파일의 상대 경로
+        self.map_iframe = f'<iframe src="{self.map_html}" width="100%" height="600"></iframe>' # 초기 맵을 표시하기 위한 iframe 코드
 
+    # 맵 iframe의 HTML 코드를 반환하는 Getter 메서드.
     @rx.var
     def map_iframe1(self) -> str:
         return self.map_iframe
     
+    # 위치 정보 목록을 반환하는 Getter 메서드
     @rx.var
     def clear_map1(self) -> list[str]:
         return self.locations
     
+    # 검색어를 반환하는 Getter 메서드
     @rx.var
     def clear_map2(self) -> str:
         return self.tag_search
     
+    # 데이터프레임을 반환하는 Getter 메서드.
     @rx.var
     def clear_map3(self) -> pd.DataFrame:
         return self.df
     
+    # 맵 HTML 파일 경로를 반환하는 Getter 메서드
     @rx.var
     def clear_map4(self) -> str:
         return self.map_html
     
-    def search_video(self):
-        if self.video_search == "":
+    # 비디오 링크 입력 변수를 저장하는 함수
+    def search_video(self):                                                                # 비디오 링크가 입력되지 않은 경우
+        if self.video_search == "":                                                          
             return rx.window_alert('Enter the link to the video..')
-        self.video_search = self.video_search
+        self.video_search = self.video_search                                              # 입력된 비디오 링크를 사용
         
-    
+    # 비디오 링크를 표시하는 Getter 메서드
     @rx.var
     def show_video(self) -> str:
         return self.video_search
     
+    # 구글 실시간 트렌드를 가져오는 함수
     def google_crawler(self):
-        url = 'https://trends.google.com/trends/api/topdailytrends?hl=ko&tz=-540&geo=KR'
-        html = requests.get(url).text
-        data = json.loads(str(html).split('\n')[1])
+        url = 'https://trends.google.com/trends/api/topdailytrends?hl=ko&tz=-540&geo=KR'   # Google 트렌드 데이터를 가져오는 URL
+        html = requests.get(url).text                                                      # URL에서 HTML 데이터 가져오기
+        data = json.loads(str(html).split('\n')[1])                                        # JSON 형식의 데이터 추출
         result = []
-        for i in range(10):
+        for i in range(10):                                                                # 상위 10개 트렌드 검색어 추출
             result.append(data['default']['trendingSearches'][i]['title'])
             
-        self.web_trend = {i+1:result[i] for i in range(len(result))}
+        self.web_trend = {i+1:result[i] for i in range(len(result))}                       # 웹 트렌드 딕셔너리에 저장
     
+    # 실시간을 변하는 트렌드 값을 반영하는 함수
     @rx.var
     def real_time_trend(self) -> dict:
         return self.web_trend
     
+    # Google API 키를 가져오는 함수
     def google_api(self):
-        key=''
-        with open('googleapikey.json','r')as f:
+        key=''                                                                             # Google API 키를 저장하는 변수 초기화
+        with open('googleapikey.json','r')as f:                                            # 'googleapikey.json' 파일에서 API 키 읽어오기
             key = json.load(f)
-        self.Google_API_KEY = key['key']
+        self.Google_API_KEY = key['key']                                                   # 클래스 속성에 Google API 키 저장
         
-        key1 = ''
-        with open('googlesearchengine.json','r') as f:
+        key1 = ''                                                                          # 검색 엔진 ID를 저장하는 변수 초기화
+        with open('googlesearchengine.json','r') as f:                                     # 'googlesearchengine.json' 파일에서 검색 엔진 ID 읽어오기
             key1 = json.load(f)
-        self.Google_SEARCH_ENGINE_ID = key1['key']
+        self.Google_SEARCH_ENGINE_ID = key1['key']                                         # 클래스 속성에 Google 검색 엔진 ID 저장
     
+    # Google API키를 활용한 웹 크롤링 함수
     def Google_API(self,query, wanted_row):
-        query= query.replace("|","OR")
-        query += "-filetype:pdf"
+        query= query.replace("|","OR")                                                     # 검색 쿼리에서 "|"을 "OR"로 대체
+        query += "-filetype:pdf"                                                           # PDF 파일 제외하도록 쿼리 업데이트
         start_pages=[]
 
-        df_google= pd.DataFrame(columns=['Title','Link','Description'])
+        df_google= pd.DataFrame(columns=['Title','Link','Description'])                    # 검색 결과를 저장할 빈 데이터프레임 생성
 
-        row_count =0 
-        self.google_api()
+        row_count =0                                                                       # 검색 횟수 초기화
+        self.google_api()                                                                  # Google API 설정 메서드 호출
 
 
-        for i in range(1,wanted_row+1000,10):
+        for i in range(1,wanted_row+1000,10):                                              # 검색 결과를 가져올 페이지 시작 지점 설정
             start_pages.append(i)
 
-        for start_page in start_pages:
+        for start_page in start_pages:                                                     # 각 페이지에서 검색 결과 가져오기
             url = f"https://www.googleapis.com/customsearch/v1?key={self.Google_API_KEY}&cx={self.Google_SEARCH_ENGINE_ID}&q={query}&start={start_page}"
-            data = requests.get(url).json()
+            data = requests.get(url).json()                                                # Google Custom Search API를 통해 데이터 가져오기
             search_items = data.get("items")
             
-            try:
+            try:                                                                           # 각 검색 결과에서 필요한 정보 추출
                 for i, search_item in enumerate(search_items, start=1):
-                    # extract the page url
-                    link = search_item.get("link")
-                    if any(trash in link for trash in self.Trash_Link):
+
+                    link = search_item.get("link")                                         # 페이지 링크 추출
+                    if any(trash in link for trash in self.Trash_Link):                    # Trash_Link에 포함된 단어가 링크에 있는 경우 건너뛰기
                         pass
                     else: 
-                        # get the page title
-                        title = search_item.get("title")
-                        # page snippet
-                        description = search_item.get("snippet")
-                        # print the results
-                        df_google.loc[start_page + i] = [title,link,description] 
-                        row_count+=1
-                        if (row_count >= wanted_row) or (row_count == 300) :
+                        title = search_item.get("title")                                   # 페이지 제목 추출
+
+                        description = search_item.get("snippet")                           # 페이지 스니펫 추출
+                        
+                        df_google.loc[start_page + i] = [title,link,description]           # 결과를 데이터프레임에 추가
+                        row_count+=1                                                       # 검색 결과 횟수 증가
+                        if (row_count >= wanted_row) or (row_count == 300) :               # 원하는 행 수에 도달하거나 최대 300개의 결과를 수집한 경우 반환
                             return df_google
             except:
                 return df_google
 
         
-        return df_google
+        return df_google                                                                   # 모든 페이지에서 검색 결과를 수집한 경우 데이터프레임 반환
     
+    # Naver API 클라이언트 Id 와  클라이언트 시크릿을 저장하는 함수
     def naver_api(self):
         key=''
-        with open('naverclientid.json','r')as f:
+        with open('naverclientid.json','r')as f:                                           # 'naverclientid.json' 파일에서 클라이언트 ID 읽어오기
             key = json.load(f)
-        self.Naver_client_id = key['key']
+        self.Naver_client_id = key['key']                                                  # 클래스 속성에 네이버 API 클라이언트 ID 저장
         
         key1 = ''
-        with open('Naver_client_secret.json','r') as f:
+        with open('Naver_client_secret.json','r') as f:                                    # 'Naver_client_secret.json' 파일에서 클라이언트 시크릿 읽어오기
             key1 = json.load(f)
-        self.Google_SEARCH_ENGINE_ID = key1['key']
+        self.Google_SEARCH_ENGINE_ID = key1['key']                                         # 클래스 속성에 네이버 API 클라이언트 시크릿 저장
     
+    # Naver API 를 활용한 웹 크롤링 함수
     def Naver_API(self,query,wanted_row):
-        query = urllib.parse.quote(query)
+        query = urllib.parse.quote(query)                                                  # 검색 쿼리를 URL 인코딩
 
-        display=100
+        display=100                                                                        # 한 번에 표시할 검색 결과 수, 시작 페이지, 마지막 페이지, 정렬 기준 설정
         start=1
         end=wanted_row+10000
         idx=0
         sort='sim'
 
-        df= pd.DataFrame(columns=['Title','Link','Description'])
-        row_count= 0 
+        df= pd.DataFrame(columns=['Title','Link','Description'])                           # 결과를 저장할 데이터프레임 생성
+        row_count= 0                                                                       # 검색 결과 횟수 초기화
         
-        for start_index in range(start,end,display):
+        for start_index in range(start,end,display):                                       # 검색 결과를 가져오는 반복문
             url = "https://openapi.naver.com/v1/search/webkr?query="+ query +\
                 "&display=" + str(display)+ \
                 "&start=" + str(start_index) + \
                 "&sort=" + sort
-            request = urllib.request.Request(url)
-            request.add_header("X-Naver-Client-Id",self.Naver_client_id)
+            request = urllib.request.Request(url)                                          # 네이버 검색 API URL 설정
+            request.add_header("X-Naver-Client-Id",self.Naver_client_id)                   # HTTP 요청 헤더에 클라이언트 ID와 시크릿 추가
             request.add_header("X-Naver-Client-Secret",self.Naver_client_secret)
-            try:
+            try:                                                                           # HTTP 요청을 통해 응답 받기
                 response = urllib.request.urlopen(request)
                 rescode = response.getcode()
-                if(rescode==200):
+                if(rescode==200):                                                          # 응답이 성공적인 경우
                     response_body = response.read()
                     items= json.loads(response_body.decode('utf-8'))['items']
                     remove_tag = re.compile('<.*?>')
-                    for item_index in range(0,len(items)):
+                    for item_index in range(0,len(items)):                                 # 각 검색 결과에서 필요한 정보 추출
                         link = items[item_index]['link']
-                        if any(trash in link for trash in self.Trash_Link):
+                        if any(trash in link for trash in self.Trash_Link):                # Trash_Link에 포함된 단어가 링크에 있는 경우 건너뛰기
                             idx+=1
                             pass
-                        else:
+                        else:                                                              # 결과를 데이터프레임에 추가
                             title = re.sub(remove_tag, '', items[item_index]['title'])
                             description = re.sub(remove_tag, '', items[item_index]['description'])
                             df.loc[idx] =[title,link,description]
-                            idx+=1
+                            idx+=1                                                         # 검색 결과 횟수 증가
                             row_count+=1
-                            if (row_count >= wanted_row) or (row_count == 300):
+                            if (row_count >= wanted_row) or (row_count == 300):            # 원하는 행 수에 도달하거나 최대 300개의 결과를 수집한 경우 반환
                                 return df
                             
             except:
                 return df
     
+    # Daum API를 활용한 웹 크롤링
     def Daum_API(self,query,wanted_row):
-        pages= wanted_row//10 
-        self.kakao_api()
-        method = "GET"
+        pages= wanted_row//10                                                              # 요청할 페이지 수 계산
+        self.kakao_api()                                                                   # Kakao API 설정 메서드 호출
+        method = "GET"                                                                     # HTTP 요청 방식, URL, 헤더 설정
         url = "https://dapi.kakao.com/v2/search/web"
         header = {'authorization': f'KakaoAK {self.KAKAO_REST_API_KEY}'}
 
-        df= pd.DataFrame(columns=['Title','Link','Description'])
+        df= pd.DataFrame(columns=['Title','Link','Description'])                           # 결과를 저장할 데이터프레임 생성
 
-        row_count=0
+        row_count=0                                                                        # 검색 결과 횟수 초기화
 
-        for page in range(1,pages+10):
+        for page in range(1,pages+10):                                                     # 각 페이지에서 검색 결과 가져오기
             params = {'query' : query, 'page' : page}
             request = requests.get( url, params= params, headers=header )
-            for i, item in enumerate(request.json()["documents"], start=1):
+            for i, item in enumerate(request.json()["documents"], start=1):                # 검색 결과에서 필요한 정보 추출
                 link = item['url']
                 try:
-                    written_year=int(item['datetime'][:4])
+                    written_year=int(item['datetime'][:4])                                 # 게시된 연도 추출
                 except:
                     written_year = 2023
 
-                if (any(trash in link for trash in self.Trash_Link) or (written_year <2020)):
+                if (any(trash in link for trash in self.Trash_Link) or (written_year <2020)): # Trash_Link에 포함된 단어가 링크에 있거나, 작성 연도가 2020년 이전인 경우 건너뛰기
                     pass
                 else:
                     title= item["title"]
                     description = item["contents"]
-                    df.loc[10*page+i] =[title,link,description]
-                    row_count+=1
-                    if (row_count >= wanted_row) or (row_count == 300):
-                        remove_tag = re.compile('<.*?>')
+                    df.loc[10*page+i] =[title,link,description]                            # 결과를 데이터프레임에 추가
+                    row_count+=1                                                           # 검색 결과 횟수 증가
+                    if (row_count >= wanted_row) or (row_count == 300):                    # 원하는 행 수에 도달하거나 최대 300개의 결과를 수집한 경우 반환
+                        remove_tag = re.compile('<.*?>')                                  
                         df['Title'] =df['Title'].apply(lambda x :re.sub(remove_tag, '',x))
                         df['Description'] =df['Description'].apply(lambda x :re.sub(remove_tag, '',x))
 
                         return df
                     
 
-        remove_tag = re.compile('<.*?>')
+        remove_tag = re.compile('<.*?>')                                                   # HTML 태그 제거 후 데이터프레임 반환
         df['Title'] =df['Title'].apply(lambda x :re.sub(remove_tag, '',x))
         df['Description'] =df['Description'].apply(lambda x :re.sub(remove_tag, '',x))
         
         return df
     
+    # Google, Naver, Daum의 웹 크롤링 결과를 하나로 합치는 함수
     def final(self,query,wanted_row=100):
+        # Google
         df_google = self.Google_API(query,wanted_row)
         df_google['search_engine']='Google'
+        
+        # Naver
         df_naver = self.Naver_API(query,wanted_row)
         df_naver['search_engine']='Naver'
+        
+        # Daum
         df_daum = self.Daum_API(query,wanted_row)
         df_daum['search_engine']='Daum'
+        
+        # 데이터프레임 합치기
         df_final= pd.concat([df_google,df_naver,df_daum])
-        df_final.reset_index(inplace=True,drop=True)
+        df_final.reset_index(inplace=True,drop=True)                                       # 인덱스 재설정
         return df_final
     
+    # search 버튼을 누를 때 웹 크롤링 동작을 하게 해주는 함수
     def search_all(self):
         self.search_df = self.final(query=self.web_search, wanted_row=100)
     
+    # 실시간으로 웹 크롤링 결과를 반영해주는 함수
     @rx.var
     def search_table(self)->pd.DataFrame:
         return self.search_df
-        
     
-    # def kogptapi(self):
-    #     self.kakao_api()
-    #     api = KoGPT(service_key = self.KAKAO_REST_API_KEY)
-    #     prompt = self.chat_input
-    #     max_tokens=32
-    #     self.kogpt_response = api.generate(prompt, max_tokens, temperature = 0.01)['generations'][0]['text']
-    #     print(self.kogpt_response)
-    
+    # 실시간으로 ai 채팅 결과를 반영해주는 함수
     @rx.var
     def kogpt_answer(self) ->str:
         return self.kogpt_response
     
+    # KoGPT api를 활용한 대화 함수
     def kogptapi(self):
         """Post a tweet."""
-        if not self.logged_in:
+        if not self.logged_in:                                                            # 로그인되어 있지 않은 경우 알림
             return rx.window_alert("Please log in first")
-        if len(self.chat_input)==0:
+        if len(self.chat_input)==0:                                                       # 대화 입력이 비어 있는 경우 알림
             return rx.window_alert('Please write at least one character!')
         
-        self.kakao_api()
-        api = KoGPT(service_key = self.KAKAO_REST_API_KEY)
-        prompt = self.chat_input
+        self.kakao_api()                                                                  # Kakao API 설정 메서드 호출
+        api = KoGPT(service_key = self.KAKAO_REST_API_KEY)                                # KoGPT API 인스턴스 생성
+        prompt = self.chat_input                                                          # 대화 입력을 프롬프트로 사용하여 KoGPT에 요청하여 응답 받기
         max_tokens=300
         self.kogpt_response = api.generate(prompt, max_tokens, temperature = 0.01)['generations'][0]['text']
         
-        with rx.session() as session:
+        with rx.session() as session:                                                     # 대화 내용을 데이터베이스에 저장
             gpt = GPT(
                 author=self.user.username,
                 content=self.chat_input,
@@ -554,7 +569,7 @@ class HomeState(State):
             session.commit()
             self.chat_input= ""
             
-        with rx.session() as session:
+        with rx.session() as session:                                                     # KoGPT의 응답을 데이터베이스에 저장
             gpt = GPT(
                 author = 'KoGPT',
                 content=self.kogpt_response,
@@ -564,12 +579,14 @@ class HomeState(State):
             session.commit()
             self.kogpt_response=''
             
-        return self.get_gpt()
+        return self.get_gpt()                                                             # 최신 대화 기록 반환
     
+    # 데이터베이스에서 KoGPT 대화내역을 가져오는 함수
     def get_gpt(self):
         with rx.session() as session:
             self.gpts = session.query(GPT).all()[::-1]  
-            
+    
+    #데이터 베이스에 있는 KoGPT 대화 내역을 삭제하는 함수        
     def clear_gpt(self):
         with rx.session() as session:
             session.query(GPT).delete()
@@ -578,6 +595,7 @@ class HomeState(State):
         self.gpts=self.get_gpt()
         print(self.gpts)
     
+    # 실시간으로 대화내역을 반영하는 함수
     @rx.var
     def saved_gpt(self) -> list[GPT] :
         return self.gpts
