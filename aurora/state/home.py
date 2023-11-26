@@ -16,6 +16,7 @@ import re
 import urllib.request
 import sys
 from PyKakao import KoGPT
+from geopy import Nominatim
 
 class HomeState(State):
     """The state for the home page."""
@@ -47,6 +48,8 @@ class HomeState(State):
     kogpt_response:str                                                         # KoGPT 답변 저장 변수
     gpts: list[GPT] = []                                                       # KoGPT 전체 답변 저장 리스트
     Trash_Link = ["kin", "dcinside", "fmkorea", "ruliweb", "theqoo", "clien", "mlbpark", "instiz", "todayhumor"] # 웹 크롤링 시 제외할 결과목록
+    place_address:str
+    place_html:str
     
     # 파일 선택함수
     def handle_file_selection(self):                                          
@@ -289,7 +292,7 @@ class HomeState(State):
                     ).add_to(m)
         return m                                                                            # 최종 지도 반환
 
-        
+    # 키워드로 지도검색하는 함수
     def map_search(self):
         if self.tag_search == "":                                                           # 검색어가 입력되지 않은 경우
             return rx.window_alert('Please enter your search term!')                        # 검색어를 입력해주세요!
@@ -300,10 +303,27 @@ class HomeState(State):
         self.df = self.df.drop('place_url', axis=1)                                         
         self.df = self.df.reset_index()                                                     # 인덱스 재설정
 
+    # 키워드로 지도검색한 내용을 초기화 하는 함수
     def map_clear(self):
         self.locations=[]                                                                   # 위치 정보, 검색어, 데이터프레임 초기화
         self.tag_search =""
         self.df = pd.DataFrame()
+    
+    # 도로명 주소를 입력하면 마커로 표시해주는 함수    
+    def show_map(self):
+        m = folium.Map(location=[37.5666612,126.9783785],zoom_start = 5)
+        geolocator = Nominatim(user_agent="my_geocoder")
+        location = geolocator.geocode(self.place_address)
+        if location:
+            folium.Marker(location=[location.latitude, location.longitude]).add_to(m)
+        m.save('assets/place.html')
+        self.place_html='/place.html'
+    
+    # 실시간으로 place_html값 반영   
+    @rx.var
+    def place_map_show(self) -> str:
+        return self.place_html
+                
 
 
     # 맵 iframe의 HTML 코드를 반환하는 Getter 메서드.
