@@ -1,6 +1,6 @@
 # aurora.state.home 모듈에서 필요한 State 및 HomeState를 가져옵니다.
 import reflex as rx
-from aurora.state.base import State
+from aurora.state.base import State, User
 from aurora.state.home import HomeState
 
 # 컴포넌트를 가져옵니다.
