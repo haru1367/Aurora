@@ -49,7 +49,8 @@ class HomeState(State):
     gpts: list[GPT] = []                                                       # KoGPT 전체 답변 저장 리스트
     Trash_Link = ["kin", "dcinside", "fmkorea", "ruliweb", "theqoo", "clien", "mlbpark", "instiz", "todayhumor"] # 웹 크롤링 시 제외할 결과목록
     place_address:str
-    place_html:str
+    place_html:str = '/map.html'
+    place_iframe:str = f'<iframe src="{place_html}" width="100%" height="600"></iframe>'
     
     # 파일 선택함수
     def handle_file_selection(self):                                          
@@ -309,20 +310,14 @@ class HomeState(State):
         self.tag_search =""
         self.df = pd.DataFrame()
     
-    # 도로명 주소를 입력하면 마커로 표시해주는 함수    
-    def show_map(self):
-        m = folium.Map(location=[37.5666612,126.9783785],zoom_start = 5)
-        geolocator = Nominatim(user_agent="my_geocoder")
-        location = geolocator.geocode(self.place_address)
-        if location:
-            folium.Marker(location=[location.latitude, location.longitude]).add_to(m)
-        m.save('assets/place.html')
-        self.place_html='/place.html'
-    
     # 실시간으로 place_html값 반영   
     @rx.var
     def place_map_show(self) -> str:
         return self.place_html
+    
+    @rx.var
+    def place_map_show(self)->str:
+        return self.place_iframe
                 
 
 

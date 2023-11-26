@@ -173,80 +173,65 @@ def feed_header(HomeState):
         rx.input(on_change=HomeState.set_search, placeholder="Search"),  # 트윗 검색을 위한 입력 상자
         justify="space-between",
         p=4,
-        border_bottom="1px solid #ededed",
+        border_bottom="3px solid #000000",
     )
 
 def composer(AuthState):
     """The composer for new tweets."""
-    return rx.grid(
+    return rx.vstack(
         rx.hstack(
-            rx.avatar(size="md"),  # 사용자의 아바타 이미지
+            rx.avatar(size="lg"),  # 사용자의 아바타 이미지
             rx.text(AuthState.username, 
-                    size = "md", fontSize = "18px", fontWeight = "bold"
+                    size = "md", fontSize = "30px", fontWeight = "bold"
                     ),
             p=4,
         ),
         rx.box(
             rx.button("write",),
-            rx.modal(
-                rx.modal_overlay(
-                    rx.modal_content(
-                        rx.modal_header("write", on_click=HomeState.change),
-                        rx.modal_body(
-                            rx.text_area(
-                                value = HomeState.tweet,
-                                w="100%",
-                                border=0,
-                                placeholder="What's happening?",  # 트윗을 작성하는 입력 상자
-                                resize="none",
-                                py=4,
-                                px=0,
-                                _focus={"border": 0, "outline": 0, "boxShadow": "none"},
-                                on_change=HomeState.set_tweet,
-                            ),
-                            rx.hstack(
-                                rx.button(
-                                    "Upload",
-                                    on_click=HomeState.post_tweet,
-                                    bg="rgb(0,128,0)",
-                                    color="white",
-                                    border_radius="full",
-                                ),  # 트윗을 게시하는 버튼
-                                justify_content="flex-end",
-                                border_top="1px solid #ededed",
-                                px=4,
-                                py=2,
-                            ),
-                        ),
-                        rx.modal_footer(
-                            rx.button(
-                                "Close", on_click=HomeState.change
-                            )
-                        ),
-                    )
-                ),
-                is_open=HomeState.show,
-            )
-        )
+        ),
+        align_items='start',
+        border_bottom='3px solid #000000',
+        border_radius='20px',
     )
     
     
 
-# 개별 트윗을 표시하는 함수
 def tweet(tweet):
     """Display for an individual tweet in the feed."""
-    return rx.grid(
-        rx.vstack(
-            rx.avatar(name=tweet.author, size="sm"),  # 트윗 작성자의 아바타 이미지
+    image_tags = rx.cond(
+        tweet.image_content,
+        rx.foreach(
+            tweet.image_content.split(", "),
+            lambda image: rx.image(src=f"/{image}", alt="tweet image")
         ),
-        rx.box(
-            rx.text("@" + tweet.author, font_weight="bold"),  # 트윗 작성자의 사용자 이름
-            rx.text(tweet.content, width="100%"),  # 트윗 내용
+        rx.box()  # 이미지가 없는 경우 빈 리스트를 반환합니다.
+    ),
+
+    return rx.vstack(
+        rx.hstack(
+            rx.container(width='5px'),
+            rx.vstack(
+                rx.avatar(name=tweet.author, size="sm"),  # 트윗 작성자의 아바타 이미지
+            ),
+            rx.box(
+                rx.hstack(
+                    rx.text("@" + tweet.author, font_weight="bold"),  # 트윗 작성자의 사용자 이름
+                    rx.text("["+ tweet.created_at +"]"),
+                ),
+                rx.text(tweet.content, width="100%"),  # 트윗 내용
+                *image_tags,
+                width = '100%',
+            ),
+            py=4,
+            gap=1,
+            border="3px solid #3498db",
+            border_radius='10px',
+            width='98%',
         ),
-        grid_template_columns="1fr 5fr",
-        py=4,
-        gap=1,
-        border_bottom="1px solid #ededed",
+        rx.container(height='5px'),
+        margin_left='15px',
+        align_items='start',
+        width='auto',
     )
 
 # 피드 영역
@@ -273,7 +258,7 @@ def feed(HomeState):
                 p=4,
             ),
         ),
-        
+        border_x="3px solid #000000",
     )
 
 # 마이 페이지

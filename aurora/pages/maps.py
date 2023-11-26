@@ -66,23 +66,7 @@ def tabs():
 
 def sidebar(HomeState):
     HomeState.place_map_show
-    map_iframe = f'<iframe src="{HomeState.place_html}" width="100%" height="600"></iframe>'
     return rx.vstack(
-        rx.hstack(
-            rx.input(on_blur=HomeState.set_place_address, placeholder="input place address"),
-            rx.button(
-                "Show",
-                on_click = HomeState.show_map,
-                border_radius="1em",
-                box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
-                background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
-                box_sizing="border-box",
-                color="white",
-                opacity="0.6",
-                _hover={"opacity": 1},
-            ),
-        ),
-        rx.html(map_iframe),
         align_items="start",
         gap=4,
         h="100%",
