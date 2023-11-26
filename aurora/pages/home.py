@@ -51,23 +51,6 @@ def tabs():
             tab_button("video","/video"),
             tab_button("web search","/websearch"),
             tab_button("ai chat","/aichat"),
-            rx.box(
-                rx.heading("Followers", size="sm"),
-                rx.foreach(
-                    HomeState.followers,
-                    lambda follow: rx.vstack(
-                        rx.hstack(
-                            rx.avatar(name=follow.follower_username, size="sm"),  # 팔로워의 아바타 이미지
-                            rx.text(follow.follower_username),  # 팔로워의 사용자 이름
-                        width="100%",
-                        ),
-                        padding="1em",
-                    ),
-                ),
-                p=4,
-                border_radius="md",
-                border="1px solid #eaeaea",
-            ),
             rx.button("Sign out", on_click=State.logout),  # 로그아웃 버튼
             rx.button(
                 rx.icon(tag="moon"),
@@ -107,28 +90,6 @@ def sidebar(HomeState):
                 width="100%",
             ),
         ),
-        rx.box(
-            rx.heading("Following", size="sm"),
-            rx.foreach(
-                HomeState.following,
-                lambda follow: rx.vstack(
-                    rx.hstack(
-                        rx.avatar(name=follow.followed_username, size="sm"),  # 팔로잉 중인 사용자의 아바타 이미지
-                        rx.text(follow.followed_username),  # 팔로잉 중인 사용자의 사용자 이름
-                        rx.spacer(),
-                        rx.button(
-                            rx.icon(tag="minus"),
-                            on_click=lambda: HomeState.unfollow_user(follow.followed_username),
-                        ),
-                    ),
-                    padding="1em",
-                ),
-            ),
-            p=4,
-            border_radius="md",
-            border="1px solid #000000",
-            w="100%",
-        ),
         align_items="start",
         gap=4,
         h="100%",
@@ -149,62 +110,68 @@ def feed_header(HomeState):
 # 새로운 트윗을 작성하는 컴포저
 def composer(HomeState):
     """The composer for new tweets."""
-    return rx.grid(
-        rx.hstack(
-            rx.avatar(size="md"),  # 사용자의 아바타 이미지
-            rx.container(width='30px'),
-            rx.text_area(
-                value=HomeState.tweet,
-                w="600px",
-                border=2,
-                placeholder="What's happening?",  # 트윗을 작성하는 입력 상자
-                resize="none",
-                py=4,
-                px=0,
-                _focus={"border": 0, "outline": 0, "boxShadow": "none"},
-                on_change=HomeState.set_tweet,
-            ),
-            margin_left = '30px',
-        ),
-        rx.hstack(
-            rx.button(
-                "Select File",
-                color=color,
-                bg="white",
-                border=f"1px solid {color}",
-                on_click=HomeState.handle_file_selection,
-                style={"margin": "0", "padding": "10px"}
-            ),
-            rx.button(
-                "Tweet",
-                on_click= HomeState.post_tweet,
-                border_radius="1em",
-                box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
-                background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
-                box_sizing="border-box",
-                color="white",
-                opacity="0.6",
-                _hover={"opacity": 1},
-                style={"margin-left": "auto"},  # Align to the right
-            ),  # 트윗을 게시하는 버튼
-            justify_content="flex-end",
-            px=4,
-            py=2,
-        ),
-        rx.responsive_grid(
-            rx.foreach(
-                HomeState.img,
-                lambda img: rx.vstack(
-                    rx.image(src=img),
-                    rx.text(img),
+    return rx.vstack(
+        rx.container(height='5px'),
+        rx.vstack(
+            rx.hstack(
+                rx.avatar(size="md"),  # 사용자의 아바타 이미지
+                rx.container(width='30px'),
+                rx.text_area(
+                    value=HomeState.tweet,
+                    w='100%',
+                    border=2,
+                    placeholder="What's happening?",  # 트윗을 작성하는 입력 상자
+                    resize="none",
+                    py=4,
+                    px=0,
+                    _focus={"border": 0, "outline": 0, "boxShadow": "none"},
+                    on_change=HomeState.set_tweet,
                 ),
+                width='95%',
+                margin_left = '30px',
             ),
-            columns=[2],
-            spacing="5px",
+            rx.hstack(
+                rx.button(
+                    "Select File",
+                    color=color,
+                    bg="white",
+                    border=f"1px solid {color}",
+                    on_click=HomeState.handle_file_selection,
+                    style={"margin": "0", "padding": "10px"}
+                ),
+                rx.button(
+                    "Tweet",
+                    on_click= HomeState.post_tweet,
+                    border_radius="1em",
+                    box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                    background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                    box_sizing="border-box",
+                    color="white",
+                    opacity="0.6",
+                    _hover={"opacity": 1},
+                    style={"margin-left": "auto"},  # Align to the right
+                ),  # 트윗을 게시하는 버튼
+                justify_content="flex-end",
+                px=4,
+                py=2,
+                width='100%',
+            ),
+            rx.responsive_grid(
+                rx.foreach(
+                    HomeState.img,
+                    lambda img: rx.vstack(
+                        rx.image(src=img),
+                        rx.text(img),
+                    ),
+                ),
+                columns=[2],
+                spacing="5px",
+            ),
+            margin_left='5px',
+            width='97%',
+            border_radius='20px',
+            border="3px solid #000000",
         ),
-        grid_template_rows="0.5fr 0.3fr 0.5fr",
-        border_radius='20px',
-        border="3px solid #000000",
     )
 
 
@@ -242,7 +209,7 @@ def tweet(tweet):
             width='98%',
         ),
         rx.container(height='5px'),
-        margin_left='10px',
+        margin_left='15px',
         align_items='start',
         width='auto',
     )
