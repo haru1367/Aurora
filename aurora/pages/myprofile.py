@@ -176,14 +176,14 @@ def feed_header(HomeState):
         border_bottom="3px solid #000000",
     )
 
-def composer(AuthState):
+def composer(HomeState):
     """The composer for new tweets."""
     return rx.vstack(
         rx.container(height='10px'),
         rx.vstack(
             rx.hstack(
                 rx.avatar(size="lg"),  # 사용자의 아바타 이미지
-                rx.text(AuthState.username, size = "md", fontSize = "30px", fontWeight = "bold"),
+                rx.text(HomeState.user.username, size = "md", fontSize = "30px", fontWeight = "bold"),
                 p=4,
                 width='100%',
                 margin_left='5px',
@@ -191,7 +191,54 @@ def composer(AuthState):
             ),
             rx.hstack(
                 rx.box(
-                    rx.button("Edit Profile",),
+                    rx.button(
+                        "Edit Profile",
+                        on_click = HomeState.change,
+                    ),
+                    rx.modal(
+                        rx.modal_overlay(
+                            rx.modal_content(
+                                rx.modal_header("Edit Profile"),
+                                rx.modal_body(
+                                    rx.vstack(
+                                        rx.hstack(
+                                            rx.vstack(
+                                                rx.text('Nickname '),
+                                                rx.container(height='3px'),
+                                                rx.text('Message '),
+                                                align_items='start',
+                                            ),
+                                            rx.vstack(
+                                                rx.input(on_change=HomeState.set_edit_user_name, placeholder='write nickname'),
+                                                rx.input(on_change=HomeState.set_edit_user_status_message, placeholder='write status_message'),
+                                                align_items='start',
+                                            ),
+                                            width='100%',
+                                        ),
+                                        rx.hstack(
+                                            rx.text(
+                                                'private account'
+                                            ),
+                                            rx.switch(
+                                                is_checked=HomeState.checked,
+                                                on_change=HomeState.change_check,
+                                                color_scheme="blue",
+                                            ),
+                                            justify_content='flex-end',
+                                        ),
+                                        align_items='start',
+                                    ),
+                                ),
+                                rx.modal_footer(
+                                    rx.button(
+                                        'Confirm',
+                                        on_click=HomeState.change,
+                                    )
+                                )
+                            ),
+                        ),
+                        is_open=HomeState.show,
+                    )
                 ),
                 rx.container(width='10px'),
                 justify_content='flex-end',
@@ -251,7 +298,7 @@ def feed(HomeState):
     """The feed."""
     return rx.box(
         feed_header(HomeState),
-        composer(AuthState),
+        composer(HomeState),
         rx.cond(
             HomeState.user_tweets,
             rx.foreach(

@@ -10,6 +10,8 @@ class AuthState(State):
     username: str
     password: str
     confirm_password: str
+    
+    
 
     def signup(self):
         #로그인을 위한 유저의 회원가입 정보 저장
@@ -46,5 +48,8 @@ class AuthState(State):
                 return rx.window_alert(f'your password : {user_instance.password}') #아이디를 입력하면 유저의 비밀번호를 화면에 리턴
             session.expire_on_commit = False
             return rx.redirect("/")
+        
+
+        
     
     

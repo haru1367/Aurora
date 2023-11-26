@@ -48,9 +48,15 @@ class HomeState(State):
     kogpt_response:str                                                         # KoGPT 답변 저장 변수
     gpts: list[GPT] = []                                                       # KoGPT 전체 답변 저장 리스트
     Trash_Link = ["kin", "dcinside", "fmkorea", "ruliweb", "theqoo", "clien", "mlbpark", "instiz", "todayhumor"] # 웹 크롤링 시 제외할 결과목록
-    place_address:str
-    place_html:str = '/map.html'
-    place_iframe:str = f'<iframe src="{place_html}" width="100%" height="600"></iframe>'
+    
+    edit_user_name:str
+    edit_user_status_message:str
+    edit_user_account_status:str
+    show:bool=False
+    
+    checked: bool = False
+    is_checked: bool = "Public Account!"
+    
     
     # 파일 선택함수
     def handle_file_selection(self):                                          
@@ -309,16 +315,6 @@ class HomeState(State):
         self.locations=[]                                                                   # 위치 정보, 검색어, 데이터프레임 초기화
         self.tag_search =""
         self.df = pd.DataFrame()
-    
-    # 실시간으로 place_html값 반영   
-    @rx.var
-    def place_map_show(self) -> str:
-        return self.place_html
-    
-    @rx.var
-    def place_map_show(self)->str:
-        return self.place_iframe
-                
 
 
     # 맵 iframe의 HTML 코드를 반환하는 Getter 메서드.
@@ -615,10 +611,23 @@ class HomeState(State):
     def saved_gpt(self) -> list[GPT] :
         return self.gpts
     
-    #유저가 작성한 트윗만 가져오는 함수
+    # 유저가 작성한 트윗만 가져오는 함수
     def get_user_tweet(self):
         with rx.session() as session:
             self.user_tweets = (session.query(Tweet)
             .filter(Tweet.author == self.user.username)
             .all()[::-1]
-            )           
+            )
+    
+    # 유저 프로필 편집 함수
+    def change(self):
+        self.show = not (self.show)
+    
+    # 계정 상태변경    
+    def change_check(self, checked: bool):
+        self.checked = checked
+        if self.checked:
+            self.is_checked = "Private account!"
+        else:
+            self.is_checked = "Public account!"
+             

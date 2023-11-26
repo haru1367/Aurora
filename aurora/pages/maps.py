@@ -65,7 +65,6 @@ def tabs():
     )
 
 def sidebar(HomeState):
-    HomeState.place_map_show
     return rx.vstack(
         align_items="start",
         gap=4,
