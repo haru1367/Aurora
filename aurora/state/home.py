@@ -87,6 +87,10 @@ class HomeState(State):
 
             # Update the img var.
             self.img.append(file.filename)
+            
+    async def file_select_cancel(self):
+        self.img=[]
+        self.files=[]
     
     #게시물 업로드 함수
     async def post_tweet(self):
