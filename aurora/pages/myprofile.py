@@ -182,8 +182,16 @@ def composer(HomeState):
         rx.container(height='10px'),
         rx.vstack(
             rx.hstack(
-                rx.avatar(size="lg"),  # 사용자의 아바타 이미지
-                rx.text(HomeState.user.username, size = "md", fontSize = "30px", fontWeight = "bold"),
+                rx.vstack(
+                    rx.container(height='10px'),
+                    rx.avatar(size="xl"),  # 사용자의 아바타 이미지
+                ),
+                rx.vstack(
+                    rx.text(HomeState.user.username, size = "md", fontSize = "30px", fontWeight = "bold"),
+                    rx.text(HomeState.edit_user_name, fontSize = "20px", fontweight='bold'),
+                    rx.text(HomeState.edit_user_status_message, fontSize = '15px'),
+                    align_items='start',
+                ),
                 p=4,
                 width='100%',
                 margin_left='5px',
@@ -249,8 +257,9 @@ def composer(HomeState):
             border='3px solid #eda239',
             border_radius='20px',
         ),
+        rx.container(height='10px'),
         width ='97%',
-        margin_left='5px',
+        margin_left='10px',
     )
     
     
@@ -270,7 +279,7 @@ def tweet(tweet):
         rx.hstack(
             rx.container(width='5px'),
             rx.vstack(
-                rx.avatar(name=tweet.author, size="sm"),  # 트윗 작성자의 아바타 이미지
+                rx.avatar(name=tweet.author, size="md"),  # 트윗 작성자의 아바타 이미지
             ),
             rx.box(
                 rx.hstack(
@@ -290,7 +299,7 @@ def tweet(tweet):
         rx.container(height='5px'),
         margin_left='15px',
         align_items='start',
-        width='auto',
+        width='97%',
     )
 
 # 피드 영역
