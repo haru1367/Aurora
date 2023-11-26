@@ -1,7 +1,7 @@
 """The state for the home page."""
 from datetime import datetime
 import reflex as rx
-from .base import Follows, State, Tweet, User, GPT
+from .base import Follows, State, Tweet, User, GPT, Profile
 import os,json
 import tkinter as tk
 from tkinter import filedialog
@@ -16,7 +16,6 @@ import re
 import urllib.request
 import sys
 from PyKakao import KoGPT
-from geopy import Nominatim
 
 class HomeState(State):
     """The state for the home page."""
@@ -49,9 +48,14 @@ class HomeState(State):
     gpts: list[GPT] = []                                                       # KoGPT 전체 답변 저장 리스트
     Trash_Link = ["kin", "dcinside", "fmkorea", "ruliweb", "theqoo", "clien", "mlbpark", "instiz", "todayhumor"] # 웹 크롤링 시 제외할 결과목록
     
+    users_id:str
+    users_name:str=''
+    users_status_message:str=''
+    users_account_status:bool=False
+
     edit_user_name:str
     edit_user_status_message:str
-    edit_user_account_status:str
+    edit_user_account_status:bool
     show:bool=False
     
     checked: bool = False
@@ -618,10 +622,55 @@ class HomeState(State):
             .filter(Tweet.author == self.user.username)
             .all()[::-1]
             )
+
+    # 유저가 설정한 이름 실시간 반영함수
+    @rx.var
+    def syn_user_name(self)->str:
+        return self.users_name
+    
+    # 유저가 설정한 상태메시지 실시간 반영함수
+    @rx.var
+    def syn_user_status_message(self)->str:
+        return self.users_status_message
+    
+    # 유저가 설정한 계정 비공개 여부 실시간 반영함수
+    @rx.var
+    def syn_user_account_status(self)->bool:
+        return self.users_account_status
+    
+    # 데이터 베이스에 저장된 유저 프로필 가져오는 함수
+    def getprofile(self):
+        with rx.session() as session:
+            profile = (
+                session.query(Profile)
+                .filter(
+                    Profile.user_id == self.user.username
+                )
+                .all()[::-1]
+            )
+        self.users_id = profile[0].user_id
+        self.users_name = profile[0].user_name
+        self.users_status_message = profile[0].user_status_message
+        self.users_account_status= profile[0].user_accoount_status
+
+        print(self.users_id)
+        print(self.users_name)
+        print(self.users_status_message)
+        print(self.users_account_status)
     
     # 유저 프로필 편집 함수
     def change(self):
         self.show = not (self.show)
+        with rx.session() as session:
+            profile = Profile(
+                user_id = self.user.username,
+                user_name = self.edit_user_name,
+                user_status_message=self.edit_user_status_message,
+                user_account_status=self.checked,
+            )
+            session.add(profile)
+            session.commit()
+
     
     # 계정 상태변경    
     def change_check(self, checked: bool):
@@ -630,4 +679,7 @@ class HomeState(State):
             self.is_checked = "Private account!"
         else:
             self.is_checked = "Public account!"
+
+    def setting_user_id(self):
+        self.users_id = self.user.username
              

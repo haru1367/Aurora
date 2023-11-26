@@ -1,9 +1,7 @@
 # aurora.state.home 모듈에서 필요한 State 및 HomeState를 가져옵니다.
 import reflex as rx
-from aurora.state.base import State, Tweet
+from aurora.state.base import State
 from aurora.state.home import HomeState
-from aurora.state.auth import AuthState
-from aurora.state.base import User
 
 # 컴포넌트를 가져옵니다.
 from ..components import container
@@ -177,7 +175,11 @@ def feed_header(HomeState):
     )
 
 def composer(HomeState):
-    """The composer for new tweets."""
+    HomeState.setting_user_id
+    HomeState.syn_user_name
+    HomeState.syn_user_status_message
+    HomeState.syn_user_account_status
+    HomeState.getprofile
     return rx.vstack(
         rx.container(height='10px'),
         rx.vstack(
@@ -187,9 +189,9 @@ def composer(HomeState):
                     rx.avatar(size="xl"),  # 사용자의 아바타 이미지
                 ),
                 rx.vstack(
-                    rx.text(HomeState.user.username, size = "md", fontSize = "30px", fontWeight = "bold"),
-                    rx.text(HomeState.edit_user_name, fontSize = "20px", fontweight='bold'),
-                    rx.text(HomeState.edit_user_status_message, fontSize = '15px'),
+                    rx.text(HomeState.users_id, size = "md", fontSize = "30px", fontWeight = "bold"),
+                    rx.text(HomeState.users_name, fontSize = "20px", fontweight='bold'),
+                    rx.text(HomeState.users_status_message, fontSize = '15px'),
                     align_items='start',
                 ),
                 p=4,

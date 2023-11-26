@@ -14,6 +14,12 @@ class Follows(rx.Model, table=True):
     followed_username: str = Field(primary_key=True) #followed 유저의 이름을 저장하는 영역
     follower_username: str = Field(primary_key=True) #follower 유저의 이름을 저장하는 영역
 
+class Profile(rx.Model, table=True):
+    user_id:str=Field()
+    user_name: str = Field()
+    user_status_message:str=Field()
+    user_account_status:bool=Field()
+
 #User 모델 생성
 class User(rx.Model, table=True):
 
