@@ -18,7 +18,7 @@ def tab_button(name, href):
         py=3,
         px=6,
         href=href,  # 버튼 클릭 시 이동할 경로
-        border="1px solid #eaeaea",
+        border="1px solid #000000",
         font_weight="semibold",
         border_radius="full",
     )
@@ -88,6 +88,7 @@ def sidebar(HomeState):
             on_change=HomeState.set_friend,
             placeholder="Search users",  # 사용자 검색을 위한 입력 상자
             width="100%",
+            border = "3px solid #000000",
         ),
         rx.foreach(
             HomeState.search_users,
@@ -125,7 +126,7 @@ def sidebar(HomeState):
             ),
             p=4,
             border_radius="md",
-            border="1px solid #eaeaea",
+            border="1px solid #000000",
             w="100%",
         ),
         align_items="start",
@@ -142,7 +143,7 @@ def feed_header(HomeState):
         rx.input(on_change=HomeState.set_search, placeholder="Search tweets"),  # 트윗 검색을 위한 입력 상자
         justify="space-between",
         p=4,
-        border_bottom="3px solid #ededed",
+        border_bottom="3px solid #000000",
     )
 
 # 새로운 트윗을 작성하는 컴포저
@@ -187,7 +188,6 @@ def composer(HomeState):
                 style={"margin-left": "auto"},  # Align to the right
             ),  # 트윗을 게시하는 버튼
             justify_content="flex-end",
-            border_top="1px solid #ededed",
             px=4,
             py=2,
         ),
@@ -203,7 +203,8 @@ def composer(HomeState):
             spacing="5px",
         ),
         grid_template_rows="0.5fr 0.3fr 0.5fr",
-        border_bottom="3px solid #ededed",
+        border_radius='20px',
+        border="3px solid #000000",
     )
 
 
@@ -219,19 +220,31 @@ def tweet(tweet):
         rx.box()  # 이미지가 없는 경우 빈 리스트를 반환합니다.
     ),
 
-    return rx.grid(
-        rx.vstack(
-            rx.avatar(name=tweet.author, size="sm"),  # 트윗 작성자의 아바타 이미지
+    return rx.vstack(
+        rx.hstack(
+            rx.container(width='5px'),
+            rx.vstack(
+                rx.avatar(name=tweet.author, size="sm"),  # 트윗 작성자의 아바타 이미지
+            ),
+            rx.box(
+                rx.hstack(
+                    rx.text("@" + tweet.author, font_weight="bold"),  # 트윗 작성자의 사용자 이름
+                    rx.text("["+ tweet.created_at +"]"),
+                ),
+                rx.text(tweet.content, width="100%"),  # 트윗 내용
+                *image_tags,
+                width = '100%',
+            ),
+            py=4,
+            gap=1,
+            border="3px solid #3498db",
+            border_radius='10px',
+            width='98%',
         ),
-        rx.box(
-            rx.text("@" + tweet.author, font_weight="bold"),  # 트윗 작성자의 사용자 이름
-            rx.text(tweet.content, width="100%"),  # 트윗 내용
-            *image_tags
-        ),
-        grid_template_columns="1fr 5fr",
-        py=4,
-        gap=1,
-        border_bottom="1px solid #ededed",
+        rx.container(height='5px'),
+        margin_left='10px',
+        align_items='start',
+        width='auto',
     )
 
 # 피드 영역
@@ -240,6 +253,7 @@ def feed(HomeState):
     return rx.box(
         feed_header(HomeState),
         composer(HomeState),
+        rx.container(height='10px'),
         rx.cond(
             HomeState.tweets,
             rx.foreach(
@@ -258,7 +272,7 @@ def feed(HomeState):
                 p=4,
             ),
         ),
-        border_x="3px solid #ededed",
+        border_x="3px solid #000000",
         h="100%",
     )
 

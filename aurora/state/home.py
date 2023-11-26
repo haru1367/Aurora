@@ -601,6 +601,7 @@ class HomeState(State):
     def saved_gpt(self) -> list[GPT] :
         return self.gpts
     
+    #유저가 작성한 트윗만 가져오는 함수
     def get_user_tweet(self):
         with rx.session() as session:
             self.user_tweets = (session.query(Tweet)
