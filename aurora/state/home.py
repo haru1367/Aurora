@@ -87,7 +87,8 @@ class HomeState(State):
 
             # Update the img var.
             self.img.append(file.filename)
-            
+    
+    #story 파일 선택 취소 함수        
     async def file_select_cancel(self):
         self.img=[]
         self.files=[]
