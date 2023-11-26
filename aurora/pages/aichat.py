@@ -109,30 +109,31 @@ def feed_header(HomeState):
     
 # 개별 트윗을 표시하는 함수
 def gpt(gpt):
-    """Display for an individual tweet in the feed."""
+    box_color = rx.cond(gpt.author == "KoGPT", "#99bed1", "#e2eb3b")
     return rx.vstack(
         rx.box(
             rx.hstack(
                 rx.hstack(
                     rx.container(width='2px'),
-                    rx.avatar(name=gpt.author, size="sm"),  # 트윗 작성자의 아바타 이미지
+                    rx.avatar(name=gpt.author, size="sm"), 
                 ),
                 rx.box(
                     rx.hstack(
-                        rx.text("@" + gpt.author, font_weight="bold"),  # 트윗 작성자의 사용자 이름
+                        rx.text("@" + gpt.author, font_weight="bold"),  
                         rx.text("["+ gpt.created_at +"]"),
                     ),
-                    rx.text(gpt.content, width="auto"),  # 트윗 내용
+                    rx.text(gpt.content, width="auto"),  
                     width = 'auto',
                 ),
                 py=4,
                 gap=1,
-                border="1px solid #ededed",
                 width='auto',
             ),
             align_items='start',
             width = '97%',
             margin_left='5px',
+            border_radius='20px',
+            background=box_color,
         ),
         rx.container(height='5px'),
         margin_left='10px',
