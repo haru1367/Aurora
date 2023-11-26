@@ -179,19 +179,31 @@ def feed_header(HomeState):
 def composer(AuthState):
     """The composer for new tweets."""
     return rx.vstack(
-        rx.hstack(
-            rx.avatar(size="lg"),  # 사용자의 아바타 이미지
-            rx.text(AuthState.username, 
-                    size = "md", fontSize = "30px", fontWeight = "bold"
-                    ),
-            p=4,
+        rx.container(height='10px'),
+        rx.vstack(
+            rx.hstack(
+                rx.avatar(size="lg"),  # 사용자의 아바타 이미지
+                rx.text(AuthState.username, size = "md", fontSize = "30px", fontWeight = "bold"),
+                p=4,
+                width='100%',
+                margin_left='5px',
+                align_items='start',
+            ),
+            rx.hstack(
+                rx.box(
+                    rx.button("Edit Profile",),
+                ),
+                rx.container(width='10px'),
+                justify_content='flex-end',
+                width='100%',
+            ),
+            rx.container(height='10px'),
+            width='100%',
+            border='3px solid #eda239',
+            border_radius='20px',
         ),
-        rx.box(
-            rx.button("write",),
-        ),
-        align_items='start',
-        border_bottom='3px solid #000000',
-        border_radius='20px',
+        width ='97%',
+        margin_left='5px',
     )
     
     
