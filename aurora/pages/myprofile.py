@@ -229,6 +229,8 @@ def composer(AuthState):
             )
         )
     )
+    
+    
 
 # 개별 트윗을 표시하는 함수
 def tweet(tweet):
@@ -253,6 +255,24 @@ def feed(HomeState):
     return rx.box(
         feed_header(HomeState),
         composer(AuthState),
+        rx.cond(
+            HomeState.user_tweets,
+            rx.foreach(
+                HomeState.user_tweets,
+                tweet
+            ),
+            rx.vstack(
+                rx.button(
+                    rx.icon(
+                        tag="repeat",
+                        mr=1,
+                    ),
+                    rx.text("Click to load tweets"),
+                    on_click=HomeState.get_user_tweet,
+                ),  # 트윗을 불러오는 버튼
+                p=4,
+            ),
+        ),
         
     )
 

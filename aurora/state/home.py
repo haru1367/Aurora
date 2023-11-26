@@ -21,6 +21,7 @@ class HomeState(State):
     """The state for the home page."""
     tweet: str                                                                 # 유저의 게시물 내용을 저장할 변수
     tweets: list[Tweet] = []                                                   # 게시물 내용들을 리스트로 저장
+    user_tweets:list[Tweet] = []                                               # 유저의 story저장
     friend: str                                                                # 유저를 검색하기 위한 입력변수
     search: str                                                                # 게시물을 검색하기 위한 입력변수
     img: list[str]                                                             # 이미지 파일 저장변수
@@ -599,4 +600,10 @@ class HomeState(State):
     @rx.var
     def saved_gpt(self) -> list[GPT] :
         return self.gpts
-              
+    
+    def get_user_tweet(self):
+        with rx.session() as session:
+            self.user_tweets = (session.query(Tweet)
+            .filter(Tweet.author == self.user.username)
+            .all()[::-1]
+            )           
