@@ -16,6 +16,7 @@ import re
 import urllib.request
 import sys
 from PyKakao import KoGPT
+from sqlalchemy import or_,and_
 
 class HomeState(State):
     """The state for the home page."""
@@ -144,11 +145,23 @@ class HomeState(State):
         with rx.session() as session:
             self.messages = (session.query(message)
                 .filter(
-                    message.receive_user == self.user.username
+                    or_(
+                        and_(
+                            message.send_user == self.user.username,
+                            message.receive_user == self.receive_user,
+                        ),
+                        and_(
+                            message.send_user == self.receive_user,
+                            message.receive_user == self.user.username,
+                        )
+                    )
                 )
                 .all()[::-1]                       # session에 저장된 모든 story를 가져옴 
             )     
         
+    @rx.var
+    def syn_messages(self)->list[message]:
+        return self.messages
         
     
     #게시물 업로드 함수

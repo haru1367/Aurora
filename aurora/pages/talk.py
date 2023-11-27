@@ -96,12 +96,78 @@ def feed_header(HomeState):
         border_bottom="3px solid #ededed",
     )
 
+# 개별 트윗을 표시하는 함수
+def message(message):
+    box_color = rx.cond(message.send_user == "KoGPT", "#99bed1", "#e2eb3b")
+    return rx.vstack(
+        rx.box(
+            rx.hstack(
+                rx.hstack(
+                    rx.container(width='2px'),
+                    rx.avatar(name=message.send_user, size="sm"), 
+                ),
+                rx.box(
+                    rx.hstack(
+                        rx.text("@" + message.send_user, font_weight="bold"),  
+                        rx.text("["+ message.created_at +"]"),
+                    ),
+                    rx.text(message.message, width="auto"),  
+                    width = 'auto',
+                ),
+                py=4,
+                gap=1,
+                width='auto',
+            ),
+            align_items='start',
+            width = '97%',
+            margin_left='5px',
+            border_radius='20px',
+            background=box_color,
+        ),
+        rx.container(height='5px'),
+        margin_left='10px',
+        align_items='start',
+        width='auto',
+    )
+
+
 # 피드 영역
 def feed(HomeState):
+    HomeState.syn_messages
     return rx.box(
         feed_header(HomeState),
-        rx.vstack(
-            rx.container(height='10px'),
+        rx.container(height='10px'),
+        rx.cond(
+            HomeState.messages,
+            rx.foreach(
+                HomeState.messages,
+                message
+            ),
+            rx.vstack(
+                rx.button(
+                    rx.icon(
+                        tag="repeat",
+                        mr=1,
+                    ),
+                    rx.text("Click to load chat"),
+                    on_click=HomeState.get_messages,
+                ),  # 트윗을 불러오는 버튼
+                p=4,
+            ),
+        ),
+        rx.hstack(
+            rx.input(on_blur=HomeState.set_Message, placeholder="Write Message!"),
+            rx.button(
+                'send',
+                on_click = HomeState.sending_message,
+                border_radius="1em",
+                box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                box_sizing="border-box",
+                color="white",
+                opacity="0.6",
+                _hover={"opacity": 1},
+            )
         ),
         border_x="3px solid #ededed",
         h="100%",
