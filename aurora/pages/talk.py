@@ -6,6 +6,8 @@ from aurora.state.home import HomeState
 # 컴포넌트를 가져옵니다.
 from ..components import container
 
+
+color = "rgb(107,99,246)"
 # 탭 버튼을 생성하는 함수
 def tab_button(name, href):
     """A tab switcher button."""
@@ -50,7 +52,6 @@ def tabs():
             tab_button("video","/video"),
             tab_button("web search","/websearch"),
             tab_button("ai chat","/aichat"),
-            tab_button("talk","/talk"),
             rx.button("Sign out", on_click=State.logout),  # 로그아웃 버튼
             rx.button(
                 rx.icon(tag="moon"),
@@ -63,70 +64,25 @@ def tabs():
         py=4,
     )
 
-def trend(key: str, value: str):
-    return rx.vstack(
-        rx.box(
-            rx.container(
-                rx.container(
-                    rx.text(f'{key}위 : {value}'),
-                ),
-                align='start',
-                width='250px',
-            ),
-        ),
-        align='start',
-        border='1px solid black',  # 테두리 스타일 지정
-        border_radius='12px',  # 동그란 테두리를 위한 반지름 값 지정
-        padding='5px',  # 테두리와 내용 사이의 여백 지정
-    )
-
-def sidebar(HomeState):
-    HomeState.real_time_trend
+def sidebar():
     """The sidebar displayed on the right."""
     return rx.vstack(
-        rx.container(
-            rx.button(
-                '실시간 검색어',
-                on_click = HomeState.google_crawler,
-                border_radius="1em",
-                box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
-                background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
-                box_sizing="border-box",
-                color="white",
-                opacity="0.6",
-                _hover={"opacity": 1},
-            ),
-            align_items="start",
-            height='auto',
-            py=4,
-            margin_bottom='5px',
-
-        ),
-        rx.vstack(
-            rx.foreach(
-                HomeState.web_trend,
-                lambda entry: trend(
-                    entry[0],entry[1]
-                ),
-            ),
-        ),
         align_items="start",
         gap=4,
         h="100%",
+        py=4,
     )
-    
-
 
 # 피드의 헤더
 def feed_header(HomeState):
     
     """The header of the feed."""
     return rx.hstack(
-        rx.heading("Web Search", size="md"),  # 피드의 제목
-        rx.input(on_blur=HomeState.set_web_search, placeholder="Search.."),  # 트윗 검색을 위한 입력 상자
+        rx.heading("Chat", size="md"),  # 피드의 제목
+        rx.input(on_blur=HomeState.set_receive_user, placeholder="Please enter the person you would like to send the message to!"),  # 트윗 검색을 위한 입력 상자
         rx.button(
-            "Search",
-            on_click = HomeState.search_all,
+            "select",
+            on_click = HomeState.get_messages,
             border_radius="1em",
             box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
             background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
@@ -142,25 +98,23 @@ def feed_header(HomeState):
 
 # 피드 영역
 def feed(HomeState):
-    HomeState.search_table
     return rx.box(
         feed_header(HomeState),
-        rx.data_table(
-            data=HomeState.search_df,
-            font_size = '8px',
+        rx.vstack(
+            rx.container(height='10px'),
         ),
         border_x="3px solid #ededed",
         h="100%",
     )
 
 # 홈 페이지
-def websearch():
+def talk():
     State.check_login
     return container(
         rx.grid(
             tabs(),
             feed(HomeState),
-            sidebar(HomeState),
+            sidebar(),
             grid_template_columns="1fr 4fr 1fr",
             h="100vh",
             gap=4,

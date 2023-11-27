@@ -1,7 +1,7 @@
 """The state for the home page."""
 from datetime import datetime
 import reflex as rx
-from .base import Follows, State, Tweet, User, GPT, Profile
+from .base import Follows, State, Tweet, User, GPT, Profile, message
 import os,json
 import tkinter as tk
 from tkinter import filedialog
@@ -61,6 +61,12 @@ class HomeState(State):
     checked: bool = False
     is_checked: bool = "Public Account!"
     
+    Message:str=''
+    receive_user:str=''
+    message_img:list[str]
+    message_files:list[str]=[]
+    messages:list[message]= []
+    
     
     # 파일 선택함수
     def handle_file_selection(self):                                          
@@ -106,6 +112,44 @@ class HomeState(State):
     async def file_select_cancel(self):
         self.img=[]
         self.files=[]
+        
+    # 메시지를 보내는 함수
+    async def sending_message(self):
+        if not self.logged_in:
+            return rx.window_alert("Please log in to send a message")
+        if len(self.Message)==0:
+            return rx.window_alert('Please write at least one character!')
+        
+        await self.handle_upload(rx.upload_files())
+        
+        with rx.session() as session:
+            send_message = message(
+                send_user = self.user.username,
+                receive_user = self.receive_user,
+                message = self.Message,
+                created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                image_content = ", ".join(self.message_files),
+                read = False
+            )
+            session.add(send_message)
+            session.commit()
+            self.Message = ''
+            self.message_img=[]
+            self.files=[]
+        return self.get_messages()
+    
+    # 메시지 내역을 불러오는 함수
+    def get_messages(self):
+        """Get tweets from the database."""
+        with rx.session() as session:
+            self.messages = (session.query(message)
+                .filter(
+                    message.receive_user == self.user.username
+                )
+                .all()[::-1]                       # session에 저장된 모든 story를 가져옴 
+            )     
+        
+        
     
     #게시물 업로드 함수
     async def post_tweet(self):

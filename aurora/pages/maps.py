@@ -52,6 +52,7 @@ def tabs():
             tab_button("video","/video"),
             tab_button("web search","/websearch"),
             tab_button("ai chat","/aichat"),
+            tab_button("talk","/talk"),
             rx.button("Sign out", on_click=State.logout),  # 로그아웃 버튼
             rx.button(
                 rx.icon(tag="moon"),
