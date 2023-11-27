@@ -243,17 +243,6 @@ def composer(HomeState):
                                             ),
                                             width='100%',
                                         ),
-                                        rx.hstack(
-                                            rx.text(
-                                                'private account'
-                                            ),
-                                            rx.switch(
-                                                is_checked=HomeState.checked,
-                                                on_change=HomeState.change_check,
-                                                color_scheme="blue",
-                                            ),
-                                            justify_content='flex-end',
-                                        ),
                                         align_items='start',
                                     ),
                                 ),
