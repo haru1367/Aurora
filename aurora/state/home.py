@@ -661,6 +661,8 @@ class HomeState(State):
     # 유저 프로필 편집 함수
     def change(self):
         self.show = not (self.show)
+        if len(self.edit_user_status_message)>40:
+            rx.window_alert('Please write the status message within 40 characters.')
         with rx.session() as session:
             profile = Profile(
                 user_id = self.user.username,
