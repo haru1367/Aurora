@@ -189,7 +189,7 @@ def composer(HomeState):
                     rx.avatar(size="xl"),  # 사용자의 아바타 이미지
                 ),
                 rx.vstack(
-                    rx.text(HomeState.users_id, size = "md", fontSize = "30px", fontWeight = "bold"),
+                    rx.text(HomeState.user.username, size = "md", fontSize = "30px", fontWeight = "bold"),
                     rx.text(HomeState.users_name, fontSize = "20px", fontweight='bold'),
                     rx.text(HomeState.users_status_message, fontSize = '15px'),
                     align_items='start',
@@ -200,10 +200,28 @@ def composer(HomeState):
                 align_items='start',
             ),
             rx.hstack(
-                rx.box(
+                rx.hstack(
+                    rx.button(
+                        "load",
+                        on_click = HomeState.getprofile,
+                        border_radius="1em",
+                        box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                        background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                        box_sizing="border-box",
+                        color="white",
+                        opacity="0.6",
+                        _hover={"opacity": 1},
+                    ),
                     rx.button(
                         "Edit Profile",
-                        on_click = HomeState.change,
+                        on_click = HomeState.change1,
+                        border_radius="1em",
+                        box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                        background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                        box_sizing="border-box",
+                        color="white",
+                        opacity="0.6",
+                        _hover={"opacity": 1},
                     ),
                     rx.modal(
                         rx.modal_overlay(
@@ -243,6 +261,13 @@ def composer(HomeState):
                                     rx.button(
                                         'Confirm',
                                         on_click=HomeState.change,
+                                        border_radius="1em",
+                                        box_shadow="rgba(151, 65, 252, 0.8) 0 15px 30px -10px",
+                                        background_image="linear-gradient(144deg,#AF40FF,#5B42F3 50%,#00DDEB)",
+                                        box_sizing="border-box",
+                                        color="white",
+                                        opacity="0.6",
+                                        _hover={"opacity": 1},
                                     )
                                 )
                             ),
