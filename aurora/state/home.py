@@ -115,13 +115,12 @@ class HomeState(State):
         self.files=[]
         
     # 메시지를 보내는 함수
-    async def sending_message(self):
+    def sending_message(self):
         if not self.logged_in:
             return rx.window_alert("Please log in to send a message")
         if len(self.Message)==0:
             return rx.window_alert('Please write at least one character!')
         
-        await self.handle_upload(rx.upload_files())
         
         with rx.session() as session:
             send_message = message(
@@ -129,14 +128,11 @@ class HomeState(State):
                 receive_user = self.receive_user,
                 message = self.Message,
                 created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                image_content = ", ".join(self.message_files),
                 read = False
             )
             session.add(send_message)
             session.commit()
             self.Message = ''
-            self.message_img=[]
-            self.files=[]
         return self.get_messages()
     
     # 메시지 내역을 불러오는 함수
