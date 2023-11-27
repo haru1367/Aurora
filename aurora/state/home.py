@@ -113,6 +113,8 @@ class HomeState(State):
             return rx.window_alert("Please log in to post a tweet.")                 # 로그인이 되어있지 않을 시 경고 메시지
         if len(self.tweet)==0:
             return rx.window_alert('Please write at least one character!')           # story 추가시 최소 한 글자 입력 경고 메시지
+        if len(self.tweet)>70:
+            return rx.window_alert('Please enter within 70 characters!')            # 150글자 이내로 입력제한
         
         await self.handle_upload(rx.upload_files())                                  # 이미지 추가
         
