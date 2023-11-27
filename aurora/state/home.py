@@ -652,11 +652,6 @@ class HomeState(State):
         self.users_name = profile[0].user_name
         self.users_status_message = profile[0].user_status_message
         self.users_account_status= profile[0].user_account_status
-
-        print(self.users_id)
-        print(self.users_name)
-        print(self.users_status_message)
-        print(self.users_account_status)
         
     def change1(self):
         self.show = not (self.show)
