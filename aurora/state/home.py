@@ -71,9 +71,10 @@ class HomeState(State):
     
     # 파일 선택함수
     def handle_file_selection(self):                                          
-        root = tk.Tk()                                                        # 파일 선택 대화상자 열기
-        root.withdraw()                                                       # 화면에 창을 보이지 않도록 함
-        file_paths = filedialog.askopenfilenames()
+        root = tk.Tk()
+        root.withdraw()  # 화면에 창을 보이지 않도록 함
+        root.attributes('-topmost', True)
+        file_paths = filedialog.askopenfilenames(master=root)
 
         # 선택된 파일 경로에 대한 처리
         for file_path in file_paths:
@@ -153,7 +154,7 @@ class HomeState(State):
                     )
                 )
                 .all()[::-1]                       # session에 저장된 모든 story를 가져옴 
-            )     
+            )
         
     @rx.var
     def syn_messages(self)->list[message]:
