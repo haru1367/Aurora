@@ -119,6 +119,8 @@ class HomeState(State):
     def sending_message(self):
         if not self.logged_in:
             return rx.window_alert("Please log in to send a message")
+        if self.receive_user=='':
+            return rx.window_alert('Please write User!')
         if len(self.kakaotalk)==0:
             return rx.window_alert('Please write at least one character!')
         
