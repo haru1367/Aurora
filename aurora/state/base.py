@@ -46,7 +46,6 @@ class message(rx.Model, table = True):
     receive_user:str = Field() # 메시지를 받은 사람을 저장하는 영역
     message:str = Field() # 메시지 내용
     created_at : str = Field() # 메시지를 보낸 시각
-    image_content: str = Field() #이미지 파일정보
     read : bool = Field() # 메시지 읽음 여부
 
 #앱의 기본 클래스 생성

@@ -98,7 +98,7 @@ def feed_header(HomeState):
 
 # 개별 트윗을 표시하는 함수
 def message(message):
-    box_color = rx.cond(message.send_user == "KoGPT", "#99bed1", "#e2eb3b")
+    box_color = rx.cond(message.send_user == HomeState.user.username, "#e2eb3b","#99bed1")
     return rx.vstack(
         rx.box(
             rx.hstack(
@@ -156,7 +156,7 @@ def feed(HomeState):
             ),
         ),
         rx.hstack(
-            rx.input(on_blur=HomeState.set_Message, placeholder="Write Message!"),
+            rx.input(on_blur=HomeState.set_kakaotalk, placeholder="Write Message!"),
             rx.button(
                 'send',
                 on_click = HomeState.sending_message,

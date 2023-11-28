@@ -62,7 +62,7 @@ class HomeState(State):
     checked: bool = False
     is_checked: bool = "Public Account!"
     
-    Message:str=''
+    kakaotalk:str=''
     receive_user:str=''
     message_img:list[str]
     message_files:list[str]=[]
@@ -118,7 +118,7 @@ class HomeState(State):
     def sending_message(self):
         if not self.logged_in:
             return rx.window_alert("Please log in to send a message")
-        if len(self.Message)==0:
+        if len(self.kakaotalk)==0:
             return rx.window_alert('Please write at least one character!')
         
         
@@ -126,13 +126,13 @@ class HomeState(State):
             send_message = message(
                 send_user = self.user.username,
                 receive_user = self.receive_user,
-                message = self.Message,
+                message = self.kakaotalk,
                 created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 read = False
             )
             session.add(send_message)
             session.commit()
-            self.Message = ''
+            self.kakaotalk = ''
         return self.get_messages()
     
     # 메시지 내역을 불러오는 함수
